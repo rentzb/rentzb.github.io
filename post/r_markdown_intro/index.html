@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.30.2" />
+  <meta name="author" content="Bradley T. Rentz">
+  <meta name="description" content="PhD Candidate in Linguistics">
+
+  
+  <link rel="stylesheet" href="/css/github-gist.css" rel="stylesheet" id="theme-stylesheet">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+  <link rel="alternate" hreflang="en-us" href="/post/r_markdown_intro/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+  <link rel="stylesheet" href="/css/blue.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Bradley T. Rentz">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="Bradley T. Rentz">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/r_markdown_intro/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@BradleyRentz">
+  <meta property="twitter:creator" content="@BradleyRentz">
+  
+  <meta property="og:site_name" content="Bradley T. Rentz">
+  <meta property="og:url" content="/post/r_markdown_intro/">
+  <meta property="og:title" content="Introduction to R Markdown | Bradley T. Rentz">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2017-04-18T21:13:14-05:00">
+  
+  <meta property="article:modified_time" content="2017-04-18T21:13:14-05:00">
+  
+
+  
+
+  <title>Introduction to R Markdown | Bradley T. Rentz</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#navbar-main" data-offset="71" >
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Bradley T. Rentz</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#publications_selected">
+            
+            <span>Publications</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#talks">
+            
+            <span>Talks &amp; Workshops</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#teaching">
+            
+            <span>Teaching</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Introduction to R Markdown</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2017-04-18 21:13:14 -0500 -0500" itemprop="datePublished">
+      Apr 18, 2017
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    3 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/r">R</a
+    >
+    
+  </span>
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Introduction%20to%20R%20Markdown&amp;url=%2fpost%2fr_markdown_intro%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fr_markdown_intro%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fr_markdown_intro%2f&amp;title=Introduction%20to%20R%20Markdown"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fr_markdown_intro%2f&amp;title=Introduction%20to%20R%20Markdown"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Introduction%20to%20R%20Markdown&amp;body=%2fpost%2fr_markdown_intro%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        <p>This document comes from a UH-Mānoa data science group for linguists presentation</p>
+<div id="this-is-a-top-level-section" class="section level1">
+<h1>This is a top level section</h1>
+<div id="r-markdown" class="section level2">
+<h2>R Markdown</h2>
+<p>This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.</p>
+</div>
+<div id="slide-with-bullets" class="section level2">
+<h2>Slide with Bullets</h2>
+<ul>
+<li>Bullet 1
+<ul>
+<li>Sub bullet 1</li>
+</ul></li>
+<li>Bullet 2
+<ul>
+<li>Sub bullet 2
+<ul>
+<li>Subsub bullet 2</li>
+</ul></li>
+</ul></li>
+<li>Bullet 3</li>
+</ul>
+</div>
+<div id="slide-with-r-output" class="section level2">
+<h2>Slide with R Output</h2>
+<pre class="r"><code>summary(cars)</code></pre>
+<pre><code>##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00</code></pre>
+</div>
+<div id="slide-with-plot" class="section level2">
+<h2>Slide with Plot</h2>
+<p><img src="/post/r_markdown_intro_files/figure-html/pressure-1.png" width="672" /></p>
+</div>
+</div>
+<div id="another-top-level-section" class="section level1">
+<h1>Another top level section</h1>
+<div id="r-environment-settings" class="section level2">
+<h2>R Environment settings</h2>
+<ul>
+<li>{r optional_name, eval=T,cache=T,message=F,warning=F,echo=T}</li>
+<li>In text R code: 24.3649879</li>
+</ul>
+</div>
+<div id="including-non-r-generated-images" class="section level2">
+<h2>Including Non-R generated images</h2>
+<div class="figure">
+<img src="/img/12.jpg" />
+
+</div>
+</div>
+<div id="tables-from-data-frames-sjplot" class="section level2">
+<h2>Tables from Data Frames: sjPlot</h2>
+<table style="border-collapse:collapse; border:none;border-bottom:double;">
+<td style="padding:0.2cm; border-top:double;">
+ 
+</td>
+<td style="border-bottom:1px solid; padding-left:0.5em; padding-right:0.5em; border-top:double;">
+ 
+</td>
+<td style="padding:0.2cm; text-align:center; border-bottom:1px solid; border-top:double;" colspan="3">
+speed
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; font-style:italic;">
+ 
+</td>
+<td style="padding-left:0.5em; padding-right:0.5em; font-style:italic;">
+ 
+</td>
+<td style="padding:0.2cm; text-align:center; font-style:italic; ">
+B
+</td>
+<td style="padding:0.2cm; text-align:center; font-style:italic; ">
+CI
+</td>
+<td style="padding:0.2cm; text-align:center; font-style:italic; ">
+p
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; border-top:1px solid; text-align:left;">
+(Intercept)
+</td>
+<td style="padding-left:0.5em; padding-right:0.5em; border-top:1px solid; ">
+ 
+</td>
+<td style="padding:0.2cm; text-align:center; border-top:1px solid; ">
+8.28
+</td>
+<td style="padding:0.2cm; text-align:center; border-top:1px solid; ">
+6.53 – 10.04
+</td>
+<td style="padding:0.2cm; text-align:center; border-top:1px solid; ">
+&lt;.001
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left;">
+dist
+</td>
+<td style="padding-left:0.5em; padding-right:0.5em;">
+ 
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+0.17
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+0.13 – 0.20
+</td>
+<td style="padding:0.2cm; text-align:center; ">
+&lt;.001
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; padding-top:0.1cm; padding-bottom:0.1cm; text-align:left; border-top:1px solid;">
+Observations
+</td>
+<td style="padding-left:0.5em; padding-right:0.5em; border-top:1px solid;">
+ 
+</td>
+<td style="padding:0.2cm; padding-top:0.1cm; padding-bottom:0.1cm; text-align:center; border-top:1px solid;" colspan="3">
+50
+</td>
+</tr>
+<tr>
+<td style="padding:0.2cm; text-align:left; padding-top:0.1cm; padding-bottom:0.1cm;">
+R<sup>2</sup> / adj. R<sup>2</sup>
+</td>
+<td style="padding-left:0.5em; padding-right:0.5em;">
+ 
+</td>
+<td style="padding:0.2cm; text-align:center; padding-top:0.1cm; padding-bottom:0.1cm;" colspan="3">
+.651 / .644
+</td>
+</tr>
+</table>
+</div>
+<div id="table-pander" class="section level2">
+<h2>Table: Pander</h2>
+<table style="width:88%;">
+<caption>Fitting linear model: speed ~ dist</caption>
+<colgroup>
+<col width="25%" />
+<col width="15%" />
+<col width="18%" />
+<col width="13%" />
+<col width="15%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center"> </th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><strong>(Intercept)</strong></td>
+<td align="center">8.284</td>
+<td align="center">0.8744</td>
+<td align="center">9.474</td>
+<td align="center">1.441e-12</td>
+</tr>
+<tr class="even">
+<td align="center"><strong>dist</strong></td>
+<td align="center">0.1656</td>
+<td align="center">0.01749</td>
+<td align="center">9.464</td>
+<td align="center">1.49e-12</td>
+</tr>
+</tbody>
+</table>
+<div id="table-pander-1" class="section level3">
+<h3>Table: Pander</h3>
+<table style="width:22%;">
+<colgroup>
+<col width="11%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">speed</th>
+<th align="center">dist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">4</td>
+<td align="center">2</td>
+</tr>
+<tr class="even">
+<td align="center">4</td>
+<td align="center">10</td>
+</tr>
+<tr class="odd">
+<td align="center">7</td>
+<td align="center">4</td>
+</tr>
+<tr class="even">
+<td align="center">7</td>
+<td align="center">22</td>
+</tr>
+<tr class="odd">
+<td align="center">8</td>
+<td align="center">16</td>
+</tr>
+<tr class="even">
+<td align="center">9</td>
+<td align="center">10</td>
+</tr>
+<tr class="odd">
+<td align="center">10</td>
+<td align="center">18</td>
+</tr>
+<tr class="even">
+<td align="center">10</td>
+<td align="center">26</td>
+</tr>
+<tr class="odd">
+<td align="center">10</td>
+<td align="center">34</td>
+</tr>
+<tr class="even">
+<td align="center">11</td>
+<td align="center">17</td>
+</tr>
+<tr class="odd">
+<td align="center">11</td>
+<td align="center">28</td>
+</tr>
+<tr class="even">
+<td align="center">12</td>
+<td align="center">14</td>
+</tr>
+<tr class="odd">
+<td align="center">12</td>
+<td align="center">20</td>
+</tr>
+<tr class="even">
+<td align="center">12</td>
+<td align="center">24</td>
+</tr>
+<tr class="odd">
+<td align="center">12</td>
+<td align="center">28</td>
+</tr>
+<tr class="even">
+<td align="center">13</td>
+<td align="center">26</td>
+</tr>
+<tr class="odd">
+<td align="center">13</td>
+<td align="center">34</td>
+</tr>
+<tr class="even">
+<td align="center">13</td>
+<td align="center">34</td>
+</tr>
+<tr class="odd">
+<td align="center">13</td>
+<td align="center">46</td>
+</tr>
+<tr class="even">
+<td align="center">14</td>
+<td align="center">26</td>
+</tr>
+<tr class="odd">
+<td align="center">14</td>
+<td align="center">36</td>
+</tr>
+<tr class="even">
+<td align="center">14</td>
+<td align="center">60</td>
+</tr>
+<tr class="odd">
+<td align="center">14</td>
+<td align="center">80</td>
+</tr>
+<tr class="even">
+<td align="center">15</td>
+<td align="center">20</td>
+</tr>
+<tr class="odd">
+<td align="center">15</td>
+<td align="center">26</td>
+</tr>
+<tr class="even">
+<td align="center">15</td>
+<td align="center">54</td>
+</tr>
+<tr class="odd">
+<td align="center">16</td>
+<td align="center">32</td>
+</tr>
+<tr class="even">
+<td align="center">16</td>
+<td align="center">40</td>
+</tr>
+<tr class="odd">
+<td align="center">17</td>
+<td align="center">32</td>
+</tr>
+<tr class="even">
+<td align="center">17</td>
+<td align="center">40</td>
+</tr>
+<tr class="odd">
+<td align="center">17</td>
+<td align="center">50</td>
+</tr>
+<tr class="even">
+<td align="center">18</td>
+<td align="center">42</td>
+</tr>
+<tr class="odd">
+<td align="center">18</td>
+<td align="center">56</td>
+</tr>
+<tr class="even">
+<td align="center">18</td>
+<td align="center">76</td>
+</tr>
+<tr class="odd">
+<td align="center">18</td>
+<td align="center">84</td>
+</tr>
+<tr class="even">
+<td align="center">19</td>
+<td align="center">36</td>
+</tr>
+<tr class="odd">
+<td align="center">19</td>
+<td align="center">46</td>
+</tr>
+<tr class="even">
+<td align="center">19</td>
+<td align="center">68</td>
+</tr>
+<tr class="odd">
+<td align="center">20</td>
+<td align="center">32</td>
+</tr>
+<tr class="even">
+<td align="center">20</td>
+<td align="center">48</td>
+</tr>
+<tr class="odd">
+<td align="center">20</td>
+<td align="center">52</td>
+</tr>
+<tr class="even">
+<td align="center">20</td>
+<td align="center">56</td>
+</tr>
+<tr class="odd">
+<td align="center">20</td>
+<td align="center">64</td>
+</tr>
+<tr class="even">
+<td align="center">22</td>
+<td align="center">66</td>
+</tr>
+<tr class="odd">
+<td align="center">23</td>
+<td align="center">54</td>
+</tr>
+<tr class="even">
+<td align="center">24</td>
+<td align="center">70</td>
+</tr>
+<tr class="odd">
+<td align="center">24</td>
+<td align="center">92</td>
+</tr>
+<tr class="even">
+<td align="center">24</td>
+<td align="center">93</td>
+</tr>
+<tr class="odd">
+<td align="center">24</td>
+<td align="center">120</td>
+</tr>
+<tr class="even">
+<td align="center">25</td>
+<td align="center">85</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="table-kable" class="section level2">
+<h2>Table: Kable</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="right">speed</th>
+<th align="right">dist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">4</td>
+<td align="right">2</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="right">7</td>
+<td align="right">4</td>
+</tr>
+<tr class="even">
+<td align="right">7</td>
+<td align="right">22</td>
+</tr>
+<tr class="odd">
+<td align="right">8</td>
+<td align="right">16</td>
+</tr>
+<tr class="even">
+<td align="right">9</td>
+<td align="right">10</td>
+</tr>
+<tr class="odd">
+<td align="right">10</td>
+<td align="right">18</td>
+</tr>
+<tr class="even">
+<td align="right">10</td>
+<td align="right">26</td>
+</tr>
+<tr class="odd">
+<td align="right">10</td>
+<td align="right">34</td>
+</tr>
+<tr class="even">
+<td align="right">11</td>
+<td align="right">17</td>
+</tr>
+<tr class="odd">
+<td align="right">11</td>
+<td align="right">28</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="right">14</td>
+</tr>
+<tr class="odd">
+<td align="right">12</td>
+<td align="right">20</td>
+</tr>
+<tr class="even">
+<td align="right">12</td>
+<td align="right">24</td>
+</tr>
+<tr class="odd">
+<td align="right">12</td>
+<td align="right">28</td>
+</tr>
+<tr class="even">
+<td align="right">13</td>
+<td align="right">26</td>
+</tr>
+<tr class="odd">
+<td align="right">13</td>
+<td align="right">34</td>
+</tr>
+<tr class="even">
+<td align="right">13</td>
+<td align="right">34</td>
+</tr>
+<tr class="odd">
+<td align="right">13</td>
+<td align="right">46</td>
+</tr>
+<tr class="even">
+<td align="right">14</td>
+<td align="right">26</td>
+</tr>
+<tr class="odd">
+<td align="right">14</td>
+<td align="right">36</td>
+</tr>
+<tr class="even">
+<td align="right">14</td>
+<td align="right">60</td>
+</tr>
+<tr class="odd">
+<td align="right">14</td>
+<td align="right">80</td>
+</tr>
+<tr class="even">
+<td align="right">15</td>
+<td align="right">20</td>
+</tr>
+<tr class="odd">
+<td align="right">15</td>
+<td align="right">26</td>
+</tr>
+<tr class="even">
+<td align="right">15</td>
+<td align="right">54</td>
+</tr>
+<tr class="odd">
+<td align="right">16</td>
+<td align="right">32</td>
+</tr>
+<tr class="even">
+<td align="right">16</td>
+<td align="right">40</td>
+</tr>
+<tr class="odd">
+<td align="right">17</td>
+<td align="right">32</td>
+</tr>
+<tr class="even">
+<td align="right">17</td>
+<td align="right">40</td>
+</tr>
+<tr class="odd">
+<td align="right">17</td>
+<td align="right">50</td>
+</tr>
+<tr class="even">
+<td align="right">18</td>
+<td align="right">42</td>
+</tr>
+<tr class="odd">
+<td align="right">18</td>
+<td align="right">56</td>
+</tr>
+<tr class="even">
+<td align="right">18</td>
+<td align="right">76</td>
+</tr>
+<tr class="odd">
+<td align="right">18</td>
+<td align="right">84</td>
+</tr>
+<tr class="even">
+<td align="right">19</td>
+<td align="right">36</td>
+</tr>
+<tr class="odd">
+<td align="right">19</td>
+<td align="right">46</td>
+</tr>
+<tr class="even">
+<td align="right">19</td>
+<td align="right">68</td>
+</tr>
+<tr class="odd">
+<td align="right">20</td>
+<td align="right">32</td>
+</tr>
+<tr class="even">
+<td align="right">20</td>
+<td align="right">48</td>
+</tr>
+<tr class="odd">
+<td align="right">20</td>
+<td align="right">52</td>
+</tr>
+<tr class="even">
+<td align="right">20</td>
+<td align="right">56</td>
+</tr>
+<tr class="odd">
+<td align="right">20</td>
+<td align="right">64</td>
+</tr>
+<tr class="even">
+<td align="right">22</td>
+<td align="right">66</td>
+</tr>
+<tr class="odd">
+<td align="right">23</td>
+<td align="right">54</td>
+</tr>
+<tr class="even">
+<td align="right">24</td>
+<td align="right">70</td>
+</tr>
+<tr class="odd">
+<td align="right">24</td>
+<td align="right">92</td>
+</tr>
+<tr class="even">
+<td align="right">24</td>
+<td align="right">93</td>
+</tr>
+<tr class="odd">
+<td align="right">24</td>
+<td align="right">120</td>
+</tr>
+<tr class="even">
+<td align="right">25</td>
+<td align="right">85</td>
+</tr>
+</tbody>
+</table>
+<div id="table-kable-1" class="section level3">
+<h3>Table: Kable</h3>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">Estimate</th>
+<th align="right">Std. Error</th>
+<th align="right">t value</th>
+<th align="right">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>(Intercept)</td>
+<td align="right">8.28</td>
+<td align="right">0.87</td>
+<td align="right">9.47</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td>dist</td>
+<td align="right">0.17</td>
+<td align="right">0.02</td>
+<td align="right">9.46</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="formatting-text" class="section level2">
+<h2>Formatting Text</h2>
+<ul>
+<li>This is <strong>bold</strong></li>
+<li>This is <em>italics</em></li>
+<li>For more formatting see <a href="https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf" class="uri">https://www.rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf</a></li>
+</ul>
+</div>
+</div>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/data-science">data-science</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/r">R</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/markdown">markdown</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+<div class="article-container article-widget">
+  <div class="hr-light"></div>
+  <h3>Related</h3>
+  <ul>
+    
+    <li><a href="/post/intro_bayesian_pdf/">Intro to Bayesian Linear Mixed Effect Models with rstanarm</a></li>
+    
+    <li><a href="/post/git/">Intro to Git</a></li>
+    
+    <li><a href="/post/tidy_data_handout/">Tidy Data</a></li>
+    
+  </ul>
+</div>
+
+
+
+
+<div class="article-container">
+  
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Bradley T. Rentz &middot; 
+
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+    <script src="/js/highlight.pack.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
+    
+    
+
+  </body>
+</html>
+

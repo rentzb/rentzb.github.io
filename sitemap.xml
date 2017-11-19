@@ -68,6 +68,42 @@
     
     <url>
     
+      <loc>/post/r_markdown_intro/</loc>
+      <lastmod>2017-04-18T21:13:14-05:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/post/intro_bayesian_pdf/</loc>
+      <lastmod>2017-04-04T21:13:14-05:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/post/git/</loc>
+      <lastmod>2017-03-21T21:13:14-05:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/post/tidy_data_handout/</loc>
+      <lastmod>2017-03-07T21:13:14-05:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/</loc>
       <lastmod>2017-01-01T00:00:00-10:00</lastmod>
     </url>
@@ -106,6 +142,16 @@
     
       <loc>/publication_types/2/</loc>
       <lastmod>2017-08-01T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/bayesian/</loc>
+      <lastmod>2017-04-04T21:13:14-05:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -163,6 +209,16 @@
     
     <url>
     
+      <loc>/tags/markdown/</loc>
+      <lastmod>2017-04-18T21:13:14-05:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/tags/phonetics/</loc>
       <lastmod>2017-11-18T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -205,6 +261,16 @@
     
       <loc>/tags/r/</loc>
       <lastmod>2017-11-18T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/categories/r/</loc>
+      <lastmod>2017-04-18T21:13:14-05:00</lastmod>
       <priority>0</priority>
     </url>
     

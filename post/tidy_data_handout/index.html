@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.30.2" />
+  <meta name="author" content="Bradley T. Rentz">
+  <meta name="description" content="PhD Candidate in Linguistics">
+
+  
+  <link rel="stylesheet" href="/css/github-gist.css" rel="stylesheet" id="theme-stylesheet">
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+  <link rel="alternate" hreflang="en-us" href="/post/tidy_data_handout/">
+
+  
+  
+
+
+  
+
+  
+  
+  
+  
+    
+  
+  
+    
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+  <link rel="stylesheet" href="/css/blue.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Bradley T. Rentz">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="Bradley T. Rentz">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/tidy_data_handout/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@BradleyRentz">
+  <meta property="twitter:creator" content="@BradleyRentz">
+  
+  <meta property="og:site_name" content="Bradley T. Rentz">
+  <meta property="og:url" content="/post/tidy_data_handout/">
+  <meta property="og:title" content="Tidy Data | Bradley T. Rentz">
+  <meta property="og:description" content="">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2017-03-07T21:13:14-05:00">
+  
+  <meta property="article:modified_time" content="2017-03-07T21:13:14-05:00">
+  
+
+  
+
+  <title>Tidy Data | Bradley T. Rentz</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#navbar-main" data-offset="71" >
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">Bradley T. Rentz</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#publications_selected">
+            
+            <span>Publications</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#talks">
+            
+            <span>Talks &amp; Workshops</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#teaching">
+            
+            <span>Teaching</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Tidy Data</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2017-03-07 21:13:14 -0500 -0500" itemprop="datePublished">
+      Mar 7, 2017
+    </time>
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    8 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/r">R</a
+    >
+    
+  </span>
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Tidy%20Data&amp;url=%2fpost%2ftidy_data_handout%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2ftidy_data_handout%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2ftidy_data_handout%2f&amp;title=Tidy%20Data"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2ftidy_data_handout%2f&amp;title=Tidy%20Data"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Tidy%20Data&amp;body=%2fpost%2ftidy_data_handout%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        <div id="what-is-tidy-data" class="section level1">
+<h1>What is tidy data?</h1>
+<p>Tidy data have the following characteristics:</p>
+<ul>
+<li>Observations are in rows</li>
+<li>Variables are in columns</li>
+<li>Contained in a single dataset</li>
+</ul>
+<div id="an-example-of-tidy-data" class="section level2">
+<h2>An example of tidy data</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Participant</th>
+<th align="left">Gender</th>
+<th align="left">Trial</th>
+<th align="left">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">01</td>
+<td align="left">M</td>
+<td align="left">1</td>
+<td align="left">100</td>
+</tr>
+<tr class="even">
+<td align="left">01</td>
+<td align="left">M</td>
+<td align="left">2</td>
+<td align="left">210</td>
+</tr>
+<tr class="odd">
+<td align="left">02</td>
+<td align="left">F</td>
+<td align="left">1</td>
+<td align="left">50</td>
+</tr>
+<tr class="even">
+<td align="left">02</td>
+<td align="left">F</td>
+<td align="left">2</td>
+<td align="left">75</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="an-example-of-messy-data" class="section level2">
+<h2>An example of messy data</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Participant</th>
+<th align="right">Trial1</th>
+<th align="right">Trial2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>M01</td>
+<td align="right">100</td>
+<td align="right">210</td>
+</tr>
+<tr class="even">
+<td>F02</td>
+<td align="right">50</td>
+<td align="right">75</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="r-packages-for-tidy-data" class="section level2">
+<h2>R Packages for tidy data</h2>
+<pre class="r"><code>library(&quot;tidyverse&quot;)
+## Loading tidyverse: ggplot2
+## Loading tidyverse: tibble
+## Loading tidyverse: tidyr
+## Loading tidyverse: readr
+## Loading tidyverse: purrr
+## Loading tidyverse: dplyr
+## Warning: package &#39;tidyr&#39; was built under R version 3.4.2
+## Warning: package &#39;purrr&#39; was built under R version 3.4.2
+## Conflicts with tidy packages ----------------------------------------------
+## filter(): dplyr, stats
+## lag():    dplyr, stats</code></pre>
+</div>
+</div>
+<div id="workflow-for-data-wrangling" class="section level1">
+<h1>Workflow for data wrangling</h1>
+<ul>
+<li>Import data</li>
+<li>Change from wide data to long</li>
+<li>Split columns</li>
+<li>Fix typos or irregulaties</li>
+<li>Create new variables as needed</li>
+</ul>
+<div id="import-messy-data" class="section level2">
+<h2>Import messy data</h2>
+<pre class="r"><code>data.messy &lt;- read_csv(&quot;messy_data.csv&quot;)
+## Parsed with column specification:
+## cols(
+##   participant = col_character(),
+##   vowel = col_character(),
+##   word = col_character(),
+##   f2_trial1 = col_integer(),
+##   f2_trial2 = col_integer(),
+##   f2_trial3 = col_integer(),
+##   f2_trial4 = col_integer(),
+##   f1_trial1 = col_integer(),
+##   f1_trial2 = col_integer(),
+##   f1_trial3 = col_integer(),
+##   f1_trial4 = col_integer()
+## )</code></pre>
+</div>
+<div id="find-the-problems" class="section level2">
+<h2>Find the problems</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">participant</th>
+<th align="left">vowel</th>
+<th align="left">word</th>
+<th align="right">f2_trial1</th>
+<th align="right">f2_trial2</th>
+<th align="right">f2_trial3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">f.29</td>
+<td align="left">a</td>
+<td align="left">apple</td>
+<td align="right">1736</td>
+<td align="right">1742</td>
+<td align="right">1730</td>
+</tr>
+<tr class="even">
+<td align="left">f.30</td>
+<td align="left">a</td>
+<td align="left">apple</td>
+<td align="right">1766</td>
+<td align="right">1783</td>
+<td align="right">1744</td>
+</tr>
+<tr class="odd">
+<td align="left">m.27</td>
+<td align="left">a</td>
+<td align="left">apple</td>
+<td align="right">1780</td>
+<td align="right">1803</td>
+<td align="right">1763</td>
+</tr>
+<tr class="even">
+<td align="left">m.18</td>
+<td align="left">a</td>
+<td align="left">apple</td>
+<td align="right">1701</td>
+<td align="right">1707</td>
+<td align="right">1687</td>
+</tr>
+<tr class="odd">
+<td align="left">m.29</td>
+<td align="left">a</td>
+<td align="left">apple</td>
+<td align="right">1693</td>
+<td align="right">1697</td>
+<td align="right">1689</td>
+</tr>
+<tr class="even">
+<td align="left">f.34</td>
+<td align="left">a</td>
+<td align="left">apple</td>
+<td align="right">1768</td>
+<td align="right">1779</td>
+<td align="right">1741</td>
+</tr>
+<tr class="odd">
+<td align="left">f.19</td>
+<td align="left">a</td>
+<td align="left">apple</td>
+<td align="right">1758</td>
+<td align="right">1776</td>
+<td align="right">1755</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="explore-the-data-more" class="section level2">
+<h2>Explore the data more</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="right">f2_trial4</th>
+<th align="right">f1_trial1</th>
+<th align="right">f1_trial2</th>
+<th align="right">f1_trial3</th>
+<th align="right">f1_trial4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1737</td>
+<td align="right">700</td>
+<td align="right">693</td>
+<td align="right">713</td>
+<td align="right">684</td>
+</tr>
+<tr class="even">
+<td align="right">1768</td>
+<td align="right">710</td>
+<td align="right">713</td>
+<td align="right">747</td>
+<td align="right">694</td>
+</tr>
+<tr class="odd">
+<td align="right">1780</td>
+<td align="right">682</td>
+<td align="right">685</td>
+<td align="right">708</td>
+<td align="right">656</td>
+</tr>
+<tr class="even">
+<td align="right">1704</td>
+<td align="right">715</td>
+<td align="right">714</td>
+<td align="right">735</td>
+<td align="right">701</td>
+</tr>
+<tr class="odd">
+<td align="right">1696</td>
+<td align="right">667</td>
+<td align="right">684</td>
+<td align="right">706</td>
+<td align="right">657</td>
+</tr>
+<tr class="even">
+<td align="right">1773</td>
+<td align="right">683</td>
+<td align="right">679</td>
+<td align="right">693</td>
+<td align="right">659</td>
+</tr>
+<tr class="odd">
+<td align="right">1760</td>
+<td align="right">758</td>
+<td align="right">748</td>
+<td align="right">777</td>
+<td align="right">734</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="what-makes-that-dataset-messy" class="section level1">
+<h1>What makes that dataset messy?</h1>
+<p>Why is that data messy? How does it violate the tidy data rules?</p>
+<div id="problem-1-the-columns-contain-observations" class="section level2">
+<h2>Problem 1: The columns contain observations</h2>
+<p>The first problem is the f2_trial1, f2_trial2, etc., represent observations instead of variables. We want to convert all of these columns to just three columns: trial (1 or 2), measurement type (F1 or F2), and value.</p>
+<p>To do this we use <code>gather()</code> from the package <code>tidyr</code>, which converts from a wide format to long format.</p>
+<pre class="r"><code>data.long &lt;- gather(data.messy,
+                  key=measurement,
+                  value=value,
+                  -participant,-vowel,-word)</code></pre>
+</div>
+<div id="long-data" class="section level2">
+<h2>Long data</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">participant</th>
+<th align="left">vowel</th>
+<th align="left">word</th>
+<th align="left">measurement</th>
+<th align="right">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">f.29</td>
+<td align="left">a</td>
+<td align="left">apple</td>
+<td align="left">f2_trial1</td>
+<td align="right">1736</td>
+</tr>
+<tr class="even">
+<td align="left">f.19</td>
+<td align="left">u</td>
+<td align="left">boot</td>
+<td align="left">f2_trial1</td>
+<td align="right">737</td>
+</tr>
+<tr class="odd">
+<td align="left">f.29</td>
+<td align="left">a</td>
+<td align="left">apple</td>
+<td align="left">f2_trial2</td>
+<td align="right">1742</td>
+</tr>
+<tr class="even">
+<td align="left">m.30</td>
+<td align="left">u</td>
+<td align="left">boot</td>
+<td align="left">f2_trial2</td>
+<td align="right">642</td>
+</tr>
+<tr class="odd">
+<td align="left">f.21</td>
+<td align="left">a</td>
+<td align="left">apple</td>
+<td align="left">f2_trial3</td>
+<td align="right">1636</td>
+</tr>
+<tr class="even">
+<td align="left">f.48</td>
+<td align="left">u</td>
+<td align="left">boot</td>
+<td align="left">f1_trial2</td>
+<td align="right">279</td>
+</tr>
+<tr class="odd">
+<td align="left">f.34</td>
+<td align="left">u</td>
+<td align="left">Hoop</td>
+<td align="left">f1_trial4</td>
+<td align="right">224</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="problem-2-two-variables-in-one-column" class="section level2">
+<h2>Problem 2: Two variables in one column</h2>
+<p>The next problem that we have to deal with is that two of our columns have two variables in them. Participant has both gender and the participant number. Measurment has both the trial and the measurement type (F1 or F2). To separate the columns we use <code>separate()</code> from <code>tidyr</code>.</p>
+</div>
+<div id="separating-columns" class="section level2">
+<h2>Separating columns</h2>
+<pre class="r"><code># separate measurement
+data.long &lt;- separate(data.long,
+                      measurement,
+                      c(&quot;measurement&quot;,&quot;trial&quot;),
+                      sep=&quot;_&quot;)
+# separate participant (note: for . need regex \. 
+# but need to escape the \ with a \, so \\. )
+# convert=T allows the new columns to have different data types
+data.long &lt;- separate(data.long,
+                      participant,
+                      c(&quot;gender&quot;,&quot;participant&quot;),
+                      sep=&quot;\\.&quot;,
+                      convert=T)</code></pre>
+</div>
+<div id="almost-tidy-data" class="section level2">
+<h2>Almost tidy data</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">gender</th>
+<th align="right">participant</th>
+<th align="left">vowel</th>
+<th align="left">word</th>
+<th align="left">measurement</th>
+<th align="left">trial</th>
+<th align="right">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">f</td>
+<td align="right">29</td>
+<td align="left">a</td>
+<td align="left">apple</td>
+<td align="left">f2</td>
+<td align="left">trial1</td>
+<td align="right">1736</td>
+</tr>
+<tr class="even">
+<td align="left">m</td>
+<td align="right">27</td>
+<td align="left">u</td>
+<td align="left">hoop</td>
+<td align="left">f2</td>
+<td align="left">trial1</td>
+<td align="right">731</td>
+</tr>
+<tr class="odd">
+<td align="left">f</td>
+<td align="right">30</td>
+<td align="left">u</td>
+<td align="left">hoop</td>
+<td align="left">f2</td>
+<td align="left">trial2</td>
+<td align="right">614</td>
+</tr>
+<tr class="even">
+<td align="left">f</td>
+<td align="right">37</td>
+<td align="left">u</td>
+<td align="left">boot</td>
+<td align="left">f2</td>
+<td align="left">trial3</td>
+<td align="right">390</td>
+</tr>
+<tr class="odd">
+<td align="left">m</td>
+<td align="right">18</td>
+<td align="left">u</td>
+<td align="left">boot</td>
+<td align="left">f2</td>
+<td align="left">trial4</td>
+<td align="right">588</td>
+</tr>
+<tr class="even">
+<td align="left">f</td>
+<td align="right">37</td>
+<td align="left">u</td>
+<td align="left">hoop</td>
+<td align="left">f1</td>
+<td align="left">trial1</td>
+<td align="right">238</td>
+</tr>
+<tr class="odd">
+<td align="left">f</td>
+<td align="right">21</td>
+<td align="left">a</td>
+<td align="left">apple</td>
+<td align="left">f1</td>
+<td align="left">trial4</td>
+<td align="right">727</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="problem-3-irregular-spellings" class="section level2">
+<h2>Problem 3: Irregular spellings</h2>
+<p>When entering data by hand, there are sometime irregularities in spelling, such a variation in capitalizations, typos, or extra spaces.</p>
+<p>To check for irregulaties, we convert all of our string variables to factors and then check what levels of the factors exist.</p>
+<pre class="r"><code>data.long$gender &lt;- as.factor(data.long$gender)
+data.long$participant &lt;- as.factor(data.long$participant)
+data.long$word &lt;- as.factor(data.long$word)
+data.long$vowel &lt;- as.factor(data.long$vowel)
+data.long$measurement &lt;- as.factor(data.long$measurement)
+data.long$trial &lt;- as.factor(data.long$trial)</code></pre>
+</div>
+<div id="checking-factors" class="section level2">
+<h2>Checking factors</h2>
+<p>To check the levels of each factor, we can use the <code>summary()</code> command. What problems in spelling are there?</p>
+<pre class="r"><code>summary(data.long[,1:6])
+##  gender   participant  vowel      word     measurement    trial    
+##  f:256   29     : 96   a:192   apple:112   f1:224      trial1:112  
+##  m:192   30     : 64   A: 32   at   :112   f2:224      trial2:112  
+##          18     : 32   u:224   boot :104               trial3:112  
+##          19     : 32           Boot :  8               trial4:112  
+##          21     : 32           hoop :104                           
+##          27     : 32           Hoop :  8                           
+##          (Other):160</code></pre>
+</div>
+<div id="using-stringr-to-fix-strings" class="section level2">
+<h2>Using stringr to fix strings</h2>
+<p>Now that we have identified the errors, we can fix them with <code>str_replace()</code> from <code>stringr</code>.</p>
+<pre class="r"><code>library(stringr)
+data.long$word &lt;- str_replace(data.long$word,&quot;Hoop&quot;,&quot;hoop&quot;)
+data.long$word &lt;- str_replace(data.long$word,&quot;Boot&quot;,&quot;boot&quot;)
+data.long$vowel &lt;- str_replace(data.long$vowel,&quot;A&quot;,&quot;a&quot;)</code></pre>
+</div>
+<div id="clean-data" class="section level2">
+<h2>Clean data</h2>
+<p>Let’s check to see if there are other errors.</p>
+<pre class="r"><code>data.long$gender &lt;- as.factor(data.long$gender)
+data.long$participant &lt;- as.factor(data.long$participant)
+data.long$word &lt;- as.factor(data.long$word)
+data.long$vowel &lt;- as.factor(data.long$vowel)
+data.long$measurement &lt;- as.factor(data.long$measurement)
+data.long$trial &lt;- as.factor(data.long$trial)
+summary(data.long[,1:6])
+##  gender   participant  vowel      word     measurement    trial    
+##  f:256   29     : 96   a:224   apple:112   f1:224      trial1:112  
+##  m:192   30     : 64   u:224   at   :112   f2:224      trial2:112  
+##          18     : 32           boot :112               trial3:112  
+##          19     : 32           hoop :112               trial4:112  
+##          21     : 32                                               
+##          27     : 32                                               
+##          (Other):160</code></pre>
+</div>
+</div>
+<div id="exploring-dplyr-functions" class="section level1">
+<h1>Exploring dplyr functions</h1>
+<p>Now that we have clean data we can process and explore our data with the <code>dplyr</code> functions <code>filter()</code>, <code>arrange()</code>, <code>select()</code>, <code>summarise()</code>, <code>group_by()</code>, and <code>mutate()</code>. We will also use the pipe <code>%&gt;%</code> from the <code>magrittr</code> package to make using these (and other) functions easier.</p>
+<div id="the-pipe" class="section level2">
+<h2>The pipe</h2>
+<p>The pipe <code>%&gt;%</code> allows us to nest code very easily is read as <strong>then</strong>.</p>
+<p>For example, let’s say we want to select only a few columns of a dataframe, then select row values that are greater than a certain value, then mean for each variable by participant.</p>
+<p>The pseudo-code would like this:</p>
+<pre class="r"><code>new.df &lt;- old.df %&gt;% select columns that we want %&gt;%
+  filter the row values that we want %&gt;%
+  group by participant %&gt;%
+  calculate the mean for each variable </code></pre>
+</div>
+<div id="selecting-columns-with-select" class="section level2">
+<h2>Selecting columns with select()</h2>
+<p>The function <code>select()</code> from <code>dplyr</code> is used to select certain <strong>columns</strong> from a dataframe. Columns can selected individually, excluded individually by using <code>-</code> before the name, or selected as a range with <code>:</code>, as in first_column:last_column.</p>
+<p>Let’s select the columns participant, vowel, measurement, trial, and value.</p>
+<pre class="r"><code>data.selected &lt;- data.long %&gt;%
+  select(participant, vowel, measurement, trial, value)
+# or can select those by excluding the other columns with -
+data.selected2 &lt;- data.long %&gt;%
+  select(-gender,-word)</code></pre>
+</div>
+<div id="arranging-values" class="section level2">
+<h2>Arranging values</h2>
+<p>The <code>arrange()</code> function from <code>dplyr</code> is in a sort function. You can use it to sort by one column or by multiple columns. It can also sort in descending order by using <code>desc()</code> arround the column name.</p>
+<p>Let’s sort the <code>data.selected</code> by participant, then vowel, then descending order of trial.</p>
+<pre class="r"><code>data.sorted &lt;- data.selected %&gt;% 
+  arrange(participant, vowel, desc(trial))</code></pre>
+</div>
+<div id="filtering-rows" class="section level2">
+<h2>Filtering rows</h2>
+<p>The function <code>filter()</code> from <code>dplyr</code> allows us to subset the data by selecting rows based on whatever logical rule we want.</p>
+<p>For this example let’s keep on the rows where the value is greater than or equal to 500 and the participant is not 19.</p>
+<pre class="r"><code>data.filtered &lt;- data.sorted %&gt;%
+  filter(participant != &quot;19&quot; &amp; value &gt;= 500)</code></pre>
+</div>
+<div id="logical-values" class="section level2">
+<h2>Logical values</h2>
+<p>The logical values that can be used are</p>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left">==</td>
+<td align="left">equal to</td>
+</tr>
+<tr class="even">
+<td align="left">!=</td>
+<td align="left">not equal to</td>
+</tr>
+<tr class="odd">
+<td align="left">&lt;</td>
+<td align="left">less than</td>
+</tr>
+<tr class="even">
+<td align="left">&lt;=</td>
+<td align="left">less than or equal to</td>
+</tr>
+<tr class="odd">
+<td align="left">&gt;</td>
+<td align="left">greater than</td>
+</tr>
+<tr class="even">
+<td align="left">&gt;=</td>
+<td align="left">greater than or equal too</td>
+</tr>
+<tr class="odd">
+<td align="left">&amp;</td>
+<td align="left">AND</td>
+</tr>
+<tr class="even">
+<td align="left">|</td>
+<td align="left">OR</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="adding-new-columns" class="section level2">
+<h2>Adding new columns</h2>
+<p>The <code>mutate()</code> function of <code>dplyr</code> allows us to add columns to our dataframe based on calculations run on other columns. It is a 1:1 calculation. As an example let’s say we want to calculate the z-score for the values we measured. To do this we have to first use a helper function called <code>group_by()</code>. This function groups the data in groups first before doing other calculations. Let’s calculate the z-score for each value grouped by participant and measurement type (F1 or F2).</p>
+<pre class="r"><code>data.zscore &lt;- data.filtered %&gt;%
+  group_by(participant, measurement) %&gt;%
+  mutate(z.score = (value - mean(value))/sd(value))</code></pre>
+</div>
+<div id="z-score" class="section level2">
+<h2>Z score</h2>
+<table>
+<thead>
+<tr class="header">
+<th align="left">participant</th>
+<th align="left">vowel</th>
+<th align="left">measurement</th>
+<th align="left">trial</th>
+<th align="right">value</th>
+<th align="right">z.score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">18</td>
+<td align="left">a</td>
+<td align="left">f2</td>
+<td align="left">trial4</td>
+<td align="right">1704</td>
+<td align="right">0.9467597</td>
+</tr>
+<tr class="even">
+<td align="left">18</td>
+<td align="left">a</td>
+<td align="left">f2</td>
+<td align="left">trial4</td>
+<td align="right">1734</td>
+<td align="right">0.9975243</td>
+</tr>
+<tr class="odd">
+<td align="left">18</td>
+<td align="left">a</td>
+<td align="left">f1</td>
+<td align="left">trial4</td>
+<td align="right">701</td>
+<td align="right">-1.2665945</td>
+</tr>
+<tr class="even">
+<td align="left">18</td>
+<td align="left">a</td>
+<td align="left">f1</td>
+<td align="left">trial4</td>
+<td align="right">731</td>
+<td align="right">-0.2533189</td>
+</tr>
+<tr class="odd">
+<td align="left">18</td>
+<td align="left">a</td>
+<td align="left">f2</td>
+<td align="left">trial3</td>
+<td align="right">1687</td>
+<td align="right">0.9179931</td>
+</tr>
+<tr class="even">
+<td align="left">18</td>
+<td align="left">a</td>
+<td align="left">f2</td>
+<td align="left">trial3</td>
+<td align="right">1707</td>
+<td align="right">0.9518362</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="summarizing-data" class="section level2">
+<h2>Summarizing data</h2>
+<p>The <code>summarise()</code> function from <code>dplyr</code> also creates new columns; however, it is not a 1:1 function. The function instead creates a reduced output that summarises the data. It also only returns as many columns as is necessary to display the results.</p>
+<p>An example application would be to show the means, standard deviations, or similar statistics.</p>
+<pre class="r"><code>data.global.means &lt;- data.filtered %&gt;%
+  summarise(global.means = mean(value))
+data.global.means
+## # A tibble: 1 x 1
+##   global.means
+##          &lt;dbl&gt;
+## 1     1050.686</code></pre>
+</div>
+<div id="grouped-central-tendencies" class="section level2">
+<h2>Grouped central tendencies</h2>
+<pre class="r"><code>data.grouped.ct &lt;- data.filtered %&gt;%
+  group_by(participant, vowel, measurement) %&gt;%
+  summarise(means = mean(value), sds = sd(value), 
+            medians = median(value))
+head(data.grouped.ct)
+## # A tibble: 6 x 6
+## # Groups:   participant, vowel [4]
+##   participant  vowel measurement    means      sds medians
+##        &lt;fctr&gt; &lt;fctr&gt;      &lt;fctr&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+## 1          18      a          f1  738.500 29.60695   733.0
+## 2          18      a          f2 1716.375 22.99029  1707.0
+## 3          18      u          f2  572.625 17.74371   577.5
+## 4          21      a          f1  751.625 18.53134   747.0
+## 5          21      a          f2 1677.125 23.49734  1674.0
+## 6          21      u          f2  744.000 16.71612   745.0</code></pre>
+</div>
+</div>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/data-science">data-science</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+
+
+
+<div class="article-container">
+  
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2017 Bradley T. Rentz &middot; 
+
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+    <script src="/js/highlight.pack.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
+    
+    
+
+  </body>
+</html>
+
