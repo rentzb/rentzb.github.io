@@ -11,6 +11,767 @@
     <atom:link href="/post/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Correspondence Analysis</title>
+      <link>/post/ca/</link>
+      <pubDate>Mon, 27 Nov 2017 21:13:14 -1000</pubDate>
+      
+      <guid>/post/ca/</guid>
+      <description>&lt;div id=&#34;what-to-do-with-categorical-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What to do with categorical data?&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Categorical data can be challenging to analyze quantitatively&lt;/li&gt;
+&lt;li&gt;In language research we often have data that are purely categorical&lt;/li&gt;
+&lt;li&gt;In today’s presentation we will deal with a specific type of categorical data found in questionnaires&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;questionnaire-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Questionnaire Data&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Questionnaires are frequently used in a variety of language research scenarios&lt;/li&gt;
+&lt;li&gt;They often ask people to rate something (likert scales) or select the most appropriate response&lt;/li&gt;
+&lt;li&gt;There are often multiple questions that have the same answer scale (same choices)&lt;/li&gt;
+&lt;li&gt;Example: select the language that is most appropriate to use in a given domain&lt;/li&gt;
+&lt;li&gt;Example: rate level of agreement with several statements&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;research-question&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Research Question&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Often we are interested in how the questions relate to each other in terms of their answers as well as how the answers relate to each other based on the questions they were most used with&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;correspondence-analysis&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Correspondence Analysis&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;CA is statistical technique that shows how the questions and answers of multiple questions relate to each other&lt;/li&gt;
+&lt;li&gt;Requires the data to have the same scale (all questions must have some possible answers)&lt;/li&gt;
+&lt;li&gt;CA is a descriptive tool and doesn’t give p-values per se&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;how-does-ca-work&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;How does CA work?&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;CA takes a series of categorical variables and converts them to a contingency table (a count of the number of responses at each level for each variable)&lt;/li&gt;
+&lt;li&gt;It then uses the chi-squared distribution to convert the data into a series of factors (you can specify the number of factors)&lt;/li&gt;
+&lt;li&gt;These factors are designed to be minimally correlated with each other&lt;/li&gt;
+&lt;li&gt;The first factor represents the most variation in the data and the following ones less so&lt;/li&gt;
+&lt;li&gt;It takes a large number of variables and maps them on to a smaller number of variables&lt;/li&gt;
+&lt;li&gt;Very similar to Principle Component Analysis (PCA)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;example-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Example Data&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;For the sample CA were will be using data from a questionnaire used on Pohnpei&lt;/li&gt;
+&lt;li&gt;There are 25 questions where the respondents were asked to select 1 language that is the most important for that specific domain&lt;/li&gt;
+&lt;li&gt;The answers for all 25 questions were the same 8 language choices&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains &amp;lt;- read.csv(&amp;quot;domains.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;explore-the-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Explore the data&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;making_friends&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;being_successful&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;good_education&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;happy_relationships&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;getting_money&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;reading&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;writing&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;radio&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;tv&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;accepted_pni&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_teachers&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_villages&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;funerals&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;kamadipw&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;sakau&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;facebook&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_kolonia&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_chief&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_gov&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;good_job&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;friends_school&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;church&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;store&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_neighbors&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;us_relatives&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Other&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Other&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pingelapese&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-1-create-contingency-table&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 1: Create contingency table&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+domains.gathered &amp;lt;- domains %&amp;gt;% gather(key=domain,value=language) 
+domains.gathered$domain &amp;lt;- as.factor(domains.gathered$domain) 
+domains.gathered$language &amp;lt;- as.factor(domains.gathered$language) 
+dt &amp;lt;- with(domains.gathered,table(domain,language)) &lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Chuukese&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;English&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Kosraean&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Mokilese&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Mortlockese&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Other&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Pingelapese&lt;/th&gt;
+&lt;th align=&#34;right&#34;&gt;Pohnpeian&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;accepted_pni&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;93&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;201&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;being_successful&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;179&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;117&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;church&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;43&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;8&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;225&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;facebook&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;138&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;148&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;friends_school&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;193&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;funerals&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;20&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;271&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;getting_money&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;176&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;116&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;good_education&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;194&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;99&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;good_job&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;178&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;111&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;happy_relationships&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;91&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;9&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;178&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;kamadipw&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;42&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;248&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;making_friends&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;101&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;190&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;radio&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;124&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;167&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;reading&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;175&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;121&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;sakau&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;23&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;270&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;store&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;63&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;225&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;talking_chief&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;16&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;277&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;talking_gov&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;134&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;162&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;talking_kolonia&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;48&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;245&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;talking_neighbors&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;70&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;207&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;talking_teachers&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;183&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;111&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;talking_villages&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;22&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;273&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;tv&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;206&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;3&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;8&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;82&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;us_relatives&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;5&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;107&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;4&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;7&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;167&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;writing&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;179&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;0&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;1&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;6&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;2&lt;/td&gt;
+&lt;td align=&#34;right&#34;&gt;111&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plot-raw-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Plot raw data&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/plotraw-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-2-run-the-ca&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 2: Run the CA&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(FactoMineR)
+library(factoextra)
+domains.CA &amp;lt;- CA(dt, graph=F)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-3-visualize-the-ca-symmetric&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 3: Visualize the CA (symmetric)&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_ca_biplot(domains.CA,repel=T)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/caviz-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;symmetric-vs-asymmetric-plots&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Symmetric vs asymmetric plots&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;In the symmetric plot both columns are rows are plotted on same space&lt;/li&gt;
+&lt;li&gt;The problem is that only the distance between the row points and other row points and the distance between the columns points and other column points are directly interpretable and NOT the distance between columns and rows&lt;/li&gt;
+&lt;li&gt;To intrepret the distance between columns and row, we have to create an asymmetric plot where either the columns are mapped onto row space or rows mapped onto column space&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;asymmetric-plot-row-space&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Asymmetric plot (row space)&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_ca_biplot(domains.CA,repel=T,map=&amp;quot;rowprincipal&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/cavizrow-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;asymmetric-plot-column-space&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Asymmetric plot (column space)&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_ca_biplot(domains.CA,repel=T,map=&amp;quot;colprincipal&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/cavizcol-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-4-how-many-axes-do-we-keep&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 4: How many axes do we keep?&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;The CA created many possible axes, but only some are helpful&lt;/li&gt;
+&lt;li&gt;Each axis has an eigenvalue that tell us how much information it explains (larger eigenvalue, more info)&lt;/li&gt;
+&lt;li&gt;If the data were completely random, we’d expect each axis to have an eigenvalue of &lt;code&gt;1/(nrow(dt)-1)&lt;/code&gt; or &lt;span class=&#34;math inline&#34;&gt;\(1(25-1) = 1/24 = 4.2\%\)&lt;/span&gt; for rows and &lt;code&gt;1/(ncol(dt)-1)&lt;/code&gt; or &lt;span class=&#34;math inline&#34;&gt;\(1/(8-1) = 1/7 = 14.3\%\)&lt;/span&gt; for columns&lt;/li&gt;
+&lt;li&gt;If eigenvalues are less than the largest of these two values, then should be kept, else can be ignored (though can keep it but will add little)&lt;/li&gt;
+&lt;li&gt;For us, we look for eigenvalues 14.3% or greater&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exploring-eigenvalues&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Exploring Eigenvalues&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_screeplot(domains.CA,addlabels=T) + 
+  geom_hline(yintercept=14.3,linetype=2,color=&amp;quot;red&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/eigenrow-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-5-interpreting-axes&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 5: Interpreting axes&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;The axes of the CA are not always immediately interpretable&lt;/li&gt;
+&lt;li&gt;To better understand them, we look at which columns and which rows contributed the most to the creation of that axis&lt;/li&gt;
+&lt;li&gt;We only need to explore axis 1, but will show axis 2 for sake of explanation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;columns-contributing-to-axis-1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Columns contributing to axis 1&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_contrib(domains.CA, choice=&amp;quot;col&amp;quot;,axes=1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/colcontrib-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rows-contributing-to-axis-1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Rows contributing to axis 1&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_contrib(domains.CA, choice=&amp;quot;row&amp;quot;,axes=1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/rowcontrib-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;meaning-of-axis-1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Meaning of axis 1&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;English and Pohnpeian contributed strongly to axis 1&lt;/li&gt;
+&lt;li&gt;English and Pohnpeian are also on opposite sides&lt;/li&gt;
+&lt;li&gt;Positive values of axis 1 correlate with more English and negative values with more Pohnpeian&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;columns-contributing-to-axis-2&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Columns contributing to axis 2&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_contrib(domains.CA, choice=&amp;quot;col&amp;quot;,axes=2)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/colcontrib2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rows-contributing-to-axis-2&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Rows contributing to axis 2&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_contrib(domains.CA, choice=&amp;quot;row&amp;quot;,axes=2)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/rowcontrib2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;meaning-of-axis-2&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Meaning of axis 2&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Mokilese, Mortlockese, and Chuukese contributed strongly to axis 2&lt;/li&gt;
+&lt;li&gt;They are all on thesame side of axis 2&lt;/li&gt;
+&lt;li&gt;Positive values of axis 2 correlate with more values of Mokilese, Mortlockese, and Chuukese&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-6-evaluating-quality-of-fit&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 6: Evaluating quality of fit&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;After determining the number of axes to retain and what they mean, we need to see how well each row and column item is represented by the retained number of dimensions&lt;/li&gt;
+&lt;li&gt;The squared cosine (cos2) is a measure of the quality of representation&lt;/li&gt;
+&lt;li&gt;cos2 values range from 0 to 1 and values close to 1 indicate a good representation and 0 a very bad representation&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;quality-of-fit-for-rows&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Quality of fit for rows&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_ca_row(domains.CA, col.row = &amp;quot;cos2&amp;quot;,
+             gradient.cols = c(&amp;quot;#00AFBB&amp;quot;, &amp;quot;#E7B800&amp;quot;, &amp;quot;#FC4E07&amp;quot;), 
+             repel = TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/rowquality-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;quality-of-fit-for-columns&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Quality of fit for columns&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_ca_col(domains.CA, col.col = &amp;quot;cos2&amp;quot;,
+             gradient.cols = c(&amp;quot;#00AFBB&amp;quot;, &amp;quot;#E7B800&amp;quot;, &amp;quot;#FC4E07&amp;quot;), 
+             repel = TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/colquality-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;quality-of-fit&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Quality of fit&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Rows making friends and radio have the lowest quality of fit for rows&lt;/li&gt;
+&lt;li&gt;Columns Kosraean and other have the lowest quality of fit for columns&lt;/li&gt;
+&lt;li&gt;That means that extra axes would better explain them&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-7-clustering-the-results&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 7: Clustering the results&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;This optional step allows you to cluster the rows together using hierachical clustering&lt;/li&gt;
+&lt;li&gt;By specifying -1 clusters, the algorith automatically chooses the number of clusters for you based off the data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains.CA.cluster &amp;lt;- HCPC(domains.CA,nb.clust=-1,graph=F)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visualizing-clusters&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Visualizing clusters&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_cluster(domains.CA.cluster,
+             repel = TRUE,            
+             show.clust.cent = TRUE, 
+             palette = &amp;quot;jco&amp;quot;,         
+             ggtheme = theme_minimal(),
+             main = &amp;quot;Factor map&amp;quot;
+             )&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visualizing-clusters-1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Visualizing clusters&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/cluster3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;another-visualization&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Another visualization&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_dend(domains.CA.cluster, 
+          cex = 0.7,                     
+          palette = &amp;quot;jco&amp;quot;,               
+          rect = TRUE, rect_fill = TRUE, 
+          rect_border = &amp;quot;jco&amp;quot;,          
+          labels_track_height = 0.8      
+          )&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;another-visualization-1&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Another visualization&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/cluster5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-8-interpretation-of-results&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 8: Interpretation of results&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Overall axis 1 indicates domains with more English selections (positive values) or more Pohnpeian selections (negative values)&lt;/li&gt;
+&lt;li&gt;5 of the 8 languages occur on the negative side of axis 1 so co-occur often with Pohnpeian domains&lt;/li&gt;
+&lt;li&gt;No other languages are close to English on axis 1&lt;/li&gt;
+&lt;li&gt;Cluster 1 includes domains that have high levels of Pohnpeian and other languages&lt;/li&gt;
+&lt;li&gt;Cluster 2 include domains with mixed English and Pohnpeian (as well as other languages)&lt;/li&gt;
+&lt;li&gt;Cluster 3 mostly English&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;benefit-of-ca&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Benefit of CA&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;For this data, allows us to see (1) what languages pattern in similar ways, (2) what domains pattern in similar ways, and (3) how languages and domains interact&lt;/li&gt;
+&lt;li&gt;Would be harder to see these patterns without CA&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;automating-ca&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Automating CA&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;The CA analysis can be automated somewhat (doesn’t always work)&lt;/li&gt;
+&lt;li&gt;Just input the CA object and the function can create a sample analysis&lt;/li&gt;
+&lt;li&gt;Outputs an html, Word doc, or pdf file&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(FactoInvestigate)
+Investigate(domains.CA,document=&amp;quot;html_document&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;resources&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Resources&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/113-ca-correspondence-analysis-in-r-essentials/&#34; class=&#34;uri&#34;&gt;http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/113-ca-correspondence-analysis-in-r-essentials/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://factominer.free.fr/factomethods/correspondence-analysis.html&#34; class=&#34;uri&#34;&gt;http://factominer.free.fr/factomethods/correspondence-analysis.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/117-hcpc-hierarchical-clustering-on-principal-components-essentials/&#34; class=&#34;uri&#34;&gt;http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/117-hcpc-hierarchical-clustering-on-principal-components-essentials/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;now-try-it-yourself&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Now try it yourself&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Trying doing a CA analysis with &lt;code&gt;data(housetask)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;It is already a contigency table so can still the first step&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Introduction to R Markdown</title>
       <link>/post/r_markdown_intro/</link>
       <pubDate>Tue, 18 Apr 2017 21:13:14 -0500</pubDate>
@@ -2675,7 +3436,7 @@ git config --global user.email &amp;quot;your.email@example.org&amp;quot;&lt;/co
 &lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;cd ~/Desktop/sample_git
 git init&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## sh: line 0: cd: /Users/brad_rentz/Desktop/sample_git: No such file or directory
-## Initialized empty Git repository in /Users/brad_rentz/Documents/UH/rentzb.github.io/content/post/.git/&lt;/code&gt;&lt;/pre&gt;
+## Reinitialized existing Git repository in /Users/brad_rentz/Documents/UH/rentzb.github.io/content/post/.git/&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;check-git-status&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Check Git Status&lt;/h2&gt;
@@ -2693,11 +3454,25 @@ git status&lt;/code&gt;&lt;/pre&gt;
 ## Untracked files:
 ##   (use &amp;quot;git add &amp;lt;file&amp;gt;...&amp;quot; to include in what will be committed)
 ## 
+##  .Rhistory
+##  12.jpg
 ##  _index.md
+##  ca.Rmd
+##  ca.html
+##  ca_files/
+##  domains.csv
+##  explore.png
 ##  git.Rmd
+##  git.html
+##  intro_bayesian_pdf.Rmd
+##  intro_bayesian_pdf.html
 ##  messy_data.csv
+##  r_markdown_intro.Rmd
+##  r_markdown_intro.html
+##  t_d_vot.csv
 ##  tidy_data_handout.Rmd
 ##  tidy_data_handout.html
+##  waterfall.png
 ## 
 ## nothing added to commit but untracked files present (use &amp;quot;git add&amp;quot; to track)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -2722,11 +3497,25 @@ git status&lt;/code&gt;&lt;/pre&gt;
 ## Untracked files:
 ##   (use &amp;quot;git add &amp;lt;file&amp;gt;...&amp;quot; to include in what will be committed)
 ## 
+##  .Rhistory
+##  12.jpg
 ##  _index.md
+##  ca.Rmd
+##  ca.html
+##  ca_files/
+##  domains.csv
+##  explore.png
 ##  git.Rmd
+##  git.html
+##  intro_bayesian_pdf.Rmd
+##  intro_bayesian_pdf.html
 ##  messy_data.csv
+##  r_markdown_intro.Rmd
+##  r_markdown_intro.html
+##  t_d_vot.csv
 ##  tidy_data_handout.Rmd
 ##  tidy_data_handout.html
+##  waterfall.png
 ## 
 ## nothing added to commit but untracked files present (use &amp;quot;git add&amp;quot; to track)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -2748,11 +3537,25 @@ git status&lt;/code&gt;&lt;/pre&gt;
 ## Initial commit
 ## 
 ## Untracked files:
+##  .Rhistory
+##  12.jpg
 ##  _index.md
+##  ca.Rmd
+##  ca.html
+##  ca_files/
+##  domains.csv
+##  explore.png
 ##  git.Rmd
+##  git.html
+##  intro_bayesian_pdf.Rmd
+##  intro_bayesian_pdf.html
 ##  messy_data.csv
+##  r_markdown_intro.Rmd
+##  r_markdown_intro.html
+##  t_d_vot.csv
 ##  tidy_data_handout.Rmd
 ##  tidy_data_handout.html
+##  waterfall.png
 ## 
 ## nothing added to commit but untracked files present
 ## On branch master
@@ -2762,11 +3565,25 @@ git status&lt;/code&gt;&lt;/pre&gt;
 ## Untracked files:
 ##   (use &amp;quot;git add &amp;lt;file&amp;gt;...&amp;quot; to include in what will be committed)
 ## 
+##  .Rhistory
+##  12.jpg
 ##  _index.md
+##  ca.Rmd
+##  ca.html
+##  ca_files/
+##  domains.csv
+##  explore.png
 ##  git.Rmd
+##  git.html
+##  intro_bayesian_pdf.Rmd
+##  intro_bayesian_pdf.html
 ##  messy_data.csv
+##  r_markdown_intro.Rmd
+##  r_markdown_intro.html
+##  t_d_vot.csv
 ##  tidy_data_handout.Rmd
 ##  tidy_data_handout.html
+##  waterfall.png
 ## 
 ## nothing added to commit but untracked files present (use &amp;quot;git add&amp;quot; to track)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
@@ -2853,17 +3670,43 @@ git checkout experimental
 ls&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## sh: line 0: cd: /Users/brad_rentz/Desktop/sample_git: No such file or directory
 ## error: pathspec &amp;#39;master&amp;#39; did not match any file(s) known to git.
+## 12.jpg
 ## _index.md
+## ca.Rmd
+## ca.html
+## ca_files
+## domains.csv
+## explore.png
 ## git.Rmd
+## git.html
+## intro_bayesian_pdf.Rmd
+## intro_bayesian_pdf.html
 ## messy_data.csv
+## r_markdown_intro.Rmd
+## r_markdown_intro.html
+## t_d_vot.csv
 ## tidy_data_handout.Rmd
 ## tidy_data_handout.html
+## waterfall.png
 ## error: pathspec &amp;#39;experimental&amp;#39; did not match any file(s) known to git.
+## 12.jpg
 ## _index.md
+## ca.Rmd
+## ca.html
+## ca_files
+## domains.csv
+## explore.png
 ## git.Rmd
+## git.html
+## intro_bayesian_pdf.Rmd
+## intro_bayesian_pdf.html
 ## messy_data.csv
+## r_markdown_intro.Rmd
+## r_markdown_intro.html
+## t_d_vot.csv
 ## tidy_data_handout.Rmd
-## tidy_data_handout.html&lt;/code&gt;&lt;/pre&gt;
+## tidy_data_handout.html
+## waterfall.png&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;merging-branches&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Merging branches&lt;/h2&gt;

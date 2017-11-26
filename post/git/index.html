@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme" content="hugo-academic">
-  <meta name="generator" content="Hugo 0.30.2" />
+  <meta name="generator" content="Hugo 0.31" />
   <meta name="author" content="Bradley T. Rentz">
   <meta name="description" content="PhD Candidate in Linguistics">
 
@@ -259,7 +259,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    8 min read
+    9 min read
   </span>
   
 
@@ -273,7 +273,7 @@
   <span class="article-categories">
     <i class="fa fa-folder"></i>
     
-    <a href="/categories/r">R</a
+    <a href="/categories/git">git</a
     >
     
   </span>
@@ -388,7 +388,7 @@ git config --global user.email &quot;your.email@example.org&quot;</code></pre>
 <pre class="sh"><code>cd ~/Desktop/sample_git
 git init</code></pre>
 <pre><code>## sh: line 0: cd: /Users/brad_rentz/Desktop/sample_git: No such file or directory
-## Initialized empty Git repository in /Users/brad_rentz/Documents/UH/rentzb.github.io/content/post/.git/</code></pre>
+## Reinitialized existing Git repository in /Users/brad_rentz/Documents/UH/rentzb.github.io/content/post/.git/</code></pre>
 </div>
 <div id="check-git-status" class="section level2">
 <h2>Check Git Status</h2>
@@ -406,11 +406,25 @@ git status</code></pre>
 ## Untracked files:
 ##   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
 ## 
+##  .Rhistory
+##  12.jpg
 ##  _index.md
+##  ca.Rmd
+##  ca.html
+##  ca_files/
+##  domains.csv
+##  explore.png
 ##  git.Rmd
+##  git.html
+##  intro_bayesian_pdf.Rmd
+##  intro_bayesian_pdf.html
 ##  messy_data.csv
+##  r_markdown_intro.Rmd
+##  r_markdown_intro.html
+##  t_d_vot.csv
 ##  tidy_data_handout.Rmd
 ##  tidy_data_handout.html
+##  waterfall.png
 ## 
 ## nothing added to commit but untracked files present (use &quot;git add&quot; to track)</code></pre>
 </div>
@@ -435,11 +449,25 @@ git status</code></pre>
 ## Untracked files:
 ##   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
 ## 
+##  .Rhistory
+##  12.jpg
 ##  _index.md
+##  ca.Rmd
+##  ca.html
+##  ca_files/
+##  domains.csv
+##  explore.png
 ##  git.Rmd
+##  git.html
+##  intro_bayesian_pdf.Rmd
+##  intro_bayesian_pdf.html
 ##  messy_data.csv
+##  r_markdown_intro.Rmd
+##  r_markdown_intro.html
+##  t_d_vot.csv
 ##  tidy_data_handout.Rmd
 ##  tidy_data_handout.html
+##  waterfall.png
 ## 
 ## nothing added to commit but untracked files present (use &quot;git add&quot; to track)</code></pre>
 </div>
@@ -461,11 +489,25 @@ git status</code></pre>
 ## Initial commit
 ## 
 ## Untracked files:
+##  .Rhistory
+##  12.jpg
 ##  _index.md
+##  ca.Rmd
+##  ca.html
+##  ca_files/
+##  domains.csv
+##  explore.png
 ##  git.Rmd
+##  git.html
+##  intro_bayesian_pdf.Rmd
+##  intro_bayesian_pdf.html
 ##  messy_data.csv
+##  r_markdown_intro.Rmd
+##  r_markdown_intro.html
+##  t_d_vot.csv
 ##  tidy_data_handout.Rmd
 ##  tidy_data_handout.html
+##  waterfall.png
 ## 
 ## nothing added to commit but untracked files present
 ## On branch master
@@ -475,11 +517,25 @@ git status</code></pre>
 ## Untracked files:
 ##   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
 ## 
+##  .Rhistory
+##  12.jpg
 ##  _index.md
+##  ca.Rmd
+##  ca.html
+##  ca_files/
+##  domains.csv
+##  explore.png
 ##  git.Rmd
+##  git.html
+##  intro_bayesian_pdf.Rmd
+##  intro_bayesian_pdf.html
 ##  messy_data.csv
+##  r_markdown_intro.Rmd
+##  r_markdown_intro.html
+##  t_d_vot.csv
 ##  tidy_data_handout.Rmd
 ##  tidy_data_handout.html
+##  waterfall.png
 ## 
 ## nothing added to commit but untracked files present (use &quot;git add&quot; to track)</code></pre>
 </div>
@@ -566,17 +622,43 @@ git checkout experimental
 ls</code></pre>
 <pre><code>## sh: line 0: cd: /Users/brad_rentz/Desktop/sample_git: No such file or directory
 ## error: pathspec &#39;master&#39; did not match any file(s) known to git.
+## 12.jpg
 ## _index.md
+## ca.Rmd
+## ca.html
+## ca_files
+## domains.csv
+## explore.png
 ## git.Rmd
+## git.html
+## intro_bayesian_pdf.Rmd
+## intro_bayesian_pdf.html
 ## messy_data.csv
+## r_markdown_intro.Rmd
+## r_markdown_intro.html
+## t_d_vot.csv
 ## tidy_data_handout.Rmd
 ## tidy_data_handout.html
+## waterfall.png
 ## error: pathspec &#39;experimental&#39; did not match any file(s) known to git.
+## 12.jpg
 ## _index.md
+## ca.Rmd
+## ca.html
+## ca_files
+## domains.csv
+## explore.png
 ## git.Rmd
+## git.html
+## intro_bayesian_pdf.Rmd
+## intro_bayesian_pdf.html
 ## messy_data.csv
+## r_markdown_intro.Rmd
+## r_markdown_intro.html
+## t_d_vot.csv
 ## tidy_data_handout.Rmd
-## tidy_data_handout.html</code></pre>
+## tidy_data_handout.html
+## waterfall.png</code></pre>
 </div>
 <div id="merging-branches" class="section level2">
 <h2>Merging branches</h2>
@@ -697,6 +779,8 @@ git push # saves to remote repo</code></pre>
 <div class="article-tags">
   
   <a class="btn btn-primary btn-outline" href="/tags/data-science">data-science</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/git">git</a>
   
 </div>
 

@@ -11,6 +11,24 @@
     <atom:link href="/talk/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Language attitudes on Pohnpei: Results from a survey analysis</title>
+      <link>/talk/austronesian-circle-17/</link>
+      <pubDate>Fri, 01 Dec 2017 15:00:00 -1000</pubDate>
+      
+      <guid>/talk/austronesian-circle-17/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Analyzing qualitative data with correspondence analysis in R</title>
+      <link>/talk/correspondence-analysis/</link>
+      <pubDate>Mon, 27 Nov 2017 16:00:00 -1000</pubDate>
+      
+      <guid>/talk/correspondence-analysis/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Pohnpei sohte ehu (Pohnpei is not one): A heteroglossic survey analysis of language attitudes on Pohnpei, Federated States of Micronesia</title>
       <link>/talk/2017-11-18-pohnpei-sohte-ehu-pohnpei-is-not-one-a-heteroglossic-survey-analysis-of-language-attitudes-on-pohnpei-federated-states-of-micronesia/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 -1000</pubDate>

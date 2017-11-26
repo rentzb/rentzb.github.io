@@ -5,6 +5,33 @@
     
     <url>
     
+      <loc>/talk/austronesian-circle-17/</loc>
+      <lastmod>2017-12-01T15:00:00-10:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/post/ca/</loc>
+      <lastmod>2017-11-27T21:13:14-10:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/talk/correspondence-analysis/</loc>
+      <lastmod>2017-11-27T16:00:00-10:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/talk/2017-11-18-pohnpei-sohte-ehu-pohnpei-is-not-one-a-heteroglossic-survey-analysis-of-language-attitudes-on-pohnpei-federated-states-of-micronesia/</loc>
       <lastmod>2017-11-18T00:00:00-10:00</lastmod>
     </url>
@@ -180,7 +207,27 @@
     <url>
     
       <loc>/tags/data-science/</loc>
-      <lastmod>2017-11-18T00:00:00+00:00</lastmod>
+      <lastmod>2017-11-27T21:13:14-10:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/categories/git/</loc>
+      <lastmod>2017-03-21T21:13:14-05:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/git/</loc>
+      <lastmod>2017-03-21T21:13:14-05:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -260,7 +307,7 @@
     <url>
     
       <loc>/categories/r/</loc>
-      <lastmod>2017-04-18T21:13:14-05:00</lastmod>
+      <lastmod>2017-11-27T21:13:14-10:00</lastmod>
       <priority>0</priority>
     </url>
     
