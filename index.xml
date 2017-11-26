@@ -774,7 +774,7 @@ Investigate(domains.CA,document=&amp;quot;html_document&amp;quot;)&lt;/code&gt;&
 &lt;h2&gt;Now try it yourself&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Trying doing a CA analysis with &lt;code&gt;data(housetask)&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;It is already a contigency table so can still the first step&lt;/li&gt;
+&lt;li&gt;It is already a contigency table so can skip the first step&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 </description>
