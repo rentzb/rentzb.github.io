@@ -71,8 +71,8 @@
 &lt;div id=&#34;example-data&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Example Data&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;For the sample CA were will be using data from a questionnaire used on Pohnpei&lt;/li&gt;
-&lt;li&gt;There are 25 questions where the respondents were asked to select 1 language that is the most important for that specific domain&lt;/li&gt;
+&lt;li&gt;For the sample CA, we will be using data from a language attitudes questionnaire used on Pohnpei (PNI) in the Federated States of Micronesia&lt;/li&gt;
+&lt;li&gt;The selected data come from 25 questions where the respondents were asked to select the 1 language (out of 8 possible answers) that is the most important for that specific domain&lt;/li&gt;
 &lt;li&gt;The answers for all 25 questions were the same 8 language choices&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains &amp;lt;- read.csv(&amp;quot;domains.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
