@@ -6,15 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme" content="hugo-academic">
-  <meta name="generator" content="Hugo 0.31.1" />
+  <meta name="generator" content="Hugo 0.36" />
   <meta name="author" content="Bradley T. Rentz">
   <meta name="description" content="PhD Candidate in Linguistics">
 
   
-  <link rel="stylesheet" href="/css/github-gist.css" rel="stylesheet" id="theme-stylesheet">
-<script src="/js/highlight.pack.js"></script>
+  <link rel="stylesheet" href="https://rentzb.github.io/css/github-gist.css" rel="stylesheet" id="theme-stylesheet">
+<script src="https://rentzb.github.io/js/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-  <link rel="alternate" hreflang="en-us" href="/post/tidy_data_handout/">
+  <link rel="alternate" hreflang="en-us" href="https://rentzb.github.io/post/tidy_data_handout/">
 
   
   
@@ -67,15 +67,15 @@
   
 
   
-  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="Bradley T. Rentz">
-  <link rel="feed" href="/index.xml" type="application/rss+xml" title="Bradley T. Rentz">
+  <link rel="alternate" href="https://rentzb.github.io/index.xml" type="application/rss+xml" title="Bradley T. Rentz">
+  <link rel="feed" href="https://rentzb.github.io/index.xml" type="application/rss+xml" title="Bradley T. Rentz">
   
 
   <link rel="manifest" href="/site.webmanifest">
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="/post/tidy_data_handout/">
+  <link rel="canonical" href="https://rentzb.github.io/post/tidy_data_handout/">
 
   <meta property="twitter:card" content="summary_large_image">
   
@@ -83,7 +83,7 @@
   <meta property="twitter:creator" content="@BradleyRentz">
   
   <meta property="og:site_name" content="Bradley T. Rentz">
-  <meta property="og:url" content="/post/tidy_data_handout/">
+  <meta property="og:url" content="https://rentzb.github.io/post/tidy_data_handout/">
   <meta property="og:title" content="Tidy Data | Bradley T. Rentz">
   <meta property="og:description" content="">
   <meta property="og:locale" content="en-us">
@@ -286,35 +286,35 @@
   <ul class="share">
     <li>
       <a class="twitter"
-         href="https://twitter.com/intent/tweet?text=Tidy%20Data&amp;url=%2fpost%2ftidy_data_handout%2f"
+         href="https://twitter.com/intent/tweet?text=Tidy%20Data&amp;url=https%3a%2f%2frentzb.github.io%2fpost%2ftidy_data_handout%2f"
          target="_blank" rel="noopener">
         <i class="fa fa-twitter"></i>
       </a>
     </li>
     <li>
       <a class="facebook"
-         href="https://www.facebook.com/sharer.php?u=%2fpost%2ftidy_data_handout%2f"
+         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2frentzb.github.io%2fpost%2ftidy_data_handout%2f"
          target="_blank" rel="noopener">
         <i class="fa fa-facebook"></i>
       </a>
     </li>
     <li>
       <a class="linkedin"
-         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2ftidy_data_handout%2f&amp;title=Tidy%20Data"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2frentzb.github.io%2fpost%2ftidy_data_handout%2f&amp;title=Tidy%20Data"
          target="_blank" rel="noopener">
         <i class="fa fa-linkedin"></i>
       </a>
     </li>
     <li>
       <a class="weibo"
-         href="http://service.weibo.com/share/share.php?url=%2fpost%2ftidy_data_handout%2f&amp;title=Tidy%20Data"
+         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2frentzb.github.io%2fpost%2ftidy_data_handout%2f&amp;title=Tidy%20Data"
          target="_blank" rel="noopener">
         <i class="fa fa-weibo"></i>
       </a>
     </li>
     <li>
       <a class="email"
-         href="mailto:?subject=Tidy%20Data&amp;body=%2fpost%2ftidy_data_handout%2f">
+         href="mailto:?subject=Tidy%20Data&amp;body=https%3a%2f%2frentzb.github.io%2fpost%2ftidy_data_handout%2f">
         <i class="fa fa-envelope"></i>
       </a>
     </li>
@@ -402,17 +402,14 @@
 <div id="r-packages-for-tidy-data" class="section level2">
 <h2>R Packages for tidy data</h2>
 <pre class="r"><code>library(&quot;tidyverse&quot;)
-## Loading tidyverse: ggplot2
-## Loading tidyverse: tibble
-## Loading tidyverse: tidyr
-## Loading tidyverse: readr
-## Loading tidyverse: purrr
-## Loading tidyverse: dplyr
-## Warning: package &#39;tidyr&#39; was built under R version 3.4.2
-## Warning: package &#39;purrr&#39; was built under R version 3.4.2
-## Conflicts with tidy packages ----------------------------------------------
-## filter(): dplyr, stats
-## lag():    dplyr, stats</code></pre>
+## ── Attaching packages ─────────────────────────────────────────────────── tidyverse 1.2.1 ──
+## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
+## ✔ tibble  1.4.1     ✔ dplyr   0.7.4
+## ✔ tidyr   0.7.2     ✔ stringr 1.2.0
+## ✔ readr   1.1.1     ✔ forcats 0.2.0
+## ── Conflicts ────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 </div>
 </div>
 <div id="workflow-for-data-wrangling" class="section level1">
@@ -970,7 +967,7 @@ data.global.means
 ## # A tibble: 1 x 1
 ##   global.means
 ##          &lt;dbl&gt;
-## 1     1050.686</code></pre>
+## 1         1051</code></pre>
 </div>
 <div id="grouped-central-tendencies" class="section level2">
 <h2>Grouped central tendencies</h2>
@@ -980,15 +977,15 @@ data.global.means
             medians = median(value))
 head(data.grouped.ct)
 ## # A tibble: 6 x 6
-## # Groups:   participant, vowel [4]
-##   participant  vowel measurement    means      sds medians
-##        &lt;fctr&gt; &lt;fctr&gt;      &lt;fctr&gt;    &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-## 1          18      a          f1  738.500 29.60695   733.0
-## 2          18      a          f2 1716.375 22.99029  1707.0
-## 3          18      u          f2  572.625 17.74371   577.5
-## 4          21      a          f1  751.625 18.53134   747.0
-## 5          21      a          f2 1677.125 23.49734  1674.0
-## 6          21      u          f2  744.000 16.71612   745.0</code></pre>
+## # Groups: participant, vowel [4]
+##   participant vowel  measurement means   sds medians
+##   &lt;fctr&gt;      &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+## 1 18          a      f1            738  29.6     733
+## 2 18          a      f2           1716  23.0    1707
+## 3 18          u      f2            573  17.7     578
+## 4 21          a      f1            752  18.5     747
+## 5 21          a      f2           1677  23.5    1674
+## 6 21          u      f2            744  16.7     745</code></pre>
 </div>
 </div>
 

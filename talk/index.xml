@@ -2,56 +2,58 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Recent &amp; Upcoming Talks on Bradley T. Rentz</title>
-    <link>/talk/</link>
+    <link>https://rentzb.github.io/talk/</link>
     <description>Recent content in Recent &amp; Upcoming Talks on Bradley T. Rentz</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2017 Bradley T. Rentz</copyright>
     <lastBuildDate>Sun, 01 Jan 2017 00:00:00 +0000</lastBuildDate>
-    <atom:link href="/talk/" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="https://rentzb.github.io/talk/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>Language attitudes on Pohnpei: Results from a survey analysis</title>
-      <link>/talk/austronesian-circle-17/</link>
+      <link>https://rentzb.github.io/talk/austronesian-circle-17/</link>
       <pubDate>Fri, 01 Dec 2017 15:00:00 -1000</pubDate>
       
-      <guid>/talk/austronesian-circle-17/</guid>
+      <guid>https://rentzb.github.io/talk/austronesian-circle-17/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Analyzing qualitative data with correspondence analysis in R</title>
-      <link>/talk/correspondence-analysis/</link>
+      <link>https://rentzb.github.io/talk/correspondence-analysis/</link>
       <pubDate>Mon, 27 Nov 2017 16:00:00 -1000</pubDate>
       
-      <guid>/talk/correspondence-analysis/</guid>
+      <guid>https://rentzb.github.io/talk/correspondence-analysis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Pohnpei sohte ehu (Pohnpei is not one): A heteroglossic survey analysis of language attitudes on Pohnpei, Federated States of Micronesia</title>
-      <link>/talk/2017-11-18-pohnpei-sohte-ehu-pohnpei-is-not-one-a-heteroglossic-survey-analysis-of-language-attitudes-on-pohnpei-federated-states-of-micronesia/</link>
+      <link>https://rentzb.github.io/talk/2017-11-18-pohnpei-sohte-ehu-pohnpei-is-not-one-a-heteroglossic-survey-analysis-of-language-attitudes-on-pohnpei-federated-states-of-micronesia/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 -1000</pubDate>
       
-      <guid>/talk/2017-11-18-pohnpei-sohte-ehu-pohnpei-is-not-one-a-heteroglossic-survey-analysis-of-language-attitudes-on-pohnpei-federated-states-of-micronesia/</guid>
+      <guid>https://rentzb.github.io/talk/2017-11-18-pohnpei-sohte-ehu-pohnpei-is-not-one-a-heteroglossic-survey-analysis-of-language-attitudes-on-pohnpei-federated-states-of-micronesia/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Pohnpei sohte ehu: Quantitative methods for finding emergent heteroglossic patterns in language attitudes</title>
-      <link>/talk/tuesday-seminar-2017fall/</link>
+      <link>https://rentzb.github.io/talk/tuesday-seminar-2017fall/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 -1000</pubDate>
       
-      <guid>/talk/tuesday-seminar-2017fall/</guid>
+      <guid>https://rentzb.github.io/talk/tuesday-seminar-2017fall/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Bayesian Generalized Linear Mixed Effects Models: Accessible Bayesian inference with the rstanarm package</title>
-      <link>/talk/pape-2017/</link>
+      <link>https://rentzb.github.io/talk/pape-2017/</link>
       <pubDate>Sun, 11 Jun 2017 00:00:00 -1000</pubDate>
       
-      <guid>/talk/pape-2017/</guid>
+      <guid>https://rentzb.github.io/talk/pape-2017/</guid>
       <description></description>
     </item>
     

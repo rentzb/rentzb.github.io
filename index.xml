@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Bradley T. Rentz on Bradley T. Rentz</title>
-    <link>/</link>
+    <link>https://rentzb.github.io/</link>
     <description>Recent content in Bradley T. Rentz on Bradley T. Rentz</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
@@ -12,19 +12,19 @@
     
     <item>
       <title>Language attitudes on Pohnpei: Results from a survey analysis</title>
-      <link>/talk/austronesian-circle-17/</link>
+      <link>https://rentzb.github.io/talk/austronesian-circle-17/</link>
       <pubDate>Fri, 01 Dec 2017 15:00:00 -1000</pubDate>
       
-      <guid>/talk/austronesian-circle-17/</guid>
+      <guid>https://rentzb.github.io/talk/austronesian-circle-17/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Correspondence Analysis</title>
-      <link>/post/ca/</link>
+      <link>https://rentzb.github.io/post/ca/</link>
       <pubDate>Mon, 27 Nov 2017 21:13:14 -1000</pubDate>
       
-      <guid>/post/ca/</guid>
+      <guid>https://rentzb.github.io/post/ca/</guid>
       <description>&lt;div id=&#34;what-to-do-with-categorical-data&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;What to do with categorical data?&lt;/h2&gt;
 &lt;ul&gt;
@@ -577,7 +577,7 @@ dt &amp;lt;- with(domains.gathered,table(domain,language)) &lt;/code&gt;&lt;/pre
 &lt;/div&gt;
 &lt;div id=&#34;plot-raw-data&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Plot raw data&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/plotraw-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/ca_files/figure-html/plotraw-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;step-2-run-the-ca&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Step 2: Run the CA&lt;/h2&gt;
@@ -588,7 +588,7 @@ domains.CA &amp;lt;- CA(dt, graph=F)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;step-3-visualize-the-ca-symmetric&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Step 3: Visualize the CA (symmetric)&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_ca_biplot(domains.CA,repel=T)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/caviz-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/ca_files/figure-html/caviz-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;symmetric-vs-asymmetric-plots&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Symmetric vs asymmetric plots&lt;/h2&gt;
@@ -601,12 +601,12 @@ domains.CA &amp;lt;- CA(dt, graph=F)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;asymmetric-plot-row-space&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Asymmetric plot (row space)&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_ca_biplot(domains.CA,repel=T,map=&amp;quot;rowprincipal&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/cavizrow-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/ca_files/figure-html/cavizrow-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;asymmetric-plot-column-space&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Asymmetric plot (column space)&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_ca_biplot(domains.CA,repel=T,map=&amp;quot;colprincipal&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/cavizcol-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/ca_files/figure-html/cavizcol-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;step-4-how-many-axes-do-we-keep&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Step 4: How many axes do we keep?&lt;/h2&gt;
@@ -622,7 +622,7 @@ domains.CA &amp;lt;- CA(dt, graph=F)&lt;/code&gt;&lt;/pre&gt;
 &lt;h2&gt;Exploring Eigenvalues&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_screeplot(domains.CA,addlabels=T) + 
   geom_hline(yintercept=14.3,linetype=2,color=&amp;quot;red&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/eigenrow-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/ca_files/figure-html/eigenrow-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;step-5-interpreting-axes&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Step 5: Interpreting axes&lt;/h2&gt;
@@ -635,12 +635,12 @@ domains.CA &amp;lt;- CA(dt, graph=F)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;columns-contributing-to-axis-1&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Columns contributing to axis 1&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_contrib(domains.CA, choice=&amp;quot;col&amp;quot;,axes=1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/colcontrib-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/ca_files/figure-html/colcontrib-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;rows-contributing-to-axis-1&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Rows contributing to axis 1&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_contrib(domains.CA, choice=&amp;quot;row&amp;quot;,axes=1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/rowcontrib-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/ca_files/figure-html/rowcontrib-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;meaning-of-axis-1&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Meaning of axis 1&lt;/h2&gt;
@@ -653,12 +653,12 @@ domains.CA &amp;lt;- CA(dt, graph=F)&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;columns-contributing-to-axis-2&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Columns contributing to axis 2&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_contrib(domains.CA, choice=&amp;quot;col&amp;quot;,axes=2)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/colcontrib2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/ca_files/figure-html/colcontrib2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;rows-contributing-to-axis-2&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Rows contributing to axis 2&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_contrib(domains.CA, choice=&amp;quot;row&amp;quot;,axes=2)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/rowcontrib2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/ca_files/figure-html/rowcontrib2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;meaning-of-axis-2&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Meaning of axis 2&lt;/h2&gt;
@@ -681,14 +681,14 @@ domains.CA &amp;lt;- CA(dt, graph=F)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_ca_row(domains.CA, col.row = &amp;quot;cos2&amp;quot;,
              gradient.cols = c(&amp;quot;#00AFBB&amp;quot;, &amp;quot;#E7B800&amp;quot;, &amp;quot;#FC4E07&amp;quot;), 
              repel = TRUE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/rowquality-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/ca_files/figure-html/rowquality-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;quality-of-fit-for-columns&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Quality of fit for columns&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;fviz_ca_col(domains.CA, col.col = &amp;quot;cos2&amp;quot;,
              gradient.cols = c(&amp;quot;#00AFBB&amp;quot;, &amp;quot;#E7B800&amp;quot;, &amp;quot;#FC4E07&amp;quot;), 
              repel = TRUE)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/colquality-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/ca_files/figure-html/colquality-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;quality-of-fit&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Quality of fit&lt;/h2&gt;
@@ -718,7 +718,7 @@ domains.CA &amp;lt;- CA(dt, graph=F)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;visualizing-clusters-1&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Visualizing clusters&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/cluster3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/ca_files/figure-html/cluster3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;another-visualization&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Another visualization&lt;/h2&gt;
@@ -732,7 +732,7 @@ domains.CA &amp;lt;- CA(dt, graph=F)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;another-visualization-1&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Another visualization&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;/post/ca_files/figure-html/cluster5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/ca_files/figure-html/cluster5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;step-8-interpretation-of-results&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Step 8: Interpretation of results&lt;/h2&gt;
@@ -782,85 +782,85 @@ Investigate(domains.CA,document=&amp;quot;html_document&amp;quot;)&lt;/code&gt;&
     
     <item>
       <title>Analyzing qualitative data with correspondence analysis in R</title>
-      <link>/talk/correspondence-analysis/</link>
+      <link>https://rentzb.github.io/talk/correspondence-analysis/</link>
       <pubDate>Mon, 27 Nov 2017 16:00:00 -1000</pubDate>
       
-      <guid>/talk/correspondence-analysis/</guid>
+      <guid>https://rentzb.github.io/talk/correspondence-analysis/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Pohnpei sohte ehu (Pohnpei is not one): A heteroglossic survey analysis of language attitudes on Pohnpei, Federated States of Micronesia</title>
-      <link>/talk/2017-11-18-pohnpei-sohte-ehu-pohnpei-is-not-one-a-heteroglossic-survey-analysis-of-language-attitudes-on-pohnpei-federated-states-of-micronesia/</link>
+      <link>https://rentzb.github.io/talk/2017-11-18-pohnpei-sohte-ehu-pohnpei-is-not-one-a-heteroglossic-survey-analysis-of-language-attitudes-on-pohnpei-federated-states-of-micronesia/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 -1000</pubDate>
       
-      <guid>/talk/2017-11-18-pohnpei-sohte-ehu-pohnpei-is-not-one-a-heteroglossic-survey-analysis-of-language-attitudes-on-pohnpei-federated-states-of-micronesia/</guid>
+      <guid>https://rentzb.github.io/talk/2017-11-18-pohnpei-sohte-ehu-pohnpei-is-not-one-a-heteroglossic-survey-analysis-of-language-attitudes-on-pohnpei-federated-states-of-micronesia/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Pohnpei sohte ehu: Quantitative methods for finding emergent heteroglossic patterns in language attitudes</title>
-      <link>/talk/tuesday-seminar-2017fall/</link>
+      <link>https://rentzb.github.io/talk/tuesday-seminar-2017fall/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 -1000</pubDate>
       
-      <guid>/talk/tuesday-seminar-2017fall/</guid>
+      <guid>https://rentzb.github.io/talk/tuesday-seminar-2017fall/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Data Science</title>
-      <link>/project/data-science/</link>
+      <link>https://rentzb.github.io/project/data-science/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>/project/data-science/</guid>
+      <guid>https://rentzb.github.io/project/data-science/</guid>
       <description>&lt;p&gt;One of my research interests is using quantitative methods from data science to help improve linguistic theory. I have worked toward this goal but using new combinations of quantitative methods in my research projects, as well as running a data science group for linguists at the University of Hawaiʻi at Mānoa.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Language Attitudes</title>
-      <link>/project/language-attitudes/</link>
+      <link>https://rentzb.github.io/project/language-attitudes/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>/project/language-attitudes/</guid>
+      <guid>https://rentzb.github.io/project/language-attitudes/</guid>
       <description>&lt;p&gt;For my dissertation, I study how people on the island of Pohnpei in the Federated States of Micronesia talk about language and the opinions and ideologies that they express.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Pohnpei</title>
-      <link>/project/pohnpei/</link>
+      <link>https://rentzb.github.io/project/pohnpei/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>/project/pohnpei/</guid>
+      <guid>https://rentzb.github.io/project/pohnpei/</guid>
       <description>&lt;p&gt;Most of my linguistic research has taken place on Pohnpei in the Federated States of Micronesia. My primary research is on language attitudes. but I have worked on projects about other linguistic areas, such as phonetics, topological relations, and language documentation.&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>Topological relations in Pohnpeian</title>
-      <link>/publication/topological-relations/</link>
+      <link>https://rentzb.github.io/publication/topological-relations/</link>
       <pubDate>Tue, 01 Aug 2017 00:00:00 +0000</pubDate>
       
-      <guid>/publication/topological-relations/</guid>
+      <guid>https://rentzb.github.io/publication/topological-relations/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Bayesian Generalized Linear Mixed Effects Models: Accessible Bayesian inference with the rstanarm package</title>
-      <link>/talk/pape-2017/</link>
+      <link>https://rentzb.github.io/talk/pape-2017/</link>
       <pubDate>Sun, 11 Jun 2017 00:00:00 -1000</pubDate>
       
-      <guid>/talk/pape-2017/</guid>
+      <guid>https://rentzb.github.io/talk/pape-2017/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Introduction to R Markdown</title>
-      <link>/post/r_markdown_intro/</link>
+      <link>https://rentzb.github.io/post/r_markdown_intro/</link>
       <pubDate>Tue, 18 Apr 2017 21:13:14 -0500</pubDate>
       
-      <guid>/post/r_markdown_intro/</guid>
+      <guid>https://rentzb.github.io/post/r_markdown_intro/</guid>
       <description>&lt;p&gt;This document comes from a UH-Mānoa data science group for linguists presentation&lt;/p&gt;
 &lt;div id=&#34;this-is-a-top-level-section&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;This is a top level section&lt;/h1&gt;
@@ -899,7 +899,7 @@ Investigate(domains.CA,document=&amp;quot;html_document&amp;quot;)&lt;/code&gt;&
 &lt;/div&gt;
 &lt;div id=&#34;slide-with-plot&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Slide with Plot&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;/post/r_markdown_intro_files/figure-html/pressure-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/r_markdown_intro_files/figure-html/pressure-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;another-top-level-section&#34; class=&#34;section level1&#34;&gt;
@@ -914,7 +914,7 @@ Investigate(domains.CA,document=&amp;quot;html_document&amp;quot;)&lt;/code&gt;&
 &lt;div id=&#34;including-non-r-generated-images&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Including Non-R generated images&lt;/h2&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/img/12.jpg&#34; /&gt;
+&lt;img src=&#34;https://rentzb.github.io/img/12.jpg&#34; /&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1518,10 +1518,10 @@ R&lt;sup&gt;2&lt;/sup&gt; / adj. R&lt;sup&gt;2&lt;/sup&gt;
     
     <item>
       <title>Intro to Bayesian Linear Mixed Effect Models with rstanarm</title>
-      <link>/post/intro_bayesian_pdf/</link>
+      <link>https://rentzb.github.io/post/intro_bayesian_pdf/</link>
       <pubDate>Tue, 04 Apr 2017 21:13:14 -0500</pubDate>
       
-      <guid>/post/intro_bayesian_pdf/</guid>
+      <guid>https://rentzb.github.io/post/intro_bayesian_pdf/</guid>
       <description>&lt;div id=&#34;overview-of-presentation&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Overview of Presentation&lt;/h2&gt;
 &lt;ul&gt;
@@ -1573,7 +1573,7 @@ R&lt;sup&gt;2&lt;/sup&gt; / adj. R&lt;sup&gt;2&lt;/sup&gt;
 &lt;div id=&#34;what-they-look-like&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;What they look like&lt;/h2&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/img/12.jpg&#34; /&gt;
+&lt;img src=&#34;https://rentzb.github.io/img/12.jpg&#34; /&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1617,7 +1617,7 @@ R&lt;sup&gt;2&lt;/sup&gt; / adj. R&lt;sup&gt;2&lt;/sup&gt;
 &lt;div id=&#34;solution-visualized&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Solution visualized&lt;/h2&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/img/waterfall.png&#34; /&gt;
+&lt;img src=&#34;https://rentzb.github.io/img/waterfall.png&#34; /&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
@@ -3345,15 +3345,15 @@ R&lt;sup&gt;2&lt;/sup&gt; / Ω&lt;sub&gt;0&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt;
 &lt;/div&gt;
 &lt;div id=&#34;plotting-posterior-distribution-model1&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Plotting Posterior Distribution: Model1&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;/post/intro_bayesian_pdf_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/intro_bayesian_pdf_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;plotting-posterior-distribution-model2&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Plotting Posterior Distribution: Model2&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;/post/intro_bayesian_pdf_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/intro_bayesian_pdf_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;plotting-posterior-distribution-model3&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Plotting Posterior Distribution: Model3&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;/post/intro_bayesian_pdf_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/intro_bayesian_pdf_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;diagnostics-and-comparing-models&#34; class=&#34;section level1&#34;&gt;
@@ -3374,7 +3374,7 @@ R&lt;sup&gt;2&lt;/sup&gt; / Ω&lt;sub&gt;0&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt;
 &lt;/div&gt;
 &lt;div id=&#34;how-well-did-the-model-sample&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;How well did the model sample&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&#34;/post/intro_bayesian_pdf_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/intro_bayesian_pdf_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;model-comparisons&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Model Comparisons&lt;/h2&gt;
@@ -3456,10 +3456,10 @@ loo1a &amp;lt;- loo(model1a)&lt;/code&gt;&lt;/pre&gt;
     
     <item>
       <title>Intro to Git</title>
-      <link>/post/git/</link>
+      <link>https://rentzb.github.io/post/git/</link>
       <pubDate>Tue, 21 Mar 2017 21:13:14 -0500</pubDate>
       
-      <guid>/post/git/</guid>
+      <guid>https://rentzb.github.io/post/git/</guid>
       <description>&lt;div id=&#34;what-is-git&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;What is Git?&lt;/h1&gt;
 &lt;div id=&#34;git-is&#34; class=&#34;section level2&#34;&gt;
@@ -3533,7 +3533,7 @@ git status&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## sh: line 0: cd: /Users/brad_rentz/Desktop/sample_git: No such file or directory
 ## On branch master
 ## 
-## Initial commit
+## No commits yet
 ## 
 ## Untracked files:
 ##   (use &amp;quot;git add &amp;lt;file&amp;gt;...&amp;quot; to include in what will be committed)
@@ -3544,15 +3544,22 @@ git status&lt;/code&gt;&lt;/pre&gt;
 ##  ca.Rmd
 ##  ca.html
 ##  ca_files/
+##  clustering.Rmd
+##  clustering.html
+##  clustering_files/
+##  demos.csv
 ##  domains.csv
 ##  explore.png
 ##  git.Rmd
 ##  git.html
 ##  intro_bayesian_pdf.Rmd
 ##  intro_bayesian_pdf.html
+##  intro_bayesian_pdf_cache/
+##  intro_bayesian_pdf_files/
 ##  messy_data.csv
 ##  r_markdown_intro.Rmd
 ##  r_markdown_intro.html
+##  r_markdown_intro_files/
 ##  t_d_vot.csv
 ##  tidy_data_handout.Rmd
 ##  tidy_data_handout.html
@@ -3576,7 +3583,7 @@ git status&lt;/code&gt;&lt;/pre&gt;
 ## fatal: pathspec &amp;#39;sample.R&amp;#39; did not match any files
 ## On branch master
 ## 
-## Initial commit
+## No commits yet
 ## 
 ## Untracked files:
 ##   (use &amp;quot;git add &amp;lt;file&amp;gt;...&amp;quot; to include in what will be committed)
@@ -3587,15 +3594,22 @@ git status&lt;/code&gt;&lt;/pre&gt;
 ##  ca.Rmd
 ##  ca.html
 ##  ca_files/
+##  clustering.Rmd
+##  clustering.html
+##  clustering_files/
+##  demos.csv
 ##  domains.csv
 ##  explore.png
 ##  git.Rmd
 ##  git.html
 ##  intro_bayesian_pdf.Rmd
 ##  intro_bayesian_pdf.html
+##  intro_bayesian_pdf_cache/
+##  intro_bayesian_pdf_files/
 ##  messy_data.csv
 ##  r_markdown_intro.Rmd
 ##  r_markdown_intro.html
+##  r_markdown_intro_files/
 ##  t_d_vot.csv
 ##  tidy_data_handout.Rmd
 ##  tidy_data_handout.html
@@ -3627,15 +3641,22 @@ git status&lt;/code&gt;&lt;/pre&gt;
 ##  ca.Rmd
 ##  ca.html
 ##  ca_files/
+##  clustering.Rmd
+##  clustering.html
+##  clustering_files/
+##  demos.csv
 ##  domains.csv
 ##  explore.png
 ##  git.Rmd
 ##  git.html
 ##  intro_bayesian_pdf.Rmd
 ##  intro_bayesian_pdf.html
+##  intro_bayesian_pdf_cache/
+##  intro_bayesian_pdf_files/
 ##  messy_data.csv
 ##  r_markdown_intro.Rmd
 ##  r_markdown_intro.html
+##  r_markdown_intro_files/
 ##  t_d_vot.csv
 ##  tidy_data_handout.Rmd
 ##  tidy_data_handout.html
@@ -3644,7 +3665,7 @@ git status&lt;/code&gt;&lt;/pre&gt;
 ## nothing added to commit but untracked files present
 ## On branch master
 ## 
-## Initial commit
+## No commits yet
 ## 
 ## Untracked files:
 ##   (use &amp;quot;git add &amp;lt;file&amp;gt;...&amp;quot; to include in what will be committed)
@@ -3655,15 +3676,22 @@ git status&lt;/code&gt;&lt;/pre&gt;
 ##  ca.Rmd
 ##  ca.html
 ##  ca_files/
+##  clustering.Rmd
+##  clustering.html
+##  clustering_files/
+##  demos.csv
 ##  domains.csv
 ##  explore.png
 ##  git.Rmd
 ##  git.html
 ##  intro_bayesian_pdf.Rmd
 ##  intro_bayesian_pdf.html
+##  intro_bayesian_pdf_cache/
+##  intro_bayesian_pdf_files/
 ##  messy_data.csv
 ##  r_markdown_intro.Rmd
 ##  r_markdown_intro.html
+##  r_markdown_intro_files/
 ##  t_d_vot.csv
 ##  tidy_data_handout.Rmd
 ##  tidy_data_handout.html
@@ -3759,15 +3787,22 @@ ls&lt;/code&gt;&lt;/pre&gt;
 ## ca.Rmd
 ## ca.html
 ## ca_files
+## clustering.Rmd
+## clustering.html
+## clustering_files
+## demos.csv
 ## domains.csv
 ## explore.png
 ## git.Rmd
 ## git.html
 ## intro_bayesian_pdf.Rmd
 ## intro_bayesian_pdf.html
+## intro_bayesian_pdf_cache
+## intro_bayesian_pdf_files
 ## messy_data.csv
 ## r_markdown_intro.Rmd
 ## r_markdown_intro.html
+## r_markdown_intro_files
 ## t_d_vot.csv
 ## tidy_data_handout.Rmd
 ## tidy_data_handout.html
@@ -3778,15 +3813,22 @@ ls&lt;/code&gt;&lt;/pre&gt;
 ## ca.Rmd
 ## ca.html
 ## ca_files
+## clustering.Rmd
+## clustering.html
+## clustering_files
+## demos.csv
 ## domains.csv
 ## explore.png
 ## git.Rmd
 ## git.html
 ## intro_bayesian_pdf.Rmd
 ## intro_bayesian_pdf.html
+## intro_bayesian_pdf_cache
+## intro_bayesian_pdf_files
 ## messy_data.csv
 ## r_markdown_intro.Rmd
 ## r_markdown_intro.html
+## r_markdown_intro_files
 ## t_d_vot.csv
 ## tidy_data_handout.Rmd
 ## tidy_data_handout.html
@@ -3907,10 +3949,10 @@ git push # saves to remote repo&lt;/code&gt;&lt;/pre&gt;
     
     <item>
       <title>Tidy Data</title>
-      <link>/post/tidy_data_handout/</link>
+      <link>https://rentzb.github.io/post/tidy_data_handout/</link>
       <pubDate>Tue, 07 Mar 2017 21:13:14 -0500</pubDate>
       
-      <guid>/post/tidy_data_handout/</guid>
+      <guid>https://rentzb.github.io/post/tidy_data_handout/</guid>
       <description>&lt;div id=&#34;what-is-tidy-data&#34; class=&#34;section level1&#34;&gt;
 &lt;h1&gt;What is tidy data?&lt;/h1&gt;
 &lt;p&gt;Tidy data have the following characteristics:&lt;/p&gt;
@@ -3985,17 +4027,14 @@ git push # saves to remote repo&lt;/code&gt;&lt;/pre&gt;
 &lt;div id=&#34;r-packages-for-tidy-data&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;R Packages for tidy data&lt;/h2&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;tidyverse&amp;quot;)
-## Loading tidyverse: ggplot2
-## Loading tidyverse: tibble
-## Loading tidyverse: tidyr
-## Loading tidyverse: readr
-## Loading tidyverse: purrr
-## Loading tidyverse: dplyr
-## Warning: package &amp;#39;tidyr&amp;#39; was built under R version 3.4.2
-## Warning: package &amp;#39;purrr&amp;#39; was built under R version 3.4.2
-## Conflicts with tidy packages ----------------------------------------------
-## filter(): dplyr, stats
-## lag():    dplyr, stats&lt;/code&gt;&lt;/pre&gt;
+## ── Attaching packages ─────────────────────────────────────────────────── tidyverse 1.2.1 ──
+## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
+## ✔ tibble  1.4.1     ✔ dplyr   0.7.4
+## ✔ tidyr   0.7.2     ✔ stringr 1.2.0
+## ✔ readr   1.1.1     ✔ forcats 0.2.0
+## ── Conflicts ────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div id=&#34;workflow-for-data-wrangling&#34; class=&#34;section level1&#34;&gt;
@@ -4553,7 +4592,7 @@ data.global.means
 ## # A tibble: 1 x 1
 ##   global.means
 ##          &amp;lt;dbl&amp;gt;
-## 1     1050.686&lt;/code&gt;&lt;/pre&gt;
+## 1         1051&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;grouped-central-tendencies&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Grouped central tendencies&lt;/h2&gt;
@@ -4563,15 +4602,15 @@ data.global.means
             medians = median(value))
 head(data.grouped.ct)
 ## # A tibble: 6 x 6
-## # Groups:   participant, vowel [4]
-##   participant  vowel measurement    means      sds medians
-##        &amp;lt;fctr&amp;gt; &amp;lt;fctr&amp;gt;      &amp;lt;fctr&amp;gt;    &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;   &amp;lt;dbl&amp;gt;
-## 1          18      a          f1  738.500 29.60695   733.0
-## 2          18      a          f2 1716.375 22.99029  1707.0
-## 3          18      u          f2  572.625 17.74371   577.5
-## 4          21      a          f1  751.625 18.53134   747.0
-## 5          21      a          f2 1677.125 23.49734  1674.0
-## 6          21      u          f2  744.000 16.71612   745.0&lt;/code&gt;&lt;/pre&gt;
+## # Groups: participant, vowel [4]
+##   participant vowel  measurement means   sds medians
+##   &amp;lt;fctr&amp;gt;      &amp;lt;fctr&amp;gt; &amp;lt;fctr&amp;gt;      &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;   &amp;lt;dbl&amp;gt;
+## 1 18          a      f1            738  29.6     733
+## 2 18          a      f2           1716  23.0    1707
+## 3 18          u      f2            573  17.7     578
+## 4 21          a      f1            752  18.5     747
+## 5 21          a      f2           1677  23.5    1674
+## 6 21          u      f2            744  16.7     745&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>
