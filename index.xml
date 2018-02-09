@@ -11,6 +11,503 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Cluster Analysis</title>
+      <link>https://rentzb.github.io/post/cluster-analysis/</link>
+      <pubDate>Thu, 08 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://rentzb.github.io/post/cluster-analysis/</guid>
+      <description>&lt;div id=&#34;what-to-do-with-categorical-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What to do with categorical data?&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Categorical data can be challenging to analyze quantitatively&lt;/li&gt;
+&lt;li&gt;In language research we often have data that are purely categorical&lt;/li&gt;
+&lt;li&gt;In today’s presentation we will deal with a specific type of categorical data found in questionnaires&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;questionnaire-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Questionnaire Data&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Questionnaires are frequently used in a variety of language research scenarios&lt;/li&gt;
+&lt;li&gt;They often ask people to rate something (likert scales) or select the most appropriate response&lt;/li&gt;
+&lt;li&gt;Example: select the language that is most appropriate to use in a given domain&lt;/li&gt;
+&lt;li&gt;Example: rate level of agreement with several statements&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;research-question&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Research Question&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;How do the questionnaire respondents relate to each other based on their responses?&lt;/li&gt;
+&lt;li&gt;In other words: what groups of respodents emerge based on their responses?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;cluster-analysis&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Cluster Analysis&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Cluster analysis is a family of statistical techniques that shows groups of respondents based on their responses&lt;/li&gt;
+&lt;li&gt;Cluster analysis is a descriptive tool and doesn’t give p-values per se, though there are some helpful diagnostics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;common-cluster-analyses&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Common cluster analyses&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;k-means clustering&lt;/li&gt;
+&lt;li&gt;k-medoids clustering or partitioning around medoids (PAM)&lt;/li&gt;
+&lt;li&gt;DBSCAN (density based clustering)&lt;/li&gt;
+&lt;li&gt;hierarchical clusters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;pam&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;PAM&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;This presentation will focus on the use of PAM&lt;/li&gt;
+&lt;li&gt;Works in general by finding a pre-determined number of group in the data and interatively tried to find an ideal solution based on assigning a center point for each cluster and all other data points to the appropriate center point&lt;/li&gt;
+&lt;li&gt;Is more robust to outliers than k-means since uses medians rather than means&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;example-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Example Data&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;For the sample cluster analysis were will be using data from a questionnaire used on Pohnpei&lt;/li&gt;
+&lt;li&gt;There are 25 questions where the respondents were asked to select 1 language that is the most important for that specific domain&lt;/li&gt;
+&lt;li&gt;The answers for all 25 questions were the same 8 language choices&lt;/li&gt;
+&lt;li&gt;301 respondents&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains &amp;lt;- read.csv(&amp;quot;domains.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;explore-the-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Explore the data&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;making_friends&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;being_successful&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;good_education&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;happy_relationships&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;getting_money&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;reading&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;writing&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;radio&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;tv&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;accepted_pni&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_teachers&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_villages&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;funerals&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;kamadipw&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;sakau&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;facebook&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_kolonia&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_chief&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_gov&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;good_job&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;friends_school&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;church&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;store&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_neighbors&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;us_relatives&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Other&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Other&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pingelapese&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;libraries-well-use&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Libraries we’ll use&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+library(hrbrthemes)
+library(cluster)
+library(NbClust)
+library(factoextra)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-1-create-a-dissimilarity-matrix&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 1: Create a dissimilarity matrix&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;In order to cluster respondents, we need to calculate how dissimilar each respondent is from each other respondent&lt;/li&gt;
+&lt;li&gt;To calculate a dissimilarity matrix, we use the Gower dissimilarity calculation that works for categorical data, instead of the Euclidean method for numerical data&lt;/li&gt;
+&lt;li&gt;We use the &lt;code&gt;daisy()&lt;/code&gt; function from the cluster package&lt;/li&gt;
+&lt;li&gt;Responses range from 0–1&lt;/li&gt;
+&lt;li&gt;Values of 1 are completely dissimilar and values of 0 means identical responses&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;calculate-the-dissimilary-matrix&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Calculate the dissimilary matrix&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains.dist &amp;lt;- daisy(domains,metric=&amp;quot;gower&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visualize-matrix&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Visualize matrix&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gradient.color &amp;lt;- list(low = &amp;quot;steelblue&amp;quot;,  high = &amp;quot;white&amp;quot;)
+fviz_dist(domains.dist, 
+   gradient = gradient.color,order=T)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/2018-02-08-cluster-analysis_files/figure-html/dissimilarity.plot2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-2-determine-number-of-clusters&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 2: Determine number of clusters&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Clustering algorithms such as PAM require the number of clusters to be pre-specified&lt;/li&gt;
+&lt;li&gt;You can determine the number of clusters based on theory or research expectations&lt;/li&gt;
+&lt;li&gt;Or more commonly through some sort of diagnostic that allows the number of clusters to emerge from the data&lt;/li&gt;
+&lt;li&gt;For categorical data, one common way is the silhouette method (numerical data have many other possible diagonstics)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;silhouette-method&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Silhouette Method&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;The silhouette method calculates for a range of cluster sizes how similar values in a particular cluster are to each other versus how similar they are to values outside their cluster&lt;/li&gt;
+&lt;li&gt;For this method, and ideal arrangement would have values being very similar to other members of its cluster and very dissimilar with those values outside its cluster&lt;/li&gt;
+&lt;li&gt;The method give score overall from -1 to 1 for each number of clusters, where 1 means very well clustered and -1 very poorly clustered&lt;/li&gt;
+&lt;li&gt;The number of clusters with the best score is selected&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;calculating-silhouette-method&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Calculating silhouette method&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;number_clusters &amp;lt;- NbClust(diss=domains.dist,distance=NULL,
+                          min.nc = 2, max.nc = 10,
+                          method = &amp;quot;median&amp;quot;,
+                          index=&amp;quot;silhouette&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  Only frey, mcclain, cindex, sihouette and dunn can be computed. To compute the other indices, data matrix is needed&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;number_clusters$Best.nc # best solution&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Number_clusters     Value_Index 
+##          2.0000          0.3413&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-3-run-pam&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 3: Run PAM&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Based on the silhouette method, we will use 2 clusters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains.pam &amp;lt;- pam(domains.dist,2)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visualizing-the-pam&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Visualizing the PAM&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;To visual the PAM, we can reduce the complexity of the dissimilarity matrix to 2 dimensions via multidimensional scaling&lt;/li&gt;
+&lt;li&gt;Then can add color for each cluster&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains.mds &amp;lt;- as.data.frame(cmdscale(domains.dist,2))
+domains.mds$domains_cluster &amp;lt;- as.factor(domains.pam$clustering)
+ggplot(domains.mds,aes(x=V1,y=V2,color=domains_cluster)) + 
+  geom_point() + theme_ipsum() +
+  labs(title=&amp;quot;MDS plot for domain questions&amp;quot;,
+       subtitle=&amp;quot;Colored by PAM cluster&amp;quot;) +
+  scale_color_brewer(palette=&amp;quot;Set1&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;clusters-plotted&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Clusters plotted&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/2018-02-08-cluster-analysis_files/figure-html/pam.plot2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-4-interpret-the-clusters&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 4: Interpret the clusters&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Now that the clusters are created, we have to evaluate whether or not they tell a meaningful story about the data, since it could just be a random grouping of the data&lt;/li&gt;
+&lt;li&gt;Need to determine: (a) what pattern(s)/behavior(s) each cluster represents and (b) who is in each group&lt;/li&gt;
+&lt;li&gt;Remember: Clusters are descriptive/exploratory, rather than a statistical test&lt;/li&gt;
+&lt;li&gt;For (a) can subset data by cluster and compare how each group answered the different questionnaire questions&lt;/li&gt;
+&lt;li&gt;For (b) can subset data by cluster, then compare each cluster by known demographic variables&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;subsetting&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Subsetting&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains$domains_cluster &amp;lt;- domains.mds$domains_cluster
+language_domains_social_solidarity &amp;lt;- domains %&amp;gt;%
+  dplyr::select(making_friends,happy_relationships,accepted_pni,
+                talking_villages,talking_kolonia,talking_neighbors,
+                us_relatives,domains_cluster)
+names(language_domains_social_solidarity) &amp;lt;-c(
+  &amp;quot;Making friends&amp;quot;,
+  &amp;quot;Feeling happy in your relationships&amp;quot;,
+  &amp;quot;Being accepted in Pohnpei&amp;quot;,
+  &amp;quot;Talking with people in the sections of Pohnpei&amp;quot;,
+  &amp;quot;Talking with people in Kolonia&amp;quot;,
+  &amp;quot;Talking with your neighbors&amp;quot;,
+  &amp;quot;Speaking with relatives who live in the US&amp;quot;,
+  &amp;quot;Domain PAM cluster&amp;quot;)
+language_domains_social_solidarity_gathered &amp;lt;- language_domains_social_solidarity %&amp;gt;%
+  gather(key=&amp;quot;domain&amp;quot;,value=&amp;quot;language&amp;quot;,-&amp;quot;Domain PAM cluster&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plot-of-some-answers-by-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Plot of some answers by cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(language_domains_social_solidarity_gathered,
+       aes(x=domain,fill=language)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Language importance by PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;Social solidarity domains&amp;quot;) + 
+  xlab(&amp;quot;Domain&amp;quot;)+ theme(axis.text.x =
+                          element_text(angle = 20,hjust=1,size=8),
+                        legend.position=&amp;quot;bottom&amp;quot;,
+                        legend.text=element_text(size=10))+ 
+  ylab(&amp;quot;Number of respondents&amp;quot;) + facet_grid(~`Domain PAM cluster`)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/2018-02-08-cluster-analysis_files/figure-html/pam.subset.plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;interpretation-what&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Interpretation: what&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;For (a), based on the plots, you can describe different patterns and trends that occur, such as group 1 has more English selections as well as languages other than Pohnpeian, while group 2 tends toward only Pohnpeian selections&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;determining-who-is-in-each-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Determining who is in each cluster&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;To determine who is in each cluster, we import the demographic data and add the cluster information to it&lt;/li&gt;
+&lt;li&gt;The plot the clusters by several demograhpic variables&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;demos &amp;lt;- read.csv(&amp;quot;demos.csv&amp;quot;)
+demos$cluster &amp;lt;- as.factor(domains.mds$domains_cluster)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;age-and-pam-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Age and PAM cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(demos,aes(x=age,fill=cluster)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Age and PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;for language importance&amp;quot;) + 
+  xlab(&amp;quot;Age&amp;quot;)+ 
+  ylab(&amp;quot;Number of respondents&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/2018-02-08-cluster-analysis_files/figure-html/age-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;gender-and-pam-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Gender and PAM cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(demos,aes(x=sex,fill=cluster)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Gender and PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;for language importance&amp;quot;) + 
+  xlab(&amp;quot;Gender&amp;quot;)+  
+  ylab(&amp;quot;Number of respondents&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/2018-02-08-cluster-analysis_files/figure-html/gender-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;gender-and-age-by-pam-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Gender and Age by PAM cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(demos,aes(x=age,fill=cluster)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Gender and Age by PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;for language importance&amp;quot;) + theme(axis.text.x =
+                          element_text(angle = 20,hjust=1,size=5),
+                        legend.position=&amp;quot;bottom&amp;quot;,
+                        legend.text=element_text(size=8)) +
+  xlab(&amp;quot;Age&amp;quot;)+
+  ylab(&amp;quot;Number of respondents&amp;quot;) + facet_grid(~sex)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/2018-02-08-cluster-analysis_files/figure-html/gender_age-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;eduation-and-pam-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Eduation and PAM cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(demos,aes(x=education,fill=cluster)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Education and PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;for language importance&amp;quot;) + theme(axis.text.x =
+                          element_text(angle = 20,hjust=1,size=5),
+                        legend.position=&amp;quot;bottom&amp;quot;,
+                        legend.text=element_text(size=8))+
+  xlab(&amp;quot;Highest education level&amp;quot;)+  
+  ylab(&amp;quot;Number of respondents&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/2018-02-08-cluster-analysis_files/figure-html/education-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;current-municipality-and-pam-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Current municipality and PAM cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(demos,aes(x=current_muni,fill=cluster)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Current municipality and PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;for language importance&amp;quot;) + 
+  xlab(&amp;quot;Current municipality&amp;quot;)+  
+  ylab(&amp;quot;Number of respondents&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/2018-02-08-cluster-analysis_files/figure-html/current_muni-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;interpretation-who&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Interpretation: who&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;People aged 18–24 have much greater numbers in cluster 1, ages 25–44 are fairly equally distributed, and ages 45+ have more respondents cluster 2&lt;/li&gt;
+&lt;li&gt;Gender is more evenly distributed with somewhat more women in cluster 1&lt;/li&gt;
+&lt;li&gt;Both women and men aged 18–24 tend to be in cluster 1, but somewhat more women aged 25–34 in cluster 1, and slightly more men in that age group in cluster 2&lt;/li&gt;
+&lt;li&gt;Those who completed high school tend be in cluster 1 and those who did not are more likely in cluster 2&lt;/li&gt;
+&lt;li&gt;All municipalities except Sokehs have fairly similar distributions, which tends to be in cluster 1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Cluster analysis can help find emergent patterns in the data&lt;/li&gt;
+&lt;li&gt;These patterns can be similar to what is found with other statistical models such as regression&lt;/li&gt;
+&lt;li&gt;But more importantly can help find patterns and global trends across your own coded groups (such as demographic variables) that may be missed by other methods&lt;/li&gt;
+&lt;li&gt;Can also show more complex (aka non-linear) trends than regression modeling&lt;/li&gt;
+&lt;li&gt;Cluster analysis can be a very helpful data exploration and analysis technique&lt;/li&gt;
+&lt;li&gt;Though lacks probabilities of group membership and significance testing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;further-reading&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Further reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.sthda.com/english/articles/25-cluster-analysis-in-r-practical-guide/111-types-of-clustering-methods-overview-and-quick-start-r-code/&#34; class=&#34;uri&#34;&gt;http://www.sthda.com/english/articles/25-cluster-analysis-in-r-practical-guide/111-types-of-clustering-methods-overview-and-quick-start-r-code/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.sthda.com/english/articles/29-cluster-validation-essentials/95-assessing-clustering-tendency-essentials/&#34; class=&#34;uri&#34;&gt;http://www.sthda.com/english/articles/29-cluster-validation-essentials/95-assessing-clustering-tendency-essentials/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Language attitudes on Pohnpei: Results from a survey analysis</title>
       <link>https://rentzb.github.io/talk/austronesian-circle-17/</link>
       <pubDate>Fri, 01 Dec 2017 15:00:00 -1000</pubDate>
@@ -3540,13 +4037,20 @@ git status&lt;/code&gt;&lt;/pre&gt;
 ## 
 ##  .Rhistory
 ##  12.jpg
+##  2018-02-08-cluster-analysis.Rmd
+##  2018-02-08-cluster-analysis.html
+##  2018-02-08-cluster-analysis_files/
+##  2018-02-08-clustering.Rmd
+##  2018-02-08-clustering.html
+##  2018-02-08-clustering_files/
 ##  _index.md
 ##  ca.Rmd
 ##  ca.html
 ##  ca_files/
-##  clustering.Rmd
+##  cluster.Rmd
+##  cluster.html
+##  cluster_files/
 ##  clustering.html
-##  clustering_files/
 ##  demos.csv
 ##  domains.csv
 ##  explore.png
@@ -3590,13 +4094,20 @@ git status&lt;/code&gt;&lt;/pre&gt;
 ## 
 ##  .Rhistory
 ##  12.jpg
+##  2018-02-08-cluster-analysis.Rmd
+##  2018-02-08-cluster-analysis.html
+##  2018-02-08-cluster-analysis_files/
+##  2018-02-08-clustering.Rmd
+##  2018-02-08-clustering.html
+##  2018-02-08-clustering_files/
 ##  _index.md
 ##  ca.Rmd
 ##  ca.html
 ##  ca_files/
-##  clustering.Rmd
+##  cluster.Rmd
+##  cluster.html
+##  cluster_files/
 ##  clustering.html
-##  clustering_files/
 ##  demos.csv
 ##  domains.csv
 ##  explore.png
@@ -3637,13 +4148,20 @@ git status&lt;/code&gt;&lt;/pre&gt;
 ## Untracked files:
 ##  .Rhistory
 ##  12.jpg
+##  2018-02-08-cluster-analysis.Rmd
+##  2018-02-08-cluster-analysis.html
+##  2018-02-08-cluster-analysis_files/
+##  2018-02-08-clustering.Rmd
+##  2018-02-08-clustering.html
+##  2018-02-08-clustering_files/
 ##  _index.md
 ##  ca.Rmd
 ##  ca.html
 ##  ca_files/
-##  clustering.Rmd
+##  cluster.Rmd
+##  cluster.html
+##  cluster_files/
 ##  clustering.html
-##  clustering_files/
 ##  demos.csv
 ##  domains.csv
 ##  explore.png
@@ -3672,13 +4190,20 @@ git status&lt;/code&gt;&lt;/pre&gt;
 ## 
 ##  .Rhistory
 ##  12.jpg
+##  2018-02-08-cluster-analysis.Rmd
+##  2018-02-08-cluster-analysis.html
+##  2018-02-08-cluster-analysis_files/
+##  2018-02-08-clustering.Rmd
+##  2018-02-08-clustering.html
+##  2018-02-08-clustering_files/
 ##  _index.md
 ##  ca.Rmd
 ##  ca.html
 ##  ca_files/
-##  clustering.Rmd
+##  cluster.Rmd
+##  cluster.html
+##  cluster_files/
 ##  clustering.html
-##  clustering_files/
 ##  demos.csv
 ##  domains.csv
 ##  explore.png
@@ -3783,13 +4308,20 @@ ls&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## sh: line 0: cd: /Users/brad_rentz/Desktop/sample_git: No such file or directory
 ## error: pathspec &amp;#39;master&amp;#39; did not match any file(s) known to git.
 ## 12.jpg
+## 2018-02-08-cluster-analysis.Rmd
+## 2018-02-08-cluster-analysis.html
+## 2018-02-08-cluster-analysis_files
+## 2018-02-08-clustering.Rmd
+## 2018-02-08-clustering.html
+## 2018-02-08-clustering_files
 ## _index.md
 ## ca.Rmd
 ## ca.html
 ## ca_files
-## clustering.Rmd
+## cluster.Rmd
+## cluster.html
+## cluster_files
 ## clustering.html
-## clustering_files
 ## demos.csv
 ## domains.csv
 ## explore.png
@@ -3809,13 +4341,20 @@ ls&lt;/code&gt;&lt;/pre&gt;
 ## waterfall.png
 ## error: pathspec &amp;#39;experimental&amp;#39; did not match any file(s) known to git.
 ## 12.jpg
+## 2018-02-08-cluster-analysis.Rmd
+## 2018-02-08-cluster-analysis.html
+## 2018-02-08-cluster-analysis_files
+## 2018-02-08-clustering.Rmd
+## 2018-02-08-clustering.html
+## 2018-02-08-clustering_files
 ## _index.md
 ## ca.Rmd
 ## ca.html
 ## ca_files
-## clustering.Rmd
+## cluster.Rmd
+## cluster.html
+## cluster_files
 ## clustering.html
-## clustering_files
 ## demos.csv
 ## domains.csv
 ## explore.png
