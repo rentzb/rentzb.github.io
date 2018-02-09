@@ -11,11 +11,11 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>Cluster Analysis</title>
-      <link>https://rentzb.github.io/post/cluster-analysis/</link>
-      <pubDate>Thu, 08 Feb 2018 00:00:00 +0000</pubDate>
+      <title>Cluster Analysis for Categorical Data</title>
+      <link>https://rentzb.github.io/post/cluster/</link>
+      <pubDate>Fri, 09 Feb 2018 13:00:00 -0500</pubDate>
       
-      <guid>https://rentzb.github.io/post/cluster-analysis/</guid>
+      <guid>https://rentzb.github.io/post/cluster/</guid>
       <description>&lt;div id=&#34;what-to-do-with-categorical-data&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;What to do with categorical data?&lt;/h2&gt;
 &lt;ul&gt;
@@ -299,7 +299,7 @@ library(factoextra)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gradient.color &amp;lt;- list(low = &amp;quot;steelblue&amp;quot;,  high = &amp;quot;white&amp;quot;)
 fviz_dist(domains.dist, 
    gradient = gradient.color,order=T)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/2018-02-08-cluster-analysis_files/figure-html/dissimilarity.plot2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/cluster_files/figure-html/dissimilarity.plot2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;div id=&#34;step-2-determine-number-of-clusters&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Step 2: Determine number of clusters&lt;/h2&gt;
@@ -316,6 +316,1000 @@ fviz_dist(domains.dist,
 &lt;li&gt;The silhouette method calculates for a range of cluster sizes how similar values in a particular cluster are to each other versus how similar they are to values outside their cluster&lt;/li&gt;
 &lt;li&gt;For this method, and ideal arrangement would have values being very similar to other members of its cluster and very dissimilar with those values outside its cluster&lt;/li&gt;
 &lt;li&gt;The method give score overall from -1 to 1 for each number of clusters, where 1 means very well clustered and -1 very poorly clustered&lt;/li&gt;
+&lt;li&gt;The number of clusters with the best score is selected&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;calculating-silhouette-method&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Calculating silhouette method&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;number_clusters &amp;lt;- NbClust(diss=domains.dist,distance=NULL,
+                          min.nc = 2, max.nc = 10,
+                          method = &amp;quot;median&amp;quot;,
+                          index=&amp;quot;silhouette&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  Only frey, mcclain, cindex, sihouette and dunn can be computed. To compute the other indices, data matrix is needed&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;number_clusters$Best.nc # best solution&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Number_clusters     Value_Index 
+##          2.0000          0.3413&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-3-run-pam&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 3: Run PAM&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Based on the silhouette method, we will use 2 clusters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains.pam &amp;lt;- pam(domains.dist,2)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visualizing-the-pam&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Visualizing the PAM&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;To visual the PAM, we can reduce the complexity of the dissimilarity matrix to 2 dimensions via multidimensional scaling&lt;/li&gt;
+&lt;li&gt;Then can add color for each cluster&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains.mds &amp;lt;- as.data.frame(cmdscale(domains.dist,2))
+domains.mds$domains_cluster &amp;lt;- as.factor(domains.pam$clustering)
+ggplot(domains.mds,aes(x=V1,y=V2,color=domains_cluster)) + 
+  geom_point() + theme_ipsum() +
+  labs(title=&amp;quot;MDS plot for domain questions&amp;quot;,
+       subtitle=&amp;quot;Colored by PAM cluster&amp;quot;) +
+  scale_color_brewer(palette=&amp;quot;Set1&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;clusters-plotted&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Clusters plotted&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/cluster_files/figure-html/pam.plot2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-4-interpret-the-clusters&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 4: Interpret the clusters&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Now that the clusters are created, we have to evaluate whether or not they tell a meaningful story about the data, since it could just be a random grouping of the data&lt;/li&gt;
+&lt;li&gt;Need to determine: (a) what pattern(s)/behavior(s) each cluster represents and (b) who is in each group&lt;/li&gt;
+&lt;li&gt;Remember: Clusters are descriptive/exploratory, rather than a statistical test&lt;/li&gt;
+&lt;li&gt;For (a) can subset data by cluster and compare how each group answered the different questionnaire questions&lt;/li&gt;
+&lt;li&gt;For (b) can subset data by cluster, then compare each cluster by known demographic variables&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;subsetting&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Subsetting&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains$domains_cluster &amp;lt;- domains.mds$domains_cluster
+language_domains_social_solidarity &amp;lt;- domains %&amp;gt;%
+  dplyr::select(making_friends,happy_relationships,accepted_pni,
+                talking_villages,talking_kolonia,talking_neighbors,
+                us_relatives,domains_cluster)
+names(language_domains_social_solidarity) &amp;lt;-c(
+  &amp;quot;Making friends&amp;quot;,
+  &amp;quot;Feeling happy in your relationships&amp;quot;,
+  &amp;quot;Being accepted in Pohnpei&amp;quot;,
+  &amp;quot;Talking with people in the sections of Pohnpei&amp;quot;,
+  &amp;quot;Talking with people in Kolonia&amp;quot;,
+  &amp;quot;Talking with your neighbors&amp;quot;,
+  &amp;quot;Speaking with relatives who live in the US&amp;quot;,
+  &amp;quot;Domain PAM cluster&amp;quot;)
+language_domains_social_solidarity_gathered &amp;lt;- language_domains_social_solidarity %&amp;gt;%
+  gather(key=&amp;quot;domain&amp;quot;,value=&amp;quot;language&amp;quot;,-&amp;quot;Domain PAM cluster&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plot-of-some-answers-by-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Plot of some answers by cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(language_domains_social_solidarity_gathered,
+       aes(x=domain,fill=language)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Language importance by PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;Social solidarity domains&amp;quot;) + 
+  xlab(&amp;quot;Domain&amp;quot;)+ theme(axis.text.x =
+                          element_text(angle = 20,hjust=1,size=8),
+                        legend.position=&amp;quot;bottom&amp;quot;,
+                        legend.text=element_text(size=10))+ 
+  ylab(&amp;quot;Number of respondents&amp;quot;) + facet_grid(~`Domain PAM cluster`)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/cluster_files/figure-html/pam.subset.plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;interpretation-what&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Interpretation: what&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;For (a), based on the plots, you can describe different patterns and trends that occur, such as group 1 has more English selections as well as languages other than Pohnpeian, while group 2 tends toward only Pohnpeian selections&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;determining-who-is-in-each-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Determining who is in each cluster&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;To determine who is in each cluster, we import the demographic data and add the cluster information to it&lt;/li&gt;
+&lt;li&gt;The plot the clusters by several demograhpic variables&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;demos &amp;lt;- read.csv(&amp;quot;demos.csv&amp;quot;)
+demos$cluster &amp;lt;- as.factor(domains.mds$domains_cluster)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;age-and-pam-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Age and PAM cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(demos,aes(x=age,fill=cluster)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Age and PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;for language importance&amp;quot;) + 
+  xlab(&amp;quot;Age&amp;quot;)+ 
+  ylab(&amp;quot;Number of respondents&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/cluster_files/figure-html/age-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;gender-and-pam-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Gender and PAM cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(demos,aes(x=sex,fill=cluster)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Gender and PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;for language importance&amp;quot;) + 
+  xlab(&amp;quot;Gender&amp;quot;)+  
+  ylab(&amp;quot;Number of respondents&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/cluster_files/figure-html/gender-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;gender-and-age-by-pam-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Gender and Age by PAM cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(demos,aes(x=age,fill=cluster)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Gender and Age by PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;for language importance&amp;quot;) + theme(axis.text.x =
+                          element_text(angle = 20,hjust=1,size=5),
+                        legend.position=&amp;quot;bottom&amp;quot;,
+                        legend.text=element_text(size=8)) +
+  xlab(&amp;quot;Age&amp;quot;)+
+  ylab(&amp;quot;Number of respondents&amp;quot;) + facet_grid(~sex)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/cluster_files/figure-html/gender_age-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;eduation-and-pam-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Eduation and PAM cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(demos,aes(x=education,fill=cluster)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Education and PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;for language importance&amp;quot;) + theme(axis.text.x =
+                          element_text(angle = 20,hjust=1,size=5),
+                        legend.position=&amp;quot;bottom&amp;quot;,
+                        legend.text=element_text(size=8))+
+  xlab(&amp;quot;Highest education level&amp;quot;)+  
+  ylab(&amp;quot;Number of respondents&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/cluster_files/figure-html/education-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;current-municipality-and-pam-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Current municipality and PAM cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(demos,aes(x=current_muni,fill=cluster)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Current municipality and PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;for language importance&amp;quot;) + 
+  xlab(&amp;quot;Current municipality&amp;quot;)+  
+  ylab(&amp;quot;Number of respondents&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/cluster_files/figure-html/current_muni-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;interpretation-who&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Interpretation: who&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;People aged 18–24 have much greater numbers in cluster 1, ages 25–44 are fairly equally distributed, and ages 45+ have more respondents cluster 2&lt;/li&gt;
+&lt;li&gt;Gender is more evenly distributed with somewhat more women in cluster 1&lt;/li&gt;
+&lt;li&gt;Both women and men aged 18–24 tend to be in cluster 1, but somewhat more women aged 25–34 in cluster 1, and slightly more men in that age group in cluster 2&lt;/li&gt;
+&lt;li&gt;Those who completed high school tend be in cluster 1 and those who did not are more likely in cluster 2&lt;/li&gt;
+&lt;li&gt;All municipalities except Sokehs have fairly similar distributions, which tends to be in cluster 1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Cluster analysis can help find emergent patterns in the data&lt;/li&gt;
+&lt;li&gt;These patterns can be similar to what is found with other statistical models such as regression&lt;/li&gt;
+&lt;li&gt;But more importantly can help find patterns and global trends across your own coded groups (such as demographic variables) that may be missed by other methods&lt;/li&gt;
+&lt;li&gt;Can also show more complex (aka non-linear) trends than regression modeling&lt;/li&gt;
+&lt;li&gt;Cluster analysis can be a very helpful data exploration and analysis technique&lt;/li&gt;
+&lt;li&gt;Though lacks probabilities of group membership and significance testing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;further-reading&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Further reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.sthda.com/english/articles/25-cluster-analysis-in-r-practical-guide/111-types-of-clustering-methods-overview-and-quick-start-r-code/&#34; class=&#34;uri&#34;&gt;http://www.sthda.com/english/articles/25-cluster-analysis-in-r-practical-guide/111-types-of-clustering-methods-overview-and-quick-start-r-code/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.sthda.com/english/articles/29-cluster-validation-essentials/95-assessing-clustering-tendency-essentials/&#34; class=&#34;uri&#34;&gt;http://www.sthda.com/english/articles/29-cluster-validation-essentials/95-assessing-clustering-tendency-essentials/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Cluster Analysis for Categorical Data</title>
+      <link>https://rentzb.github.io/post/clustering/</link>
+      <pubDate>Fri, 09 Feb 2018 13:00:00 -0500</pubDate>
+      
+      <guid>https://rentzb.github.io/post/clustering/</guid>
+      <description>&lt;div id=&#34;what-to-do-with-categorical-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What to do with categorical data?&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Categorical data can be challenging to analyze quantitatively&lt;/li&gt;
+&lt;li&gt;In language research we often have data that are purely categorical&lt;/li&gt;
+&lt;li&gt;In today’s presentation we will deal with a specific type of categorical data found in questionnaires&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;questionnaire-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Questionnaire Data&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Questionnaires are frequently used in a variety of language research scenarios&lt;/li&gt;
+&lt;li&gt;They often ask people to rate something (likert scales) or select the most appropriate response&lt;/li&gt;
+&lt;li&gt;Example: select the language that is most appropriate to use in a given domain&lt;/li&gt;
+&lt;li&gt;Example: rate level of agreement with several statements&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;research-question&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Research Question&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;How do the questionnaire respondents relate to each other based on their responses?&lt;/li&gt;
+&lt;li&gt;In other words: what groups of respodents emerge based on their responses?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;cluster-analysis&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Cluster Analysis&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Cluster analysis is a family of statistical techniques that shows groups of respondents based on their responses&lt;/li&gt;
+&lt;li&gt;Cluster analysis is a descriptive tool and doesn’t give p-values per se, though there are some helpful diagnostics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;common-cluster-analyses&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Common cluster analyses&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;k-means clustering&lt;/li&gt;
+&lt;li&gt;k-medoids clustering or partitioning around medoids (PAM)&lt;/li&gt;
+&lt;li&gt;DBSCAN (density based clustering)&lt;/li&gt;
+&lt;li&gt;hierarchical clusters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;pam&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;PAM&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;This presentation will focus on the use of PAM&lt;/li&gt;
+&lt;li&gt;Works in general by finding a pre-determined number of group in the data and interatively tried to find an ideal solution based on assigning a center point for each cluster and all other data points to the appropriate center point&lt;/li&gt;
+&lt;li&gt;Is more robust to outliers than k-means since uses medians rather than means&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;example-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Example Data&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;For the sample cluster analysis were will be using data from a questionnaire used on Pohnpei&lt;/li&gt;
+&lt;li&gt;There are 25 questions where the respondents were asked to select 1 language that is the most important for that specific domain&lt;/li&gt;
+&lt;li&gt;The answers for all 25 questions were the same 8 language choices&lt;/li&gt;
+&lt;li&gt;301 respondents&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains &amp;lt;- read.csv(&amp;quot;domains.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;explore-the-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Explore the data&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;making_friends&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;being_successful&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;good_education&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;happy_relationships&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;getting_money&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;reading&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;writing&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;radio&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;tv&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;accepted_pni&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_teachers&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_villages&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;funerals&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;kamadipw&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;sakau&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;facebook&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_kolonia&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_chief&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_gov&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;good_job&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;friends_school&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;church&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;store&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_neighbors&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;us_relatives&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Other&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Other&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pingelapese&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;libraries-well-use&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Libraries we’ll use&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+library(hrbrthemes)
+library(cluster)
+library(NbClust)
+library(factoextra)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-1-create-a-dissimilarity-matrix&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 1: Create a dissimilarity matrix&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;In order to cluster respondents, we need to calculate how dissimilar each respondent is from each other respondent&lt;/li&gt;
+&lt;li&gt;To calculate a dissimilarity matrix, we use the Gower dissimilarity calculation that works for categorical data, instead of the Euclidean method for numerical data&lt;/li&gt;
+&lt;li&gt;We use the &lt;code&gt;daisy()&lt;/code&gt; function from the cluster package&lt;/li&gt;
+&lt;li&gt;Responses range from 0–1&lt;/li&gt;
+&lt;li&gt;Values of 1 are completely dissimilar and values of 0 means identical responses&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;calculate-the-dissimilary-matrix&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Calculate the dissimilary matrix&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains.dist &amp;lt;- daisy(domains,metric=&amp;quot;gower&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visualize-matrix&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Visualize matrix&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gradient.color &amp;lt;- list(low = &amp;quot;steelblue&amp;quot;,  high = &amp;quot;white&amp;quot;)
+fviz_dist(domains.dist, 
+   gradient = gradient.color,order=T)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/clustering_files/figure-html/dissimilarity.plot2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-2-determine-number-of-clusters&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 2: Determine number of clusters&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Clustering algorithms such as PAM require the number of clusters to be pre-specified&lt;/li&gt;
+&lt;li&gt;You can determine the number of clusters based on theory or research expectations&lt;/li&gt;
+&lt;li&gt;Or more commonly through some sort of diagnostic that allows the number of clusters to emerge from the data&lt;/li&gt;
+&lt;li&gt;For categorical data, one common way is the silhouette method (numerical data have many other possible diagonstics)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;silhouette-method&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Silhouette Method&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;The silhouette method calculates for a range of cluster sizes how similar values in a particular cluster are to each other versus how similar they are to values outside their cluster&lt;/li&gt;
+&lt;li&gt;For this method, and ideal arrangement would have values being very similar to other members of its cluster and very dissimilar with those values outside its cluster&lt;/li&gt;
+&lt;li&gt;The method give score overall from -1 to 1 for each number of clusters, where 1 means very well clustered and -1 very poorly clustered&lt;/li&gt;
+&lt;li&gt;The number of clusters with the best score is selected&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;calculating-silhouette-method&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Calculating silhouette method&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;number_clusters &amp;lt;- NbClust(diss=domains.dist,distance=NULL,
+                          min.nc = 2, max.nc = 10,
+                          method = &amp;quot;median&amp;quot;,
+                          index=&amp;quot;silhouette&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  Only frey, mcclain, cindex, sihouette and dunn can be computed. To compute the other indices, data matrix is needed&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;number_clusters$Best.nc # best solution&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Number_clusters     Value_Index 
+##          2.0000          0.3413&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-3-run-pam&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 3: Run PAM&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Based on the silhouette method, we will use 2 clusters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains.pam &amp;lt;- pam(domains.dist,2)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visualizing-the-pam&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Visualizing the PAM&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;To visual the PAM, we can reduce the complexity of the dissimilarity matrix to 2 dimensions via multidimensional scaling&lt;/li&gt;
+&lt;li&gt;Then can add color for each cluster&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains.mds &amp;lt;- as.data.frame(cmdscale(domains.dist,2))
+domains.mds$domains_cluster &amp;lt;- as.factor(domains.pam$clustering)
+ggplot(domains.mds,aes(x=V1,y=V2,color=domains_cluster)) + 
+  geom_point() + theme_ipsum() +
+  labs(title=&amp;quot;MDS plot for domain questions&amp;quot;,
+       subtitle=&amp;quot;Colored by PAM cluster&amp;quot;) +
+  scale_color_brewer(palette=&amp;quot;Set1&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;clusters-plotted&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Clusters plotted&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/clustering_files/figure-html/pam.plot2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-4-interpret-the-clusters&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 4: Interpret the clusters&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Now that the clusters are created, we have to evaluate whether or not they tell a meaningful story about the data, since it could just be a random grouping of the data&lt;/li&gt;
+&lt;li&gt;Need to determine: (a) what pattern(s)/behavior(s) each cluster represents and (b) who is in each group&lt;/li&gt;
+&lt;li&gt;Remember: Clusters are descriptive/exploratory, rather than a statistical test&lt;/li&gt;
+&lt;li&gt;For (a) can subset data by cluster and compare how each group answered the different questionnaire questions&lt;/li&gt;
+&lt;li&gt;For (b) can subset data by cluster, then compare each cluster by known demographic variables&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;subsetting&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Subsetting&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains$domains_cluster &amp;lt;- domains.mds$domains_cluster
+language_domains_social_solidarity &amp;lt;- domains %&amp;gt;%
+  dplyr::select(making_friends,happy_relationships,accepted_pni,
+                talking_villages,talking_kolonia,talking_neighbors,
+                us_relatives,domains_cluster)
+names(language_domains_social_solidarity) &amp;lt;-c(
+  &amp;quot;Making friends&amp;quot;,
+  &amp;quot;Feeling happy in your relationships&amp;quot;,
+  &amp;quot;Being accepted in Pohnpei&amp;quot;,
+  &amp;quot;Talking with people in the sections of Pohnpei&amp;quot;,
+  &amp;quot;Talking with people in Kolonia&amp;quot;,
+  &amp;quot;Talking with your neighbors&amp;quot;,
+  &amp;quot;Speaking with relatives who live in the US&amp;quot;,
+  &amp;quot;Domain PAM cluster&amp;quot;)
+language_domains_social_solidarity_gathered &amp;lt;- language_domains_social_solidarity %&amp;gt;%
+  gather(key=&amp;quot;domain&amp;quot;,value=&amp;quot;language&amp;quot;,-&amp;quot;Domain PAM cluster&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plot-of-some-answers-by-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Plot of some answers by cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(language_domains_social_solidarity_gathered,
+       aes(x=domain,fill=language)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Language importance by PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;Social solidarity domains&amp;quot;) + 
+  xlab(&amp;quot;Domain&amp;quot;)+ theme(axis.text.x =
+                          element_text(angle = 20,hjust=1,size=8),
+                        legend.position=&amp;quot;bottom&amp;quot;,
+                        legend.text=element_text(size=10))+ 
+  ylab(&amp;quot;Number of respondents&amp;quot;) + facet_grid(~`Domain PAM cluster`)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/clustering_files/figure-html/pam.subset.plot-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;interpretation-what&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Interpretation: what&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;For (a), based on the plots, you can describe different patterns and trends that occur, such as group 1 has more English selections as well as languages other than Pohnpeian, while group 2 tends toward only Pohnpeian selections&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;determining-who-is-in-each-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Determining who is in each cluster&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;To determine who is in each cluster, we import the demographic data and add the cluster information to it&lt;/li&gt;
+&lt;li&gt;The plot the clusters by several demograhpic variables&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;demos &amp;lt;- read.csv(&amp;quot;demos.csv&amp;quot;)
+demos$cluster &amp;lt;- as.factor(domains.mds$domains_cluster)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;age-and-pam-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Age and PAM cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(demos,aes(x=age,fill=cluster)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Age and PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;for language importance&amp;quot;) + 
+  xlab(&amp;quot;Age&amp;quot;)+ 
+  ylab(&amp;quot;Number of respondents&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/clustering_files/figure-html/age-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;gender-and-pam-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Gender and PAM cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(demos,aes(x=sex,fill=cluster)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Gender and PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;for language importance&amp;quot;) + 
+  xlab(&amp;quot;Gender&amp;quot;)+  
+  ylab(&amp;quot;Number of respondents&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/clustering_files/figure-html/gender-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;gender-and-age-by-pam-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Gender and Age by PAM cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(demos,aes(x=age,fill=cluster)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Gender and Age by PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;for language importance&amp;quot;) + theme(axis.text.x =
+                          element_text(angle = 20,hjust=1,size=5),
+                        legend.position=&amp;quot;bottom&amp;quot;,
+                        legend.text=element_text(size=8)) +
+  xlab(&amp;quot;Age&amp;quot;)+
+  ylab(&amp;quot;Number of respondents&amp;quot;) + facet_grid(~sex)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/clustering_files/figure-html/gender_age-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;eduation-and-pam-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Eduation and PAM cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(demos,aes(x=education,fill=cluster)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Education and PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;for language importance&amp;quot;) + theme(axis.text.x =
+                          element_text(angle = 20,hjust=1,size=5),
+                        legend.position=&amp;quot;bottom&amp;quot;,
+                        legend.text=element_text(size=8))+
+  xlab(&amp;quot;Highest education level&amp;quot;)+  
+  ylab(&amp;quot;Number of respondents&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/clustering_files/figure-html/education-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;current-municipality-and-pam-cluster&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Current municipality and PAM cluster&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(demos,aes(x=current_muni,fill=cluster)) +
+  geom_bar(stat=&amp;quot;count&amp;quot;,position=&amp;quot;dodge&amp;quot;,width=0.7)  +
+  theme_ipsum(grid=&amp;quot;Y&amp;quot;) + scale_fill_brewer(palette=&amp;quot;Set2&amp;quot;) + 
+  labs(title=&amp;quot;Current municipality and PAM cluster&amp;quot;, 
+       subtitle=&amp;quot;for language importance&amp;quot;) + 
+  xlab(&amp;quot;Current municipality&amp;quot;)+  
+  ylab(&amp;quot;Number of respondents&amp;quot;) &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/clustering_files/figure-html/current_muni-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;interpretation-who&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Interpretation: who&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;People aged 18–24 have much greater numbers in cluster 1, ages 25–44 are fairly equally distributed, and ages 45+ have more respondents cluster 2&lt;/li&gt;
+&lt;li&gt;Gender is more evenly distributed with somewhat more women in cluster 1&lt;/li&gt;
+&lt;li&gt;Both women and men aged 18–24 tend to be in cluster 1, but somewhat more women aged 25–34 in cluster 1, and slightly more men in that age group in cluster 2&lt;/li&gt;
+&lt;li&gt;Those who completed high school tend be in cluster 1 and those who did not are more likely in cluster 2&lt;/li&gt;
+&lt;li&gt;All municipalities except Sokehs have fairly similar distributions, which tends to be in cluster 1&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Cluster analysis can help find emergent patterns in the data&lt;/li&gt;
+&lt;li&gt;These patterns can be similar to what is found with other statistical models such as regression&lt;/li&gt;
+&lt;li&gt;But more importantly can help find patterns and global trends across your own coded groups (such as demographic variables) that may be missed by other methods&lt;/li&gt;
+&lt;li&gt;Can also show more complex (aka non-linear) trends than regression modeling&lt;/li&gt;
+&lt;li&gt;Cluster analysis can be a very helpful data exploration and analysis technique&lt;/li&gt;
+&lt;li&gt;Though lacks probabilities of group membership and significance testing&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;further-reading&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Further reading&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.sthda.com/english/articles/25-cluster-analysis-in-r-practical-guide/111-types-of-clustering-methods-overview-and-quick-start-r-code/&#34; class=&#34;uri&#34;&gt;http://www.sthda.com/english/articles/25-cluster-analysis-in-r-practical-guide/111-types-of-clustering-methods-overview-and-quick-start-r-code/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www.sthda.com/english/articles/29-cluster-validation-essentials/95-assessing-clustering-tendency-essentials/&#34; class=&#34;uri&#34;&gt;http://www.sthda.com/english/articles/29-cluster-validation-essentials/95-assessing-clustering-tendency-essentials/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Cluster Analysis</title>
+      <link>https://rentzb.github.io/post/cluster-analysis/</link>
+      <pubDate>Wed, 07 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>https://rentzb.github.io/post/cluster-analysis/</guid>
+      <description>&lt;div id=&#34;what-to-do-with-categorical-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What to do with categorical data?&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Categorical data can be challenging to analyze quantitatively&lt;/li&gt;
+&lt;li&gt;In language research we often have data that are purely categorical&lt;/li&gt;
+&lt;li&gt;In today’s presentation we will deal with a specific type of categorical data found in questionnaires&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;questionnaire-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Questionnaire Data&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Questionnaires are frequently used in a variety of language research scenarios&lt;/li&gt;
+&lt;li&gt;They often ask people to rate something (likert scales) or select the most appropriate response&lt;/li&gt;
+&lt;li&gt;Example: select the language that is most appropriate to use in a given domain&lt;/li&gt;
+&lt;li&gt;Example: rate level of agreement with several statements&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;research-question&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Research Question&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;How do the questionnaire respondents relate to each other based on their responses?&lt;/li&gt;
+&lt;li&gt;In other words: what groups of respodents emerge based on their responses?&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;cluster-analysis&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Cluster Analysis&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Cluster analysis is a family of statistical techniques that shows groups of respondents based on their responses&lt;/li&gt;
+&lt;li&gt;Cluster analysis is a descriptive tool and doesn’t give p-values per se, though there are some helpful diagnostics&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;common-cluster-analyses&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Common cluster analyses&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;k-means clustering&lt;/li&gt;
+&lt;li&gt;k-medoids clustering or partitioning around medoids (PAM)&lt;/li&gt;
+&lt;li&gt;DBSCAN (density based clustering)&lt;/li&gt;
+&lt;li&gt;hierarchical clusters&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;pam&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;PAM&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;This presentation will focus on the use of PAM&lt;/li&gt;
+&lt;li&gt;Works in general by finding a pre-determined number of groups in the data and iteratively tries to find an ideal solution based on assigning a center point for each cluster and all other data points to the appropriate center point&lt;/li&gt;
+&lt;li&gt;Is more robust to outliers than k-means since uses medians rather than means&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;example-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Example Data&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;For the sample cluster analysis we will be using data from a questionnaire used on Pohnpei&lt;/li&gt;
+&lt;li&gt;There are 25 questions where the respondents were asked to select 1 language that is the most important for that specific domain&lt;/li&gt;
+&lt;li&gt;The answers for all 25 questions were the same 8 language choices&lt;/li&gt;
+&lt;li&gt;301 respondents&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains &amp;lt;- read.csv(&amp;quot;domains.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;explore-the-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Explore the data&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th align=&#34;left&#34;&gt;making_friends&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;being_successful&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;good_education&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;happy_relationships&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;getting_money&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;reading&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;writing&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;radio&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;tv&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;accepted_pni&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_teachers&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_villages&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;funerals&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;kamadipw&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;sakau&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;facebook&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_kolonia&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_chief&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_gov&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;good_job&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;friends_school&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;church&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;store&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;talking_neighbors&lt;/th&gt;
+&lt;th align=&#34;left&#34;&gt;us_relatives&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Other&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Other&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pingelapese&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;Pohnpeian&lt;/td&gt;
+&lt;td align=&#34;left&#34;&gt;English&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div id=&#34;libraries-well-use&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Libraries we’ll use&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+library(hrbrthemes)
+library(cluster)
+library(NbClust)
+library(factoextra)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-1-create-a-dissimilarity-matrix&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 1: Create a dissimilarity matrix&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;In order to cluster respondents, we need to calculate how dissimilar each respondent is from each other respondent&lt;/li&gt;
+&lt;li&gt;To calculate a dissimilarity matrix, we use the Gower dissimilarity calculation that works for categorical data, instead of the Euclidean method for numerical data&lt;/li&gt;
+&lt;li&gt;We use the &lt;code&gt;daisy()&lt;/code&gt; function from the cluster package&lt;/li&gt;
+&lt;li&gt;Responses range from 0–1&lt;/li&gt;
+&lt;li&gt;Values of 1 are completely dissimilar and values of 0 means identical responses&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;calculate-the-dissimilarity-matrix&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Calculate the dissimilarity matrix&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;domains.dist &amp;lt;- daisy(domains,metric=&amp;quot;gower&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visualize-matrix&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Visualize matrix&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;gradient.color &amp;lt;- list(low = &amp;quot;steelblue&amp;quot;,  high = &amp;quot;white&amp;quot;)
+fviz_dist(domains.dist, 
+   gradient = gradient.color,order=T)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://rentzb.github.io/post/2018-02-08-cluster-analysis_files/figure-html/dissimilarity.plot2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;step-2-determine-number-of-clusters&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Step 2: Determine number of clusters&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Clustering algorithms such as PAM require the number of clusters to be pre-specified&lt;/li&gt;
+&lt;li&gt;You can determine the number of clusters based on theory or research expectations&lt;/li&gt;
+&lt;li&gt;Or more commonly through some sort of diagnostic that allows the number of clusters to emerge from the data&lt;/li&gt;
+&lt;li&gt;For categorical data, one common way is the silhouette method (numerical data have many other possible diagonstics)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;silhouette-method&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Silhouette Method&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;The silhouette method calculates for a range of cluster sizes how similar values in a particular cluster are to each other versus how similar they are to values outside their cluster&lt;/li&gt;
+&lt;li&gt;For this method, an ideal arrangement would have values being very similar to other members of its cluster and very dissimilar with those values outside its cluster&lt;/li&gt;
+&lt;li&gt;The method gives score overall from -1 to 1 for each number of clusters, where 1 means very well clustered and -1 very poorly clustered&lt;/li&gt;
 &lt;li&gt;The number of clusters with the best score is selected&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
@@ -410,7 +1404,7 @@ language_domains_social_solidarity_gathered &amp;lt;- language_domains_social_so
 &lt;h2&gt;Determining who is in each cluster&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;To determine who is in each cluster, we import the demographic data and add the cluster information to it&lt;/li&gt;
-&lt;li&gt;The plot the clusters by several demograhpic variables&lt;/li&gt;
+&lt;li&gt;Then plot the clusters by several demograhpic variables&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;demos &amp;lt;- read.csv(&amp;quot;demos.csv&amp;quot;)
 demos$cluster &amp;lt;- as.factor(domains.mds$domains_cluster)&lt;/code&gt;&lt;/pre&gt;
@@ -479,7 +1473,7 @@ demos$cluster &amp;lt;- as.factor(domains.mds$domains_cluster)&lt;/code&gt;&lt;/
 &lt;div id=&#34;interpretation-who&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Interpretation: who&lt;/h2&gt;
 &lt;ul&gt;
-&lt;li&gt;People aged 18–24 have much greater numbers in cluster 1, ages 25–44 are fairly equally distributed, and ages 45+ have more respondents cluster 2&lt;/li&gt;
+&lt;li&gt;People aged 18–24 have much greater numbers in cluster 1, ages 25–44 are fairly equally distributed, and ages 45+ have more respondents in cluster 2&lt;/li&gt;
 &lt;li&gt;Gender is more evenly distributed with somewhat more women in cluster 1&lt;/li&gt;
 &lt;li&gt;Both women and men aged 18–24 tend to be in cluster 1, but somewhat more women aged 25–34 in cluster 1, and slightly more men in that age group in cluster 2&lt;/li&gt;
 &lt;li&gt;Those who completed high school tend be in cluster 1 and those who did not are more likely in cluster 2&lt;/li&gt;
@@ -3946,1210 +4940,6 @@ loo1a &amp;lt;- loo(model1a)&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;&lt;a href=&#34;https://arbital.com/p/bayes_rule/?l=693&#34; class=&#34;uri&#34;&gt;https://arbital.com/p/bayes_rule/?l=693&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&#34;http://www.kevinboone.net/bayes.html&#34; class=&#34;uri&#34;&gt;http://www.kevinboone.net/bayes.html&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Intro to Git</title>
-      <link>https://rentzb.github.io/post/git/</link>
-      <pubDate>Tue, 21 Mar 2017 21:13:14 -0500</pubDate>
-      
-      <guid>https://rentzb.github.io/post/git/</guid>
-      <description>&lt;div id=&#34;what-is-git&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;What is Git?&lt;/h1&gt;
-&lt;div id=&#34;git-is&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Git is…&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;A distributed version control system&lt;/li&gt;
-&lt;li&gt;Used to allow multiple people to collaborate on the same code&lt;/li&gt;
-&lt;li&gt;Also useful for managing your own code and larger projects&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;applications-for-language-researchers&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Applications for language researchers?&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Coauthoring papers&lt;/li&gt;
-&lt;li&gt;Working on R scripts or other code&lt;/li&gt;
-&lt;li&gt;Sharing code with others (via github or bitbucket)&lt;/li&gt;
-&lt;li&gt;Managing large projects like a dissertation, thesis, or article&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;what-does-git-do&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;What does Git do?&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Git repositories store the history of files contained in it&lt;/li&gt;
-&lt;li&gt;Changes to files are tracked and can also be undone&lt;/li&gt;
-&lt;li&gt;Also allows for multiple &lt;strong&gt;branches&lt;/strong&gt; which store multiple versions of the same file (production versions vs development versions vs experimental approaches or various draft verions)&lt;/li&gt;
-&lt;li&gt;Git stores this information &lt;strong&gt;locally&lt;/strong&gt; but can also save it &lt;strong&gt;remotely&lt;/strong&gt; on github or other platforms&lt;/li&gt;
-&lt;li&gt;Mainly accessed through terminal or command line&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;how-do-we-use-git&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;How do we use Git?&lt;/h1&gt;
-&lt;div id=&#34;the-basic-local-git-workflow&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;The Basic Local Git Workflow&lt;/h2&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Create Git repository&lt;/li&gt;
-&lt;li&gt;Add files so that Git tracks them (staging files)&lt;/li&gt;
-&lt;li&gt;After done editing commit changes (committing files)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;div id=&#34;git-config&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Git config&lt;/h2&gt;
-&lt;p&gt;Basic Git configuration if haven’t done so already&lt;/p&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;# configure the user which will be used by Git
-# this should be not an acronym but your full name
-git config --global user.name &amp;quot;Firstname Lastname&amp;quot;
-
-# configure the email address
-git config --global user.email &amp;quot;your.email@example.org&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;creating-a-git-repository&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Creating a Git Repository&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Create a folder for the project (or use an existing one)&lt;/li&gt;
-&lt;li&gt;Navigate via terminal/command line to that folder&lt;/li&gt;
-&lt;li&gt;Then run &lt;code&gt;git init&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;cd ~/Desktop/sample_git
-git init&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## sh: line 0: cd: /Users/brad_rentz/Desktop/sample_git: No such file or directory
-## Reinitialized existing Git repository in /Users/brad_rentz/Documents/UH/rentzb.github.io/content/post/.git/&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;check-git-status&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Check Git Status&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Now that the repository is created we can check the status of the repository&lt;/li&gt;
-&lt;li&gt;You can run this at any point too&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;cd ~/Desktop/sample_git
-git status&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## sh: line 0: cd: /Users/brad_rentz/Desktop/sample_git: No such file or directory
-## On branch master
-## 
-## No commits yet
-## 
-## Untracked files:
-##   (use &amp;quot;git add &amp;lt;file&amp;gt;...&amp;quot; to include in what will be committed)
-## 
-##  .Rhistory
-##  12.jpg
-##  2018-02-08-cluster-analysis.Rmd
-##  2018-02-08-cluster-analysis.html
-##  2018-02-08-cluster-analysis_files/
-##  2018-02-08-clustering.Rmd
-##  2018-02-08-clustering.html
-##  2018-02-08-clustering_files/
-##  _index.md
-##  ca.Rmd
-##  ca.html
-##  ca_files/
-##  cluster.Rmd
-##  cluster.html
-##  cluster_files/
-##  clustering.html
-##  demos.csv
-##  domains.csv
-##  explore.png
-##  git.Rmd
-##  git.html
-##  intro_bayesian_pdf.Rmd
-##  intro_bayesian_pdf.html
-##  intro_bayesian_pdf_cache/
-##  intro_bayesian_pdf_files/
-##  messy_data.csv
-##  r_markdown_intro.Rmd
-##  r_markdown_intro.html
-##  r_markdown_intro_files/
-##  t_d_vot.csv
-##  tidy_data_handout.Rmd
-##  tidy_data_handout.html
-##  waterfall.png
-## 
-## nothing added to commit but untracked files present (use &amp;quot;git add&amp;quot; to track)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;staging-files&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Staging files&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;We have to tell Git which files to track&lt;/li&gt;
-&lt;li&gt;We add them with &lt;code&gt;git add FILENAME&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Add &lt;code&gt;sample.R&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;cd ~/Desktop/sample_git
-git add sample.R
-# too add all R files in directory
-# use &amp;#39;git add *.R&amp;#39;
-git status&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## sh: line 0: cd: /Users/brad_rentz/Desktop/sample_git: No such file or directory
-## fatal: pathspec &amp;#39;sample.R&amp;#39; did not match any files
-## On branch master
-## 
-## No commits yet
-## 
-## Untracked files:
-##   (use &amp;quot;git add &amp;lt;file&amp;gt;...&amp;quot; to include in what will be committed)
-## 
-##  .Rhistory
-##  12.jpg
-##  2018-02-08-cluster-analysis.Rmd
-##  2018-02-08-cluster-analysis.html
-##  2018-02-08-cluster-analysis_files/
-##  2018-02-08-clustering.Rmd
-##  2018-02-08-clustering.html
-##  2018-02-08-clustering_files/
-##  _index.md
-##  ca.Rmd
-##  ca.html
-##  ca_files/
-##  cluster.Rmd
-##  cluster.html
-##  cluster_files/
-##  clustering.html
-##  demos.csv
-##  domains.csv
-##  explore.png
-##  git.Rmd
-##  git.html
-##  intro_bayesian_pdf.Rmd
-##  intro_bayesian_pdf.html
-##  intro_bayesian_pdf_cache/
-##  intro_bayesian_pdf_files/
-##  messy_data.csv
-##  r_markdown_intro.Rmd
-##  r_markdown_intro.html
-##  r_markdown_intro_files/
-##  t_d_vot.csv
-##  tidy_data_handout.Rmd
-##  tidy_data_handout.html
-##  waterfall.png
-## 
-## nothing added to commit but untracked files present (use &amp;quot;git add&amp;quot; to track)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;commit-files&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Commit files&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Staging files only tell Git to look for change but not to remember them&lt;/li&gt;
-&lt;li&gt;Commit tell Git to remember how the files are at that moment (it commits all staged files)&lt;/li&gt;
-&lt;li&gt;Use &lt;code&gt;git commit -m &amp;quot;Commit message&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-m&lt;/code&gt; adds a message argument&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;cd ~/Desktop/sample_git
-git commit -m &amp;quot;First commit&amp;quot;
-# the message added should explain the changes
-git status&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## sh: line 0: cd: /Users/brad_rentz/Desktop/sample_git: No such file or directory
-## On branch master
-## 
-## Initial commit
-## 
-## Untracked files:
-##  .Rhistory
-##  12.jpg
-##  2018-02-08-cluster-analysis.Rmd
-##  2018-02-08-cluster-analysis.html
-##  2018-02-08-cluster-analysis_files/
-##  2018-02-08-clustering.Rmd
-##  2018-02-08-clustering.html
-##  2018-02-08-clustering_files/
-##  _index.md
-##  ca.Rmd
-##  ca.html
-##  ca_files/
-##  cluster.Rmd
-##  cluster.html
-##  cluster_files/
-##  clustering.html
-##  demos.csv
-##  domains.csv
-##  explore.png
-##  git.Rmd
-##  git.html
-##  intro_bayesian_pdf.Rmd
-##  intro_bayesian_pdf.html
-##  intro_bayesian_pdf_cache/
-##  intro_bayesian_pdf_files/
-##  messy_data.csv
-##  r_markdown_intro.Rmd
-##  r_markdown_intro.html
-##  r_markdown_intro_files/
-##  t_d_vot.csv
-##  tidy_data_handout.Rmd
-##  tidy_data_handout.html
-##  waterfall.png
-## 
-## nothing added to commit but untracked files present
-## On branch master
-## 
-## No commits yet
-## 
-## Untracked files:
-##   (use &amp;quot;git add &amp;lt;file&amp;gt;...&amp;quot; to include in what will be committed)
-## 
-##  .Rhistory
-##  12.jpg
-##  2018-02-08-cluster-analysis.Rmd
-##  2018-02-08-cluster-analysis.html
-##  2018-02-08-cluster-analysis_files/
-##  2018-02-08-clustering.Rmd
-##  2018-02-08-clustering.html
-##  2018-02-08-clustering_files/
-##  _index.md
-##  ca.Rmd
-##  ca.html
-##  ca_files/
-##  cluster.Rmd
-##  cluster.html
-##  cluster_files/
-##  clustering.html
-##  demos.csv
-##  domains.csv
-##  explore.png
-##  git.Rmd
-##  git.html
-##  intro_bayesian_pdf.Rmd
-##  intro_bayesian_pdf.html
-##  intro_bayesian_pdf_cache/
-##  intro_bayesian_pdf_files/
-##  messy_data.csv
-##  r_markdown_intro.Rmd
-##  r_markdown_intro.html
-##  r_markdown_intro_files/
-##  t_d_vot.csv
-##  tidy_data_handout.Rmd
-##  tidy_data_handout.html
-##  waterfall.png
-## 
-## nothing added to commit but untracked files present (use &amp;quot;git add&amp;quot; to track)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;modifying-a-file&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Modifying a file&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Let’s change the file to see what happens&lt;/li&gt;
-&lt;li&gt;Make some changes to &lt;code&gt;sample.R&lt;/code&gt; then check the &lt;code&gt;git status&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;cd ~/Desktop/sample_git
-# changed the sample.R file
-git status&lt;/code&gt;&lt;/pre&gt;
-&lt;ul&gt;
-&lt;li&gt;What does the &lt;code&gt;git status&lt;/code&gt; say?&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;commit-changes&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Commit changes&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;After you modify a file, you can commit it again by first doing &lt;code&gt;git add filename&lt;/code&gt; then &lt;code&gt;git commit -m &amp;quot;message&amp;quot;&lt;/code&gt; &lt;strong&gt;or&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;You can use &lt;code&gt;git commit -a -m &amp;quot;message&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-a&lt;/code&gt; tells git to commit all changes to previously staged files&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;cd ~/Desktop/sample_git
-git commit -a -m &amp;quot;made some changes&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;summary-so-far&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Summary (so far)&lt;/h2&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;cd ~/Desktop/sample_git # go to the right folder
-git init # create repository (only run first time)
-git add *.R # add all .R files (staging)
-git commit -a -m &amp;quot;made some changes&amp;quot; # commit the files&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;branching&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Branching&lt;/h1&gt;
-&lt;div id=&#34;what-is-branching&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;What is branching?&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Branches are different versions of the same code&lt;/li&gt;
-&lt;li&gt;Git allows us to create branches instead of creating a completely new folder for changes&lt;/li&gt;
-&lt;li&gt;Git manages the changes between version for us and even changes what files appear depending on which branch we are in&lt;/li&gt;
-&lt;li&gt;Git can even merge branches back together if needed&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;why-is-branching-helpful&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Why is branching helpful?&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Branching allows us to have multiple versions of the code each with separate histories so we can undo certain features on&lt;/li&gt;
-&lt;li&gt;This is useful if we want to experiment with our code with a new analysis while being able to keep code that we know works&lt;/li&gt;
-&lt;li&gt;Can even use this with non-code like text documents&lt;/li&gt;
-&lt;li&gt;Can have multiple versions of papers or dissertations (especially if using LaTeX or R markdown)
-&lt;ul&gt;
-&lt;li&gt;Modify an article for different purposes&lt;/li&gt;
-&lt;li&gt;Manage comments from committee members or reviewers&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;creating-new-branch&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Creating new branch&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;To create a new branch use &lt;code&gt;git branch NAME&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Using &lt;code&gt;git branch&lt;/code&gt; will give you a list of all branches&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;cd ~/Desktop/sample_git
-git branch experimental
-git branch&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## sh: line 0: cd: /Users/brad_rentz/Desktop/sample_git: No such file or directory
-## fatal: Not a valid object name: &amp;#39;master&amp;#39;.&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;switching-between-branches&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Switching between branches&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;To switch between branches use &lt;code&gt;git checkout NAME&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Notice after switching branches the file name change (even in Finder for macOS)&lt;/li&gt;
-&lt;li&gt;Note: I added a &lt;code&gt;sample3.R&lt;/code&gt; to experimental&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;cd ~/Desktop/sample_git
-git checkout master
-# see file list before switching branches
-ls 
-git checkout experimental
-# see file list afterward
-ls&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## sh: line 0: cd: /Users/brad_rentz/Desktop/sample_git: No such file or directory
-## error: pathspec &amp;#39;master&amp;#39; did not match any file(s) known to git.
-## 12.jpg
-## 2018-02-08-cluster-analysis.Rmd
-## 2018-02-08-cluster-analysis.html
-## 2018-02-08-cluster-analysis_files
-## 2018-02-08-clustering.Rmd
-## 2018-02-08-clustering.html
-## 2018-02-08-clustering_files
-## _index.md
-## ca.Rmd
-## ca.html
-## ca_files
-## cluster.Rmd
-## cluster.html
-## cluster_files
-## clustering.html
-## demos.csv
-## domains.csv
-## explore.png
-## git.Rmd
-## git.html
-## intro_bayesian_pdf.Rmd
-## intro_bayesian_pdf.html
-## intro_bayesian_pdf_cache
-## intro_bayesian_pdf_files
-## messy_data.csv
-## r_markdown_intro.Rmd
-## r_markdown_intro.html
-## r_markdown_intro_files
-## t_d_vot.csv
-## tidy_data_handout.Rmd
-## tidy_data_handout.html
-## waterfall.png
-## error: pathspec &amp;#39;experimental&amp;#39; did not match any file(s) known to git.
-## 12.jpg
-## 2018-02-08-cluster-analysis.Rmd
-## 2018-02-08-cluster-analysis.html
-## 2018-02-08-cluster-analysis_files
-## 2018-02-08-clustering.Rmd
-## 2018-02-08-clustering.html
-## 2018-02-08-clustering_files
-## _index.md
-## ca.Rmd
-## ca.html
-## ca_files
-## cluster.Rmd
-## cluster.html
-## cluster_files
-## clustering.html
-## demos.csv
-## domains.csv
-## explore.png
-## git.Rmd
-## git.html
-## intro_bayesian_pdf.Rmd
-## intro_bayesian_pdf.html
-## intro_bayesian_pdf_cache
-## intro_bayesian_pdf_files
-## messy_data.csv
-## r_markdown_intro.Rmd
-## r_markdown_intro.html
-## r_markdown_intro_files
-## t_d_vot.csv
-## tidy_data_handout.Rmd
-## tidy_data_handout.html
-## waterfall.png&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;merging-branches&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Merging branches&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Sometimes it is helpful to merge branches together&lt;/li&gt;
-&lt;li&gt;First checkout into the branch you want to keep (master)&lt;/li&gt;
-&lt;li&gt;Then use &lt;code&gt;git merge NAME&lt;/code&gt; where name is the branch you want to merge into that branch&lt;/li&gt;
-&lt;li&gt;If there are problematic merges, Git won’t complete the merge. If so use &lt;code&gt;git mergetool&lt;/code&gt; then &lt;code&gt;git commit -a -m &amp;quot;message&amp;quot;&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;cd ~/Desktop/sample_git
-git checkout master # switch to branch want to keep
-git merge experimental # merge experimental into master
-git mergetool # only if it won&amp;#39;t merge
-git commit -a -m &amp;quot;merged experiemental into master&amp;quot; # only if used diff tool&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;deleting-merged-branches&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Deleting Merged Branches&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;After a branch is successfully merged into another branch, you can delete it with &lt;code&gt;git branch -d NAME&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;-d&lt;/code&gt; will only delete the branch if it has been merged (this is a safe delete)&lt;/li&gt;
-&lt;li&gt;If you created a branch and you don’t like it and want to delete it without merging use &lt;code&gt;git branch -D NAME&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;cd ~/Desktop/sample_git
-git branch -d experimental
-git branch crazy-idea # create this branch
-git branch -D crazy-idea # nevermind, too crazy, delete it&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;using-git-with-github&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Using Git with Github&lt;/h1&gt;
-&lt;div id=&#34;creating-github-repository&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Creating github repository&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;If you are using your own code, the first step is to make a local git repository, which we did already&lt;/li&gt;
-&lt;li&gt;Then on github make a new repository but an empty one&lt;/li&gt;
-&lt;li&gt;After creating it look for directions like these and run them in terminal (you need to &lt;code&gt;cd&lt;/code&gt; to your local git repository first. You may need to enter your github username and password):&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;github.png&#34; /&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;pushing-to-github&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Pushing to Github&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;After you link your local repository to github, you can send your changes directly by using &lt;code&gt;git push&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;This will only work if there are no other changes by others&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;cd ~/Desktop/sample_git
-git push # send code to linked github repository
-# or if you want to specify branches
-git push origin experimental # pushes experimental branch&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;pulling-files&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Pulling files&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;To get the current version of files on github if they differ from local repository use &lt;code&gt;git pull&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Git won’t let you &lt;code&gt;push&lt;/code&gt; something if there are conflicts, so good to &lt;code&gt;pull&lt;/code&gt; first, then deal with conflicts, then &lt;code&gt;push&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;If conflicts arise use &lt;code&gt;git diff&lt;/code&gt; to see differences and &lt;code&gt;git mergetool&lt;/code&gt; to merge&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;cd ~/Desktop/sample_git
-git pull # get code from linked github repository
-git diff # use if conflicts&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;summary&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Summary&lt;/h2&gt;
-&lt;pre class=&#34;sh&#34;&gt;&lt;code&gt;cd ~/Desktop/sample_git # go to the right folder
-git init # create repository (only run first time)
-git branch experimental # creates new branch called experimental
-git checkout experimental # switches branches
-git add *.R # add all .R files (staging)
-git commit -a -m &amp;quot;made some changes&amp;quot; # commit the files
-git pull # get current remove version
-git mergetool # use if need to resolve conflicts
-git push # saves to remote repo&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;other-git-things&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Other Git Things&lt;/h1&gt;
-&lt;div id=&#34;git-misc&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Git Misc&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;git log&lt;/code&gt; gives you the history of changes&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;git clone URL name&lt;/code&gt; clones an online git repo to your computer with name &lt;code&gt;name&lt;/code&gt; and sets up a git repo for it&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;git grep &amp;quot;STRING&amp;quot;&lt;/code&gt; searches through commits for that string&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;.gitignore&lt;/code&gt; is file that includes filetypes to ignore (you can find good ones online for each language) [save them in the top folder for each git repo]&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;other-git-resources&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Other Git Resources&lt;/h1&gt;
-&lt;div id=&#34;git-tutorials&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Git Tutorials&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://git-scm.com/docs/gittutorial&#34; class=&#34;uri&#34;&gt;https://git-scm.com/docs/gittutorial&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://www.vogella.com/tutorials/Git/article.html&#34; class=&#34;uri&#34;&gt;http://www.vogella.com/tutorials/Git/article.html&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://blog.udemy.com/git-tutorial-a-comprehensive-guide/&#34; class=&#34;uri&#34;&gt;https://blog.udemy.com/git-tutorial-a-comprehensive-guide/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://gitimmersion.com/lab_01.html&#34; class=&#34;uri&#34;&gt;http://gitimmersion.com/lab_01.html&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;http://rogerdudler.github.io/git-guide/&#34; class=&#34;uri&#34;&gt;http://rogerdudler.github.io/git-guide/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;more-git-resources&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;More Git Resources&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;Free book on Git &lt;a href=&#34;https://git-scm.com/book/en/v2&#34; class=&#34;uri&#34;&gt;https://git-scm.com/book/en/v2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Youtube video series &lt;a href=&#34;https://www.youtube.com/GitHubGuides&#34; class=&#34;uri&#34;&gt;https://www.youtube.com/GitHubGuides&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Git command reference guide &lt;a href=&#34;http://gitref.org/&#34; class=&#34;uri&#34;&gt;http://gitref.org/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Git cheatsheet &lt;a href=&#34;https://services.github.com/on-demand/downloads/github-git-cheat-sheet.pdf&#34; class=&#34;uri&#34;&gt;https://services.github.com/on-demand/downloads/github-git-cheat-sheet.pdf&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Tidy Data</title>
-      <link>https://rentzb.github.io/post/tidy_data_handout/</link>
-      <pubDate>Tue, 07 Mar 2017 21:13:14 -0500</pubDate>
-      
-      <guid>https://rentzb.github.io/post/tidy_data_handout/</guid>
-      <description>&lt;div id=&#34;what-is-tidy-data&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;What is tidy data?&lt;/h1&gt;
-&lt;p&gt;Tidy data have the following characteristics:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Observations are in rows&lt;/li&gt;
-&lt;li&gt;Variables are in columns&lt;/li&gt;
-&lt;li&gt;Contained in a single dataset&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div id=&#34;an-example-of-tidy-data&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;An example of tidy data&lt;/h2&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;Participant&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;Gender&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;Trial&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;Value&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;01&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;M&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;1&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;100&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;01&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;M&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;210&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;02&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;F&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;1&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;50&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;02&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;F&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;2&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;75&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;div id=&#34;an-example-of-messy-data&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;An example of messy data&lt;/h2&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th&gt;Participant&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;Trial1&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;Trial2&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td&gt;M01&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;100&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;210&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td&gt;F02&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;50&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;75&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;div id=&#34;r-packages-for-tidy-data&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;R Packages for tidy data&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;tidyverse&amp;quot;)
-## ── Attaching packages ─────────────────────────────────────────────────── tidyverse 1.2.1 ──
-## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
-## ✔ tibble  1.4.1     ✔ dplyr   0.7.4
-## ✔ tidyr   0.7.2     ✔ stringr 1.2.0
-## ✔ readr   1.1.1     ✔ forcats 0.2.0
-## ── Conflicts ────────────────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;workflow-for-data-wrangling&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Workflow for data wrangling&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;Import data&lt;/li&gt;
-&lt;li&gt;Change from wide data to long&lt;/li&gt;
-&lt;li&gt;Split columns&lt;/li&gt;
-&lt;li&gt;Fix typos or irregulaties&lt;/li&gt;
-&lt;li&gt;Create new variables as needed&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div id=&#34;import-messy-data&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Import messy data&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data.messy &amp;lt;- read_csv(&amp;quot;messy_data.csv&amp;quot;)
-## Parsed with column specification:
-## cols(
-##   participant = col_character(),
-##   vowel = col_character(),
-##   word = col_character(),
-##   f2_trial1 = col_integer(),
-##   f2_trial2 = col_integer(),
-##   f2_trial3 = col_integer(),
-##   f2_trial4 = col_integer(),
-##   f1_trial1 = col_integer(),
-##   f1_trial2 = col_integer(),
-##   f1_trial3 = col_integer(),
-##   f1_trial4 = col_integer()
-## )&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;find-the-problems&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Find the problems&lt;/h2&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;participant&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;vowel&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;word&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;f2_trial1&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;f2_trial2&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;f2_trial3&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;f.29&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;apple&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1736&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1742&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1730&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;f.30&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;apple&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1766&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1783&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1744&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;m.27&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;apple&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1780&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1803&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1763&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;m.18&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;apple&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1701&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1707&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1687&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;m.29&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;apple&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1693&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1697&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1689&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;f.34&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;apple&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1768&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1779&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1741&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;f.19&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;apple&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1758&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1776&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1755&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;div id=&#34;explore-the-data-more&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Explore the data more&lt;/h2&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;right&#34;&gt;f2_trial4&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;f1_trial1&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;f1_trial2&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;f1_trial3&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;f1_trial4&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;right&#34;&gt;1737&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;700&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;693&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;713&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;684&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;right&#34;&gt;1768&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;710&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;713&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;747&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;694&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;right&#34;&gt;1780&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;682&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;685&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;708&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;656&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;right&#34;&gt;1704&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;715&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;714&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;735&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;701&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;right&#34;&gt;1696&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;667&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;684&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;706&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;657&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;right&#34;&gt;1773&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;683&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;679&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;693&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;659&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;right&#34;&gt;1760&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;758&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;748&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;777&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;734&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;what-makes-that-dataset-messy&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;What makes that dataset messy?&lt;/h1&gt;
-&lt;p&gt;Why is that data messy? How does it violate the tidy data rules?&lt;/p&gt;
-&lt;div id=&#34;problem-1-the-columns-contain-observations&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Problem 1: The columns contain observations&lt;/h2&gt;
-&lt;p&gt;The first problem is the f2_trial1, f2_trial2, etc., represent observations instead of variables. We want to convert all of these columns to just three columns: trial (1 or 2), measurement type (F1 or F2), and value.&lt;/p&gt;
-&lt;p&gt;To do this we use &lt;code&gt;gather()&lt;/code&gt; from the package &lt;code&gt;tidyr&lt;/code&gt;, which converts from a wide format to long format.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data.long &amp;lt;- gather(data.messy,
-                  key=measurement,
-                  value=value,
-                  -participant,-vowel,-word)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;long-data&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Long data&lt;/h2&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;participant&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;vowel&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;word&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;measurement&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;value&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;f.29&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;apple&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f2_trial1&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1736&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;f.19&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;u&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;boot&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f2_trial1&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;737&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;f.29&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;apple&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f2_trial2&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1742&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;m.30&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;u&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;boot&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f2_trial2&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;642&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;f.21&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;apple&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f2_trial3&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1636&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;f.48&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;u&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;boot&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f1_trial2&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;279&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;f.34&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;u&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;Hoop&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f1_trial4&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;224&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;div id=&#34;problem-2-two-variables-in-one-column&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Problem 2: Two variables in one column&lt;/h2&gt;
-&lt;p&gt;The next problem that we have to deal with is that two of our columns have two variables in them. Participant has both gender and the participant number. Measurment has both the trial and the measurement type (F1 or F2). To separate the columns we use &lt;code&gt;separate()&lt;/code&gt; from &lt;code&gt;tidyr&lt;/code&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;separating-columns&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Separating columns&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# separate measurement
-data.long &amp;lt;- separate(data.long,
-                      measurement,
-                      c(&amp;quot;measurement&amp;quot;,&amp;quot;trial&amp;quot;),
-                      sep=&amp;quot;_&amp;quot;)
-# separate participant (note: for . need regex \. 
-# but need to escape the \ with a \, so \\. )
-# convert=T allows the new columns to have different data types
-data.long &amp;lt;- separate(data.long,
-                      participant,
-                      c(&amp;quot;gender&amp;quot;,&amp;quot;participant&amp;quot;),
-                      sep=&amp;quot;\\.&amp;quot;,
-                      convert=T)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;almost-tidy-data&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Almost tidy data&lt;/h2&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;gender&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;participant&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;vowel&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;word&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;measurement&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;trial&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;value&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;f&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;29&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;apple&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f2&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;trial1&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1736&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;m&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;27&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;u&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;hoop&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f2&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;trial1&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;731&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;f&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;30&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;u&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;hoop&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f2&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;trial2&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;614&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;f&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;37&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;u&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;boot&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f2&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;trial3&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;390&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;m&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;18&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;u&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;boot&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f2&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;trial4&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;588&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;f&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;37&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;u&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;hoop&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f1&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;trial1&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;238&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;f&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;21&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;apple&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f1&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;trial4&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;727&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;div id=&#34;problem-3-irregular-spellings&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Problem 3: Irregular spellings&lt;/h2&gt;
-&lt;p&gt;When entering data by hand, there are sometime irregularities in spelling, such a variation in capitalizations, typos, or extra spaces.&lt;/p&gt;
-&lt;p&gt;To check for irregulaties, we convert all of our string variables to factors and then check what levels of the factors exist.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data.long$gender &amp;lt;- as.factor(data.long$gender)
-data.long$participant &amp;lt;- as.factor(data.long$participant)
-data.long$word &amp;lt;- as.factor(data.long$word)
-data.long$vowel &amp;lt;- as.factor(data.long$vowel)
-data.long$measurement &amp;lt;- as.factor(data.long$measurement)
-data.long$trial &amp;lt;- as.factor(data.long$trial)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;checking-factors&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Checking factors&lt;/h2&gt;
-&lt;p&gt;To check the levels of each factor, we can use the &lt;code&gt;summary()&lt;/code&gt; command. What problems in spelling are there?&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(data.long[,1:6])
-##  gender   participant  vowel      word     measurement    trial    
-##  f:256   29     : 96   a:192   apple:112   f1:224      trial1:112  
-##  m:192   30     : 64   A: 32   at   :112   f2:224      trial2:112  
-##          18     : 32   u:224   boot :104               trial3:112  
-##          19     : 32           Boot :  8               trial4:112  
-##          21     : 32           hoop :104                           
-##          27     : 32           Hoop :  8                           
-##          (Other):160&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;using-stringr-to-fix-strings&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Using stringr to fix strings&lt;/h2&gt;
-&lt;p&gt;Now that we have identified the errors, we can fix them with &lt;code&gt;str_replace()&lt;/code&gt; from &lt;code&gt;stringr&lt;/code&gt;.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(stringr)
-data.long$word &amp;lt;- str_replace(data.long$word,&amp;quot;Hoop&amp;quot;,&amp;quot;hoop&amp;quot;)
-data.long$word &amp;lt;- str_replace(data.long$word,&amp;quot;Boot&amp;quot;,&amp;quot;boot&amp;quot;)
-data.long$vowel &amp;lt;- str_replace(data.long$vowel,&amp;quot;A&amp;quot;,&amp;quot;a&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;clean-data&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Clean data&lt;/h2&gt;
-&lt;p&gt;Let’s check to see if there are other errors.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data.long$gender &amp;lt;- as.factor(data.long$gender)
-data.long$participant &amp;lt;- as.factor(data.long$participant)
-data.long$word &amp;lt;- as.factor(data.long$word)
-data.long$vowel &amp;lt;- as.factor(data.long$vowel)
-data.long$measurement &amp;lt;- as.factor(data.long$measurement)
-data.long$trial &amp;lt;- as.factor(data.long$trial)
-summary(data.long[,1:6])
-##  gender   participant  vowel      word     measurement    trial    
-##  f:256   29     : 96   a:224   apple:112   f1:224      trial1:112  
-##  m:192   30     : 64   u:224   at   :112   f2:224      trial2:112  
-##          18     : 32           boot :112               trial3:112  
-##          19     : 32           hoop :112               trial4:112  
-##          21     : 32                                               
-##          27     : 32                                               
-##          (Other):160&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;exploring-dplyr-functions&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Exploring dplyr functions&lt;/h1&gt;
-&lt;p&gt;Now that we have clean data we can process and explore our data with the &lt;code&gt;dplyr&lt;/code&gt; functions &lt;code&gt;filter()&lt;/code&gt;, &lt;code&gt;arrange()&lt;/code&gt;, &lt;code&gt;select()&lt;/code&gt;, &lt;code&gt;summarise()&lt;/code&gt;, &lt;code&gt;group_by()&lt;/code&gt;, and &lt;code&gt;mutate()&lt;/code&gt;. We will also use the pipe &lt;code&gt;%&amp;gt;%&lt;/code&gt; from the &lt;code&gt;magrittr&lt;/code&gt; package to make using these (and other) functions easier.&lt;/p&gt;
-&lt;div id=&#34;the-pipe&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;The pipe&lt;/h2&gt;
-&lt;p&gt;The pipe &lt;code&gt;%&amp;gt;%&lt;/code&gt; allows us to nest code very easily is read as &lt;strong&gt;then&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;For example, let’s say we want to select only a few columns of a dataframe, then select row values that are greater than a certain value, then mean for each variable by participant.&lt;/p&gt;
-&lt;p&gt;The pseudo-code would like this:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;new.df &amp;lt;- old.df %&amp;gt;% select columns that we want %&amp;gt;%
-  filter the row values that we want %&amp;gt;%
-  group by participant %&amp;gt;%
-  calculate the mean for each variable &lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;selecting-columns-with-select&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Selecting columns with select()&lt;/h2&gt;
-&lt;p&gt;The function &lt;code&gt;select()&lt;/code&gt; from &lt;code&gt;dplyr&lt;/code&gt; is used to select certain &lt;strong&gt;columns&lt;/strong&gt; from a dataframe. Columns can selected individually, excluded individually by using &lt;code&gt;-&lt;/code&gt; before the name, or selected as a range with &lt;code&gt;:&lt;/code&gt;, as in first_column:last_column.&lt;/p&gt;
-&lt;p&gt;Let’s select the columns participant, vowel, measurement, trial, and value.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data.selected &amp;lt;- data.long %&amp;gt;%
-  select(participant, vowel, measurement, trial, value)
-# or can select those by excluding the other columns with -
-data.selected2 &amp;lt;- data.long %&amp;gt;%
-  select(-gender,-word)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;arranging-values&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Arranging values&lt;/h2&gt;
-&lt;p&gt;The &lt;code&gt;arrange()&lt;/code&gt; function from &lt;code&gt;dplyr&lt;/code&gt; is in a sort function. You can use it to sort by one column or by multiple columns. It can also sort in descending order by using &lt;code&gt;desc()&lt;/code&gt; arround the column name.&lt;/p&gt;
-&lt;p&gt;Let’s sort the &lt;code&gt;data.selected&lt;/code&gt; by participant, then vowel, then descending order of trial.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data.sorted &amp;lt;- data.selected %&amp;gt;% 
-  arrange(participant, vowel, desc(trial))&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;filtering-rows&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Filtering rows&lt;/h2&gt;
-&lt;p&gt;The function &lt;code&gt;filter()&lt;/code&gt; from &lt;code&gt;dplyr&lt;/code&gt; allows us to subset the data by selecting rows based on whatever logical rule we want.&lt;/p&gt;
-&lt;p&gt;For this example let’s keep on the rows where the value is greater than or equal to 500 and the participant is not 19.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data.filtered &amp;lt;- data.sorted %&amp;gt;%
-  filter(participant != &amp;quot;19&amp;quot; &amp;amp; value &amp;gt;= 500)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;logical-values&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Logical values&lt;/h2&gt;
-&lt;p&gt;The logical values that can be used are&lt;/p&gt;
-&lt;table&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;==&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;equal to&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;!=&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;not equal to&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&amp;lt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;less than&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&amp;lt;=&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;less than or equal to&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&amp;gt;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;greater than&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&amp;gt;=&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;greater than or equal too&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;&amp;amp;&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;AND&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;|&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;OR&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;div id=&#34;adding-new-columns&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Adding new columns&lt;/h2&gt;
-&lt;p&gt;The &lt;code&gt;mutate()&lt;/code&gt; function of &lt;code&gt;dplyr&lt;/code&gt; allows us to add columns to our dataframe based on calculations run on other columns. It is a 1:1 calculation. As an example let’s say we want to calculate the z-score for the values we measured. To do this we have to first use a helper function called &lt;code&gt;group_by()&lt;/code&gt;. This function groups the data in groups first before doing other calculations. Let’s calculate the z-score for each value grouped by participant and measurement type (F1 or F2).&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data.zscore &amp;lt;- data.filtered %&amp;gt;%
-  group_by(participant, measurement) %&amp;gt;%
-  mutate(z.score = (value - mean(value))/sd(value))&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;z-score&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Z score&lt;/h2&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr class=&#34;header&#34;&gt;
-&lt;th align=&#34;left&#34;&gt;participant&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;vowel&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;measurement&lt;/th&gt;
-&lt;th align=&#34;left&#34;&gt;trial&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;value&lt;/th&gt;
-&lt;th align=&#34;right&#34;&gt;z.score&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;18&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f2&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;trial4&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1704&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.9467597&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;18&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f2&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;trial4&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1734&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.9975243&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;18&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f1&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;trial4&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;701&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-1.2665945&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;18&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f1&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;trial4&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;731&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;-0.2533189&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;odd&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;18&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f2&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;trial3&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1687&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.9179931&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr class=&#34;even&#34;&gt;
-&lt;td align=&#34;left&#34;&gt;18&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;a&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;f2&lt;/td&gt;
-&lt;td align=&#34;left&#34;&gt;trial3&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;1707&lt;/td&gt;
-&lt;td align=&#34;right&#34;&gt;0.9518362&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;div id=&#34;summarizing-data&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Summarizing data&lt;/h2&gt;
-&lt;p&gt;The &lt;code&gt;summarise()&lt;/code&gt; function from &lt;code&gt;dplyr&lt;/code&gt; also creates new columns; however, it is not a 1:1 function. The function instead creates a reduced output that summarises the data. It also only returns as many columns as is necessary to display the results.&lt;/p&gt;
-&lt;p&gt;An example application would be to show the means, standard deviations, or similar statistics.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data.global.means &amp;lt;- data.filtered %&amp;gt;%
-  summarise(global.means = mean(value))
-data.global.means
-## # A tibble: 1 x 1
-##   global.means
-##          &amp;lt;dbl&amp;gt;
-## 1         1051&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;grouped-central-tendencies&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Grouped central tendencies&lt;/h2&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data.grouped.ct &amp;lt;- data.filtered %&amp;gt;%
-  group_by(participant, vowel, measurement) %&amp;gt;%
-  summarise(means = mean(value), sds = sd(value), 
-            medians = median(value))
-head(data.grouped.ct)
-## # A tibble: 6 x 6
-## # Groups: participant, vowel [4]
-##   participant vowel  measurement means   sds medians
-##   &amp;lt;fctr&amp;gt;      &amp;lt;fctr&amp;gt; &amp;lt;fctr&amp;gt;      &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;   &amp;lt;dbl&amp;gt;
-## 1 18          a      f1            738  29.6     733
-## 2 18          a      f2           1716  23.0    1707
-## 3 18          u      f2            573  17.7     578
-## 4 21          a      f1            752  18.5     747
-## 5 21          a      f2           1677  23.5    1674
-## 6 21          u      f2            744  16.7     745&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </description>

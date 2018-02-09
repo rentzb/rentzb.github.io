@@ -402,12 +402,12 @@
 <div id="r-packages-for-tidy-data" class="section level2">
 <h2>R Packages for tidy data</h2>
 <pre class="r"><code>library(&quot;tidyverse&quot;)
-## ── Attaching packages ─────────────────────────────────────────────────── tidyverse 1.2.1 ──
+## ── Attaching packages ──────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──
 ## ✔ ggplot2 2.2.1     ✔ purrr   0.2.4
-## ✔ tibble  1.4.1     ✔ dplyr   0.7.4
-## ✔ tidyr   0.7.2     ✔ stringr 1.2.0
+## ✔ tibble  1.4.2     ✔ dplyr   0.7.4
+## ✔ tidyr   0.8.0     ✔ stringr 1.2.0
 ## ✔ readr   1.1.1     ✔ forcats 0.2.0
-## ── Conflicts ────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ── Conflicts ─────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 </div>
@@ -977,15 +977,15 @@ data.global.means
             medians = median(value))
 head(data.grouped.ct)
 ## # A tibble: 6 x 6
-## # Groups: participant, vowel [4]
-##   participant vowel  measurement means   sds medians
-##   &lt;fctr&gt;      &lt;fctr&gt; &lt;fctr&gt;      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
-## 1 18          a      f1            738  29.6     733
-## 2 18          a      f2           1716  23.0    1707
-## 3 18          u      f2            573  17.7     578
-## 4 21          a      f1            752  18.5     747
-## 5 21          a      f2           1677  23.5    1674
-## 6 21          u      f2            744  16.7     745</code></pre>
+## # Groups:   participant, vowel [4]
+##   participant vowel measurement means   sds medians
+##   &lt;fct&gt;       &lt;fct&gt; &lt;fct&gt;       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+## 1 18          a     f1            738  29.6     733
+## 2 18          a     f2           1716  23.0    1707
+## 3 18          u     f2            573  17.7     578
+## 4 21          a     f1            752  18.5     747
+## 5 21          a     f2           1677  23.5    1674
+## 6 21          u     f2            744  16.7     745</code></pre>
 </div>
 </div>
 

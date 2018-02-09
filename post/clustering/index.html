@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://rentzb.github.io/css/github-gist.css" rel="stylesheet" id="theme-stylesheet">
 <script src="https://rentzb.github.io/js/highlight.pack.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-  <link rel="alternate" hreflang="en-us" href="https://rentzb.github.io/post/cluster-analysis/">
+  <link rel="alternate" hreflang="en-us" href="https://rentzb.github.io/post/clustering/">
 
   
   
@@ -75,7 +75,7 @@
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="https://rentzb.github.io/post/cluster-analysis/">
+  <link rel="canonical" href="https://rentzb.github.io/post/clustering/">
 
   <meta property="twitter:card" content="summary_large_image">
   
@@ -83,19 +83,19 @@
   <meta property="twitter:creator" content="@BradleyRentz">
   
   <meta property="og:site_name" content="Bradley T. Rentz">
-  <meta property="og:url" content="https://rentzb.github.io/post/cluster-analysis/">
-  <meta property="og:title" content="Cluster Analysis | Bradley T. Rentz">
+  <meta property="og:url" content="https://rentzb.github.io/post/clustering/">
+  <meta property="og:title" content="Cluster Analysis for Categorical Data | Bradley T. Rentz">
   <meta property="og:description" content="">
   <meta property="og:locale" content="en-us">
   
-  <meta property="article:published_time" content="2018-02-07T00:00:00&#43;00:00">
+  <meta property="article:published_time" content="2018-02-09T13:00:00-05:00">
   
-  <meta property="article:modified_time" content="2018-02-07T00:00:00&#43;00:00">
-  
-
+  <meta property="article:modified_time" content="2018-02-09T13:00:00-05:00">
   
 
-  <title>Cluster Analysis | Bradley T. Rentz</title>
+  
+
+  <title>Cluster Analysis for Categorical Data | Bradley T. Rentz</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#navbar-main" data-offset="71" >
@@ -243,7 +243,7 @@
 
   <div class="article-container">
     <div class="article-inner">
-      <h1 itemprop="name">Cluster Analysis</h1>
+      <h1 itemprop="name">Cluster Analysis for Categorical Data</h1>
 
       
 
@@ -251,8 +251,8 @@
 
   <span class="article-date">
     
-    <time datetime="2018-02-07 00:00:00 &#43;0000 UTC" itemprop="datePublished">
-      Feb 7, 2018
+    <time datetime="2018-02-09 13:00:00 -0500 -0500" itemprop="datePublished">
+      Feb 9, 2018
     </time>
   </span>
 
@@ -286,35 +286,35 @@
   <ul class="share">
     <li>
       <a class="twitter"
-         href="https://twitter.com/intent/tweet?text=Cluster%20Analysis&amp;url=https%3a%2f%2frentzb.github.io%2fpost%2fcluster-analysis%2f"
+         href="https://twitter.com/intent/tweet?text=Cluster%20Analysis%20for%20Categorical%20Data&amp;url=https%3a%2f%2frentzb.github.io%2fpost%2fclustering%2f"
          target="_blank" rel="noopener">
         <i class="fa fa-twitter"></i>
       </a>
     </li>
     <li>
       <a class="facebook"
-         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2frentzb.github.io%2fpost%2fcluster-analysis%2f"
+         href="https://www.facebook.com/sharer.php?u=https%3a%2f%2frentzb.github.io%2fpost%2fclustering%2f"
          target="_blank" rel="noopener">
         <i class="fa fa-facebook"></i>
       </a>
     </li>
     <li>
       <a class="linkedin"
-         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2frentzb.github.io%2fpost%2fcluster-analysis%2f&amp;title=Cluster%20Analysis"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2frentzb.github.io%2fpost%2fclustering%2f&amp;title=Cluster%20Analysis%20for%20Categorical%20Data"
          target="_blank" rel="noopener">
         <i class="fa fa-linkedin"></i>
       </a>
     </li>
     <li>
       <a class="weibo"
-         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2frentzb.github.io%2fpost%2fcluster-analysis%2f&amp;title=Cluster%20Analysis"
+         href="http://service.weibo.com/share/share.php?url=https%3a%2f%2frentzb.github.io%2fpost%2fclustering%2f&amp;title=Cluster%20Analysis%20for%20Categorical%20Data"
          target="_blank" rel="noopener">
         <i class="fa fa-weibo"></i>
       </a>
     </li>
     <li>
       <a class="email"
-         href="mailto:?subject=Cluster%20Analysis&amp;body=https%3a%2f%2frentzb.github.io%2fpost%2fcluster-analysis%2f">
+         href="mailto:?subject=Cluster%20Analysis%20for%20Categorical%20Data&amp;body=https%3a%2f%2frentzb.github.io%2fpost%2fclustering%2f">
         <i class="fa fa-envelope"></i>
       </a>
     </li>
@@ -372,14 +372,14 @@
 <h2>PAM</h2>
 <ul>
 <li>This presentation will focus on the use of PAM</li>
-<li>Works in general by finding a pre-determined number of groups in the data and iteratively tries to find an ideal solution based on assigning a center point for each cluster and all other data points to the appropriate center point</li>
+<li>Works in general by finding a pre-determined number of group in the data and interatively tried to find an ideal solution based on assigning a center point for each cluster and all other data points to the appropriate center point</li>
 <li>Is more robust to outliers than k-means since uses medians rather than means</li>
 </ul>
 </div>
 <div id="example-data" class="section level2">
 <h2>Example Data</h2>
 <ul>
-<li>For the sample cluster analysis we will be using data from a questionnaire used on Pohnpei</li>
+<li>For the sample cluster analysis were will be using data from a questionnaire used on Pohnpei</li>
 <li>There are 25 questions where the respondents were asked to select 1 language that is the most important for that specific domain</li>
 <li>The answers for all 25 questions were the same 8 language choices</li>
 <li>301 respondents</li>
@@ -602,8 +602,8 @@ library(factoextra)</code></pre>
 <li>Values of 1 are completely dissimilar and values of 0 means identical responses</li>
 </ul>
 </div>
-<div id="calculate-the-dissimilarity-matrix" class="section level2">
-<h2>Calculate the dissimilarity matrix</h2>
+<div id="calculate-the-dissimilary-matrix" class="section level2">
+<h2>Calculate the dissimilary matrix</h2>
 <pre class="r"><code>domains.dist &lt;- daisy(domains,metric=&quot;gower&quot;)</code></pre>
 </div>
 <div id="visualize-matrix" class="section level2">
@@ -611,7 +611,7 @@ library(factoextra)</code></pre>
 <pre class="r"><code>gradient.color &lt;- list(low = &quot;steelblue&quot;,  high = &quot;white&quot;)
 fviz_dist(domains.dist, 
    gradient = gradient.color,order=T)</code></pre>
-<p><img src="/post/2018-02-08-cluster-analysis_files/figure-html/dissimilarity.plot2-1.png" width="672" /></p>
+<p><img src="/post/clustering_files/figure-html/dissimilarity.plot2-1.png" width="672" /></p>
 </div>
 <div id="step-2-determine-number-of-clusters" class="section level2">
 <h2>Step 2: Determine number of clusters</h2>
@@ -626,8 +626,8 @@ fviz_dist(domains.dist,
 <h2>Silhouette Method</h2>
 <ul>
 <li>The silhouette method calculates for a range of cluster sizes how similar values in a particular cluster are to each other versus how similar they are to values outside their cluster</li>
-<li>For this method, an ideal arrangement would have values being very similar to other members of its cluster and very dissimilar with those values outside its cluster</li>
-<li>The method gives score overall from -1 to 1 for each number of clusters, where 1 means very well clustered and -1 very poorly clustered</li>
+<li>For this method, and ideal arrangement would have values being very similar to other members of its cluster and very dissimilar with those values outside its cluster</li>
+<li>The method give score overall from -1 to 1 for each number of clusters, where 1 means very well clustered and -1 very poorly clustered</li>
 <li>The number of clusters with the best score is selected</li>
 </ul>
 </div>
@@ -666,7 +666,7 @@ ggplot(domains.mds,aes(x=V1,y=V2,color=domains_cluster)) +
 </div>
 <div id="clusters-plotted" class="section level2">
 <h2>Clusters plotted</h2>
-<p><img src="/post/2018-02-08-cluster-analysis_files/figure-html/pam.plot2-1.png" width="672" /></p>
+<p><img src="/post/clustering_files/figure-html/pam.plot2-1.png" width="672" /></p>
 </div>
 <div id="step-4-interpret-the-clusters" class="section level2">
 <h2>Step 4: Interpret the clusters</h2>
@@ -710,7 +710,7 @@ language_domains_social_solidarity_gathered &lt;- language_domains_social_solida
                         legend.position=&quot;bottom&quot;,
                         legend.text=element_text(size=10))+ 
   ylab(&quot;Number of respondents&quot;) + facet_grid(~`Domain PAM cluster`)</code></pre>
-<p><img src="/post/2018-02-08-cluster-analysis_files/figure-html/pam.subset.plot-1.png" width="672" /></p>
+<p><img src="/post/clustering_files/figure-html/pam.subset.plot-1.png" width="672" /></p>
 </div>
 <div id="interpretation-what" class="section level2">
 <h2>Interpretation: what</h2>
@@ -722,7 +722,7 @@ language_domains_social_solidarity_gathered &lt;- language_domains_social_solida
 <h2>Determining who is in each cluster</h2>
 <ul>
 <li>To determine who is in each cluster, we import the demographic data and add the cluster information to it</li>
-<li>Then plot the clusters by several demograhpic variables</li>
+<li>The plot the clusters by several demograhpic variables</li>
 </ul>
 <pre class="r"><code>demos &lt;- read.csv(&quot;demos.csv&quot;)
 demos$cluster &lt;- as.factor(domains.mds$domains_cluster)</code></pre>
@@ -736,7 +736,7 @@ demos$cluster &lt;- as.factor(domains.mds$domains_cluster)</code></pre>
        subtitle=&quot;for language importance&quot;) + 
   xlab(&quot;Age&quot;)+ 
   ylab(&quot;Number of respondents&quot;) </code></pre>
-<p><img src="/post/2018-02-08-cluster-analysis_files/figure-html/age-1.png" width="672" /></p>
+<p><img src="/post/clustering_files/figure-html/age-1.png" width="672" /></p>
 </div>
 <div id="gender-and-pam-cluster" class="section level2">
 <h2>Gender and PAM cluster</h2>
@@ -747,7 +747,7 @@ demos$cluster &lt;- as.factor(domains.mds$domains_cluster)</code></pre>
        subtitle=&quot;for language importance&quot;) + 
   xlab(&quot;Gender&quot;)+  
   ylab(&quot;Number of respondents&quot;) </code></pre>
-<p><img src="/post/2018-02-08-cluster-analysis_files/figure-html/gender-1.png" width="672" /></p>
+<p><img src="/post/clustering_files/figure-html/gender-1.png" width="672" /></p>
 </div>
 <div id="gender-and-age-by-pam-cluster" class="section level2">
 <h2>Gender and Age by PAM cluster</h2>
@@ -761,7 +761,7 @@ demos$cluster &lt;- as.factor(domains.mds$domains_cluster)</code></pre>
                         legend.text=element_text(size=8)) +
   xlab(&quot;Age&quot;)+
   ylab(&quot;Number of respondents&quot;) + facet_grid(~sex)</code></pre>
-<p><img src="/post/2018-02-08-cluster-analysis_files/figure-html/gender_age-1.png" width="672" /></p>
+<p><img src="/post/clustering_files/figure-html/gender_age-1.png" width="672" /></p>
 </div>
 <div id="eduation-and-pam-cluster" class="section level2">
 <h2>Eduation and PAM cluster</h2>
@@ -775,7 +775,7 @@ demos$cluster &lt;- as.factor(domains.mds$domains_cluster)</code></pre>
                         legend.text=element_text(size=8))+
   xlab(&quot;Highest education level&quot;)+  
   ylab(&quot;Number of respondents&quot;) </code></pre>
-<p><img src="/post/2018-02-08-cluster-analysis_files/figure-html/education-1.png" width="672" /></p>
+<p><img src="/post/clustering_files/figure-html/education-1.png" width="672" /></p>
 </div>
 <div id="current-municipality-and-pam-cluster" class="section level2">
 <h2>Current municipality and PAM cluster</h2>
@@ -786,12 +786,12 @@ demos$cluster &lt;- as.factor(domains.mds$domains_cluster)</code></pre>
        subtitle=&quot;for language importance&quot;) + 
   xlab(&quot;Current municipality&quot;)+  
   ylab(&quot;Number of respondents&quot;) </code></pre>
-<p><img src="/post/2018-02-08-cluster-analysis_files/figure-html/current_muni-1.png" width="672" /></p>
+<p><img src="/post/clustering_files/figure-html/current_muni-1.png" width="672" /></p>
 </div>
 <div id="interpretation-who" class="section level2">
 <h2>Interpretation: who</h2>
 <ul>
-<li>People aged 18–24 have much greater numbers in cluster 1, ages 25–44 are fairly equally distributed, and ages 45+ have more respondents in cluster 2</li>
+<li>People aged 18–24 have much greater numbers in cluster 1, ages 25–44 are fairly equally distributed, and ages 45+ have more respondents cluster 2</li>
 <li>Gender is more evenly distributed with somewhat more women in cluster 1</li>
 <li>Both women and men aged 18–24 tend to be in cluster 1, but somewhat more women aged 25–34 in cluster 1, and slightly more men in that age group in cluster 2</li>
 <li>Those who completed high school tend be in cluster 1 and those who did not are more likely in cluster 2</li>
@@ -846,15 +846,15 @@ demos$cluster &lt;- as.factor(domains.mds$domains_cluster)</code></pre>
   <h3>Related</h3>
   <ul>
     
+    <li><a href="/post/cluster/">Cluster Analysis for Categorical Data</a></li>
+    
+    <li><a href="/post/cluster-analysis/">Cluster Analysis</a></li>
+    
     <li><a href="/post/ca/">Correspondence Analysis</a></li>
     
     <li><a href="/project/data-science/">Data Science</a></li>
     
     <li><a href="/post/r_markdown_intro/">Introduction to R Markdown</a></li>
-    
-    <li><a href="/post/intro_bayesian_pdf/">Intro to Bayesian Linear Mixed Effect Models with rstanarm</a></li>
-    
-    <li><a href="/project/language-attitudes/">Language Attitudes</a></li>
     
   </ul>
 </div>
