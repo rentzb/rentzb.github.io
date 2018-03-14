@@ -2,40 +2,40 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Projects on Bradley T. Rentz</title>
-    <link>https://rentzb.github.io/project/</link>
+    <link>/project/</link>
     <description>Recent content in Projects on Bradley T. Rentz</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2017 Bradley T. Rentz</copyright>
     <lastBuildDate>Sat, 18 Nov 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://rentzb.github.io/project/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/project/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Data Science</title>
-      <link>https://rentzb.github.io/project/data-science/</link>
+      <link>/project/data-science/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://rentzb.github.io/project/data-science/</guid>
+      <guid>/project/data-science/</guid>
       <description>One of my research interests is using quantitative methods from data science to help improve linguistic theory. I have worked toward this goal but using new combinations of quantitative methods in my research projects, as well as running a data science group for linguists at the University of Hawaiʻi at Mānoa.</description>
     </item>
     
     <item>
       <title>Language Attitudes</title>
-      <link>https://rentzb.github.io/project/language-attitudes/</link>
+      <link>/project/language-attitudes/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://rentzb.github.io/project/language-attitudes/</guid>
+      <guid>/project/language-attitudes/</guid>
       <description>For my dissertation, I study how people on the island of Pohnpei in the Federated States of Micronesia talk about language and the opinions and ideologies that they express.</description>
     </item>
     
     <item>
       <title>Pohnpei</title>
-      <link>https://rentzb.github.io/project/pohnpei/</link>
+      <link>/project/pohnpei/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://rentzb.github.io/project/pohnpei/</guid>
+      <guid>/project/pohnpei/</guid>
       <description>Most of my linguistic research has taken place on Pohnpei in the Federated States of Micronesia. My primary research is on language attitudes. but I have worked on projects about other linguistic areas, such as phonetics, topological relations, and language documentation.</description>
     </item>
     

@@ -2,95 +2,95 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Homes on Bradley T. Rentz</title>
-    <link>https://rentzb.github.io/home/</link>
+    <link>/home/</link>
     <description>Recent content in Homes on Bradley T. Rentz</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2017 Bradley T. Rentz</copyright>
     <lastBuildDate>Sat, 18 Nov 2017 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="https://rentzb.github.io/home/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/home/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title></title>
-      <link>https://rentzb.github.io/home/about/</link>
+      <link>/home/about/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://rentzb.github.io/home/about/</guid>
+      <guid>/home/about/</guid>
       <description>Biography I am a doctoral candidate in the Linguistics Department at the University of Hawaiʻi at Mānoa. My dissertation research focuses on language attitudes on Pohnpei, FSM. My other research projects involve language documentation and conservation, linguistic geography, acoustic phonetics, discourse analysis, quantitative approaches to linguistic research, sociolinguistics, Micronesian languages, and decolonizing linguistic methodologies. I also have a strong interest in data science, quantitative methods, and R programming.</description>
     </item>
     
     <item>
       <title>Selected Publications</title>
-      <link>https://rentzb.github.io/home/publications_selected/</link>
+      <link>/home/publications_selected/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 -1000</pubDate>
       
-      <guid>https://rentzb.github.io/home/publications_selected/</guid>
+      <guid>/home/publications_selected/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Recent Publications</title>
-      <link>https://rentzb.github.io/home/publications/</link>
+      <link>/home/publications/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 -1000</pubDate>
       
-      <guid>https://rentzb.github.io/home/publications/</guid>
+      <guid>/home/publications/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Recent &amp; Upcoming Talks</title>
-      <link>https://rentzb.github.io/home/talks/</link>
+      <link>/home/talks/</link>
       <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://rentzb.github.io/home/talks/</guid>
+      <guid>/home/talks/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Recent Posts</title>
-      <link>https://rentzb.github.io/home/posts/</link>
+      <link>/home/posts/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://rentzb.github.io/home/posts/</guid>
+      <guid>/home/posts/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Projects</title>
-      <link>https://rentzb.github.io/home/projects/</link>
+      <link>/home/projects/</link>
       <pubDate>Wed, 20 Apr 2016 00:00:00 +0000</pubDate>
       
-      <guid>https://rentzb.github.io/home/projects/</guid>
+      <guid>/home/projects/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Teaching</title>
-      <link>https://rentzb.github.io/home/teaching/</link>
+      <link>/home/teaching/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://rentzb.github.io/home/teaching/</guid>
+      <guid>/home/teaching/</guid>
       <description>I am an instructor for the following courses at the University of Hawaiʻi at Mānoa:
  LING 150: An Introduction to Language in Hawaiʻi and the Pacific  </description>
     </item>
     
     <item>
       <title>Tags</title>
-      <link>https://rentzb.github.io/home/tags/</link>
+      <link>/home/tags/</link>
       <pubDate>Wed, 20 Sep 2017 00:00:00 -1000</pubDate>
       
-      <guid>https://rentzb.github.io/home/tags/</guid>
+      <guid>/home/tags/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Contact</title>
-      <link>https://rentzb.github.io/home/contact/</link>
+      <link>/home/contact/</link>
       <pubDate>Sat, 18 Nov 2017 00:00:00 +0000</pubDate>
       
-      <guid>https://rentzb.github.io/home/contact/</guid>
+      <guid>/home/contact/</guid>
       <description></description>
     </item>
     
